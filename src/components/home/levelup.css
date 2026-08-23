@@ -1,0 +1,295 @@
+/* ============================================================
+   بازی سطح‌ها
+
+   بوم تمام‌عرض با روکش‌های شیشه‌ای روی آن. همه‌چیز داخل یک قاب
+   نسبی می‌نشیند تا روکش‌ها بدون محاسبه‌ی دستی سر جایشان بمانند.
+   ============================================================ */
+
+.lvl {
+  position: relative;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: #0a0713;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.lvl__canvas {
+  display: block;
+  width: 100%;
+  /* بازی روی موبایل با لمس کنترل می‌شود؛ بدون این، هر لمس صفحه را می‌لغزاند */
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+/* ---------- روکش شروع و پایان ---------- */
+
+.lvl__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  padding: var(--sp-6);
+  text-align: center;
+  background: radial-gradient(ellipse at center, rgba(10, 7, 19, 0.72), rgba(10, 7, 19, 0.94));
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: lvlFade var(--dur-quick) var(--ease-out);
+}
+
+@keyframes lvlFade { from { opacity: 0; } to { opacity: 1; } }
+
+.lvl__overlay-icon { width: 26px; height: 26px; color: var(--phx-ember-400, #f59440); }
+.lvl__overlay b { font-size: var(--text-lg); font-weight: 900; color: var(--text-primary); }
+.lvl__overlay span {
+  max-width: 44ch;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.lvl__overlay kbd {
+  padding: 1px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--border-default);
+  background: rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.lvl__start {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-1);
+  padding: var(--sp-3) var(--sp-6);
+  border: none;
+  border-radius: 999px;
+  background: var(--grad-action);
+  color: #fff;
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 22px var(--glow-action);
+  transition: transform 180ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+
+.lvl__start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 32px var(--glow-action-strong);
+}
+.lvl__start:active { transform: translateY(0) scale(0.97); }
+
+/* ---------- نوار وضعیت ---------- */
+
+.lvl__hud {
+  position: absolute;
+  inset-inline: var(--sp-4);
+  bottom: var(--sp-3);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 7, 19, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.lvl__progress {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  overflow: visible;
+}
+
+.lvl__progress > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--grad-ember);
+  transition: width 120ms linear;
+}
+
+/* نشانه‌ی هر پرچم روی نوار — تا بدانی چقدر تا سطح بعد مانده */
+.lvl__progress > i {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-inline-start: -4px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: #3a2f4d;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: background 260ms var(--ease-out), box-shadow 260ms var(--ease-out);
+}
+
+.lvl__progress > i.is-hit {
+  background: #ff5f6d;
+  box-shadow: 0 0 10px rgba(255, 95, 109, 0.9);
+}
+
+.lvl__coins {
+  flex-shrink: 0;
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  color: #f0b429;
+}
+.lvl__coins small { font-weight: 400; color: var(--text-faint); }
+
+.lvl__ctl {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 160ms var(--ease-out), border-color 160ms var(--ease-out);
+}
+.lvl__ctl:hover { color: #fff; border-color: rgba(255, 255, 255, 0.3); }
+
+/* ---------- دکمه‌ی پرش موبایل ---------- */
+
+.lvl__jump {
+  position: absolute;
+  inset-inline-end: var(--sp-4);
+  bottom: 56px;
+  z-index: 2;
+  display: none;
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: 999px;
+  border: 1px solid rgba(245, 148, 64, 0.5);
+  background: rgba(245, 148, 64, 0.16);
+  color: #ffd9a8;
+  font-family: inherit;
+  font-size: var(--text-2xs);
+  font-weight: 900;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.lvl__jump:active { transform: scale(0.94); }
+
+/* روی دستگاه لمسی دکمه لازم است؛ روی دسکتاپ صفحه‌کلید کافی است */
+@media (hover: none) {
+  .lvl__jump { display: block; }
+}
+
+/* ---------- حالت کاهش حرکت ---------- */
+
+.lvl--static {
+  padding: var(--sp-6);
+  text-align: center;
+}
+.lvl--static p {
+  margin: 0;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+/* ============================================================
+   سکشن باشگاه — بازی و کارت‌ها کنار هم
+
+   قبلاً بازی بالا بود و کارت‌ها پایین. رابطه‌شان دیده نمی‌شد: پرچم که
+   رد می‌شد، کارتی روشن می‌شد که اصلاً در قاب نبود. حالا هر دو هم‌زمان
+   در دیدند و علت و معلول کنار هم می‌افتند.
+   ============================================================ */
+
+.pj__split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+  margin-bottom: var(--sp-8);
+  align-items: start;
+}
+
+/* روی صفحه‌های پهن نصف‌نصف. زیر آن، بازی بالا و کارت‌ها پایین —
+   چون بازی با عرض کم اصلاً قابل بازی نیست. */
+@media (min-width: 1100px) {
+  .pj__split { grid-template-columns: 1.05fr 1fr; gap: var(--sp-8); }
+}
+
+.pj__game { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+/* ستون بازی می‌چسبد و همراه اسکرول می‌ماند.
+
+   ستون کارت‌ها بلندتر از ستون بازی است و زیر بازی حدود ۳۵۰ پیکسل
+   فضای مرده می‌ماند. پر کردنش با محتوای الکی جواب نیست؛ چسباندن،
+   همان فضا را تبدیل به مزیت می‌کند: بازی در دید می‌ماند تا وقتی
+   کاربر کارت‌ها را می‌خواند، و رابطه‌ی «پرچم ← سطح» هم‌زمان دیده
+   می‌شود — همان چیزی که اصلاً دلیل کنار هم گذاشتنشان بود. */
+@media (min-width: 1100px) {
+  .pj__game {
+    position: sticky;
+    /* زیر نوبار شناور می‌ایستد، نه چسبیده به لبه‌ی قاب */
+    top: calc(var(--nav-height) + var(--sp-4));
+  }
+}
+
+/* ---------- بولت‌های پیشرفت ---------- */
+
+.pj__bullets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+}
+
+.pj__bullet {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 320ms var(--ease-out), background 320ms var(--ease-out),
+              transform 320ms var(--ease-out);
+}
+
+.pj__bullet i {
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  transition: background 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
+}
+
+/* پرچمی که رد شده — بولتش روشن می‌شود */
+.pj__bullet.is-on {
+  border-color: color-mix(in srgb, var(--b-color) 65%, transparent);
+  background: color-mix(in srgb, var(--b-color) 16%, transparent);
+  transform: scale(1.12);
+}
+
+.pj__bullet.is-on i {
+  background: var(--b-color);
+  box-shadow: 0 0 12px var(--b-color);
+}
+
+.pj__cards { min-width: 0; }
+
+/* روی صفحه‌ی پهن، ستون کارت‌ها هم‌ارتفاع‌تر می‌شود اگر کارت‌ها کمی
+   فشرده‌تر باشند — اختلاف کمتر یعنی چسبندگی کمتر به چشم می‌آید */
+@media (min-width: 1100px) {
+  .pj__cards .grid { gap: var(--sp-3); }
+}

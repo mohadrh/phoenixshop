@@ -1,0 +1,15 @@
+node_modules/
+.next/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+.vercel
+
+# خروجی بیلد ایستا و ابزار میزبانی‌های دیگر
+out/
+.vercel/
+.liara*

@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+/* توکن‌های دیزاین — منبع واحد حقیقت برای رنگ، تایپ، فاصله و موشن */
+@import '../styles/tokens.css';
+
+/* استایل‌های اصلی نسخه‌ی قبلی — گرادیانت برند، آتش، شیشه‌ای */
+@import '../styles/legacy.css';
+
+/* پایه‌ی دکمه‌ها — قبل از CSS کامپوننت‌ها تا اصلاح‌کننده‌های محلی برنده شوند */
+@import '../styles/buttons.css';
+
+/* استایل کامپوننت‌ها. در App Router، CSS سراسری فقط از لایوت قابل ورود است،
+   پس همه اینجا جمع می‌شوند تا ترتیب لایه‌ها قطعی و قابل پیش‌بینی بماند. */
+@import '../components/HeroCinematic.css';
+@import '../components/account/account.css';
+@import '../components/account/panels/panels.css';
+@import '../components/shell/navbar.css';
+@import '../components/shell/cart.css';
+@import '../components/shell/chat.css';
+@import '../components/shell/footer.css';
+@import '../components/home/home.css';
+@import '../components/home/sections.css';
+@import '../components/notfound/notfound.css';
+@import '../components/shop/pages.css';
+@import '../components/numbers/numbers.css';
+@import '../components/three/su57.css';
+@import '../components/product/product-card.css';
+@import '../components/checkout/checkout.css';
+@import '../components/motion/reveal.css';
+@import '../components/ui/controller.css';
+@import '../components/home/levelup.css';
+
+@layer base {
+  /* نام‌های قدیمی — تا کامپوننت‌های پورت‌نشده نشکنند */
+  :root {
+    --font-vazir: var(--font-fa);
+    --font-cinzel: var(--font-en);
+    --font-sans: var(--font-fa);
+  }
+
+  html {
+    background: var(--bg-base);
+  }
+
+  body {
+    font-family: var(--font-fa);
+    background: var(--bg-base);
+    color: var(--text-secondary);
+    overflow-x: hidden;
+  }
+}
+
+@layer base {
+  /* بوم پس‌زمینه — پشت همه‌چیز، بدون رهگیری کلیک */
+  .phx-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    display: block;
+  }
+
+  /* محتوا باید بالای بوم بنشیند، وگرنه پس‌زمینه رویش می‌افتد */
+  body > * { position: relative; z-index: 1; }
+  body > .phx-bg { z-index: 0; }
+}

@@ -1,0 +1,414 @@
+/* ============================================================
+   چک‌اوت
+   نوبار و فوتر اینجا حذف شده‌اند — هر لینک اضافه در این صفحه
+   یک راه فرار از پرداخت است.
+   ============================================================ */
+
+.co {
+  min-height: 100svh;
+  padding-block: var(--sp-8) var(--sp-16);
+  background: var(--bg-base);
+}
+
+.co__inner { max-width: 1080px; margin-inline: auto; padding-inline: var(--gutter); }
+
+.co__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding-bottom: var(--sp-5);
+  margin-bottom: var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.co__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.co__brand-mark { width: 26px; height: 23px; overflow: visible; }
+
+.co__secure {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-2xs);
+  color: var(--phx-success);
+}
+.co__secure-icon { width: 13px; height: 13px; }
+
+/* ---------- گام‌ها ---------- */
+
+.co__steps {
+  list-style: none;
+  margin: 0 0 var(--sp-8);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+}
+
+.co__step {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.co__step-num {
+  display: grid;
+  place-items: center;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-default);
+  font-size: var(--text-2xs);
+}
+
+.co__step.is-active { color: var(--text-primary); font-weight: 600; }
+.co__step.is-active .co__step-num {
+  background: var(--grad-ember);
+  border-color: transparent;
+  color: var(--text-on-accent);
+  font-weight: 700;
+}
+
+/* ---------- چیدمان ---------- */
+
+.co__grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-6); }
+@media (min-width: 900px) { .co__grid { grid-template-columns: 1fr 340px; gap: var(--sp-8); align-items: start; } }
+
+.co__card {
+  padding: var(--sp-5);
+  border-radius: var(--r-xl);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.co__card .pd__section-title { display: flex; align-items: center; gap: var(--sp-2); margin: 0; font-size: var(--text-base); }
+
+.co__hint { margin: 0; font-size: var(--text-xs); line-height: var(--leading-normal); color: var(--text-faint); }
+
+.co__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  background: rgba(242,86,77,0.1);
+  border: 1px solid rgba(242,86,77,0.3);
+  font-size: var(--text-xs);
+  color: #ff9a94;
+}
+
+.co__link {
+  border: none; background: none; padding: 0;
+  font-family: inherit; font-size: inherit;
+  color: var(--phx-ember-300); text-decoration: underline; cursor: pointer;
+}
+
+.co__next { align-self: flex-start; }
+
+/* ---------- خطوط سفارش ---------- */
+
+.co__lines { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.co__line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-subtle);
+}
+
+.co__line-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.co__line-body b { font-size: var(--text-sm); color: var(--text-primary); }
+.co__line-body small { font-size: var(--text-2xs); color: var(--text-muted); }
+
+.co__line-input {
+  font-size: var(--text-2xs);
+  color: var(--phx-ember-300);
+  direction: ltr;
+  text-align: start;
+}
+
+.co__line-delivery {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: var(--text-2xs);
+  color: var(--phx-success);
+}
+.co__line-icon { width: 11px; height: 11px; }
+
+.co__line-side { display: flex; align-items: center; gap: var(--sp-3); margin-inline-start: auto; }
+.co__line-price { font-size: var(--text-sm); font-weight: 700; color: var(--phx-ember-300); }
+
+.co__remove {
+  border: none; background: none; padding: 0;
+  font-family: inherit; font-size: var(--text-2xs);
+  color: var(--text-faint); cursor: pointer;
+}
+.co__remove:hover { color: var(--phx-danger); }
+
+/* ---------- درگاه‌ها ---------- */
+
+.co__gateways { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.co__gateway {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-default);
+  color: inherit;
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: border-color var(--dur-instant) var(--ease-out);
+}
+.co__gateway.is-active { border-color: var(--accent); background: var(--accent-soft); }
+
+.co__gateway-radio {
+  width: 17px; height: 17px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  transition: all var(--dur-instant) var(--ease-out);
+}
+.co__gateway.is-active .co__gateway-radio {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-sunken), inset 0 0 0 9px var(--accent);
+}
+
+.co__gateway b { display: block; font-size: var(--text-sm); color: var(--text-primary); }
+.co__gateway small { font-size: var(--text-2xs); color: var(--text-faint); }
+
+.co__wallet {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--bg-sunken);
+  border: 1px dashed var(--border-accent);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.co__wallet input { accent-color: var(--accent); width: 17px; height: 17px; }
+.co__wallet-icon { width: 17px; height: 17px; color: var(--phx-ember-500); }
+.co__wallet b { color: var(--phx-ember-300); }
+
+.co__legal { margin: 0; font-size: var(--text-2xs); color: var(--text-faint); }
+.co__legal a { color: var(--phx-ember-300); }
+
+/* ---------- خلاصه ---------- */
+
+.co__summary {
+  padding: var(--sp-5);
+  border-radius: var(--r-xl);
+  background: var(--surface-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-lg);
+}
+@media (min-width: 900px) { .co__summary { position: sticky; top: var(--sp-6); } }
+
+.co__summary-title { margin: 0 0 var(--sp-4); font-size: var(--text-base); font-weight: 700; color: var(--text-primary); }
+
+.co__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding-block: var(--sp-2);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+.co__row--ok { color: var(--phx-success); }
+
+.co__coupon { display: flex; gap: var(--sp-2); margin-block: var(--sp-3); }
+.co__coupon .vs__input { flex: 1; min-width: 0; font-size: var(--text-xs); }
+.co__coupon .btn { flex-shrink: 0; font-size: var(--text-2xs); padding: var(--sp-2) var(--sp-3); }
+
+.co__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding-top: var(--sp-4);
+  margin-top: var(--sp-2);
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+.co__total b { font-size: var(--text-xl); font-weight: 800; color: var(--text-primary); }
+.co__total small { font-size: var(--text-xs); font-weight: 400; color: var(--text-muted); }
+
+.co__assurances { margin-top: var(--sp-5); padding-top: var(--sp-4); border-top: 1px solid var(--border-subtle); }
+.co__assurances li { font-size: var(--text-2xs); color: var(--text-faint); }
+
+/* ---------- خالی و موفقیت ---------- */
+
+.co__empty, .co__done {
+  min-height: 70svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-4);
+  text-align: center;
+  padding-inline: var(--gutter);
+}
+
+.co__empty h1, .co__done h1 { margin: 0; font-size: var(--text-2xl); font-weight: 800; color: var(--text-primary); }
+.co__empty p, .co__done p { margin: 0; font-size: var(--text-sm); color: var(--text-muted); }
+.co__empty .btn, .co__done .btn { text-decoration: none; }
+
+.co__done-mark {
+  display: grid;
+  place-items: center;
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  background: rgba(46,204,143,0.14);
+  color: var(--phx-success);
+  animation: doneIn var(--dur-slow) var(--ease-spring) both;
+}
+.co__done-mark svg { width: 32px; height: 32px; }
+
+@keyframes doneIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.co__done-note { max-width: 46ch; color: var(--text-faint) !important; font-size: var(--text-xs) !important; }
+.co__done-actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; margin-top: var(--sp-2); }
+
+/* ============================================================
+   حالت‌های میانی پرداخت
+
+   رفتن به درگاه و برگشتن از آن دو صفحه‌ی واقعی‌اند، نه یک لحظه‌ی
+   نامرئی. اگر کاربر نبیند کجاست، بستن صفحه در همان لحظه محتمل است.
+   ============================================================ */
+
+.co__pending, .co__failed { gap: var(--sp-4); }
+
+.co__spinner {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(245, 148, 64, 0.12);
+  border: 1px solid rgba(245, 148, 64, 0.3);
+  color: var(--phx-ember-400, #f59440);
+}
+.co__spinner svg { width: 26px; height: 26px; animation: coSpin 1s linear infinite; }
+
+@keyframes coSpin { to { transform: rotate(1turn); } }
+
+.co__done-mark--fail {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #f87171;
+}
+
+/* ---------- نوار مراحل پرداخت ---------- */
+
+.co__hops {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-2) var(--sp-4);
+  margin: var(--sp-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.co__hops li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--text-faint);
+}
+
+.co__hops li svg { width: 14px; height: 14px; }
+.co__hops li.is-done { color: #6ee7b7; }
+.co__hops li.is-active { color: var(--phx-ember-400, #f59440); }
+
+.co__hop-spin { animation: coSpin 1s linear infinite; }
+
+.co__hop-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.co__refid { font-size: var(--text-2xs); color: var(--text-faint); }
+
+.co__fail-link {
+  margin-top: var(--sp-2);
+  font-size: 10px;
+  color: var(--text-faint);
+  opacity: 0.6;
+}
+.co__fail-link:hover { opacity: 1; }
+
+/* ---------- هشدار اطلاعات ناقص ---------- */
+
+.co__alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  border: 1px solid rgba(245, 148, 64, 0.35);
+  background: rgba(245, 148, 64, 0.1);
+  font-size: var(--text-2xs);
+  color: #fcd9a8;
+  line-height: var(--leading-relaxed);
+}
+
+.co__alert-icon { width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; }
+
+/* ---------- ورودی داخل خط سبد ---------- */
+
+.co__line-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: var(--sp-2);
+  max-width: 320px;
+}
+
+.co__line-field label {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.co__line-field small { font-size: 10px; color: var(--text-faint); }
+.co__line-field small.is-error { color: var(--phx-danger); }

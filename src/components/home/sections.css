@@ -1,0 +1,1726 @@
+/* ============================================================
+   بخش‌های صفحه‌ی اصلی — فیلتر، پیشنهاد داغ، هوش مصنوعی، باشگاه، نظرات
+   ============================================================ */
+
+.cf__kicker-icon { width: 14px; height: 14px; }
+
+/* ============================================================
+   پورتال دسته‌بندی و فیلتر
+   ============================================================ */
+
+.cf {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--sp-20) var(--gutter) var(--sp-16);
+}
+
+.cf__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+.cf__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--phx-ember-300);
+}
+
+.cf__count {
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--phx-ember-300);
+  white-space: nowrap;
+}
+
+/* ---------- تب‌ها ---------- */
+
+.cf__tabs {
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  padding-bottom: var(--sp-3);
+  margin-bottom: var(--sp-5);
+  scrollbar-width: none;
+}
+.cf__tabs::-webkit-scrollbar { display: none; }
+
+.cf__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--dur-instant) var(--ease-out);
+}
+
+.cf__tab:hover { border-color: var(--border-strong); color: var(--text-primary); }
+
+.cf__tab.is-active {
+  color: var(--text-primary);
+  border-color: var(--tab-accent, var(--accent));
+  background: color-mix(in srgb, var(--tab-accent, var(--accent)) 14%, transparent);
+}
+
+.cf__tab-icon { width: 15px; height: 15px; color: var(--phx-ember-500); }
+.cf__tab-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+.cf__tab-count {
+  padding: 1px var(--sp-2);
+  border-radius: var(--r-full);
+  background: rgba(0, 0, 0, 0.35);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.cf__tab.is-active .cf__tab-count { color: var(--text-primary); }
+
+/* ---------- نوار فیلتر ---------- */
+
+.cf__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  margin-bottom: var(--sp-8);
+  border-radius: var(--r-xl);
+  background: var(--surface-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+}
+
+.cf__search { position: relative; flex: 1; min-width: 220px; }
+
+.cf__search-icon {
+  position: absolute;
+  inset-inline-start: var(--sp-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px; height: 15px;
+  color: var(--text-faint);
+  pointer-events: none;
+}
+
+.cf__search input {
+  width: 100%;
+  padding: var(--sp-3);
+  padding-inline-start: var(--sp-10);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: var(--text-xs);
+}
+.cf__search input::placeholder { color: var(--text-faint); }
+.cf__search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.cf__controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+
+.cf__seg {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-subtle);
+}
+
+.cf__seg-icon { width: 14px; height: 14px; margin-inline: var(--sp-2); color: var(--text-faint); }
+
+.cf__seg-btn {
+  padding: var(--sp-2) var(--sp-3);
+  border: none;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-2xs);
+  cursor: pointer;
+  transition: all var(--dur-instant) var(--ease-out);
+}
+.cf__seg-btn:hover { color: var(--text-primary); }
+.cf__seg-btn.is-active { background: var(--accent); color: var(--text-on-accent); font-weight: 700; }
+
+.cf__sort {
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+.cf__sort:focus { outline: none; border-color: var(--accent); }
+
+.cf__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(258px, 1fr));
+  gap: var(--sp-4);
+}
+
+.cf__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-16) var(--sp-6);
+  text-align: center;
+  border-radius: var(--r-xl);
+  background: var(--surface-1);
+  border: 1px dashed var(--border-default);
+}
+.cf__empty-icon { width: 34px; height: 34px; color: var(--text-faint); opacity: 0.55; }
+.cf__empty h3 { margin: 0; font-size: var(--text-base); color: var(--text-secondary); }
+.cf__empty p  { margin: 0 0 var(--sp-2); font-size: var(--text-sm); color: var(--text-faint); }
+
+/* ============================================================
+   پیشنهادهای داغ
+   ============================================================ */
+
+.hd {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--sp-16) var(--gutter);
+}
+
+.hd__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-6);
+  border-radius: var(--r-xl);
+  background: var(--surface-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border-accent);
+  box-shadow: var(--shadow-lg);
+}
+
+.hd__bar-main { display: flex; align-items: center; gap: var(--sp-3); }
+
+.hd__flame {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--r-md);
+  /* شعاعی به‌جای خطی — مرکز روشن، لبه‌ها محو */
+  background: radial-gradient(circle at 35% 28%, #ffc46b 0%, #f2568f 55%, #9143d4 100%);
+  color: #17100a;
+  box-shadow: 0 6px 20px -4px rgba(242, 86, 143, 0.5);
+}
+.hd__flame svg { width: 20px; height: 20px; }
+
+.hd__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: 0 0 2px;
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.hd__discount {
+  padding: 2px var(--sp-2);
+  border-radius: var(--r-full);
+  background: rgba(222, 46, 107, 0.16);
+  border: 1px solid rgba(222, 46, 107, 0.4);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: #ff8fb4;
+}
+
+.hd__sub { margin: 0; font-size: var(--text-xs); color: var(--text-faint); }
+
+.hd__timer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--text-2xs);
+}
+.hd__timer-icon { width: 13px; height: 13px; color: var(--phx-ember-500); }
+.hd__timer-label { color: var(--text-faint); }
+.hd__timer b { font-size: var(--text-sm); color: var(--phx-ember-300); font-weight: 700; }
+
+/* ---------- کارت‌ها ---------- */
+
+.hd__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--sp-4);
+}
+
+.hd__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  /* همان زمینه و گردی کارت محصول، تا دو بخش یک زبان داشته باشند */
+  border-radius: 1.5rem;
+  background: rgba(14, 10, 27, 0.95);
+  border: 1px solid rgba(255, 165, 80, 0.22);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform var(--dur-quick) var(--ease-out),
+              border-color var(--dur-quick) var(--ease-out),
+              box-shadow var(--dur-quick) var(--ease-out);
+}
+
+.hd__card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 175, 90, 0.6);
+  box-shadow: 0 15px 40px rgba(249, 148, 64, 0.22);
+}
+
+/* هاله‌ی اخگر از پایین کارت */
+.hd__ember {
+  position: absolute;
+  inset-inline: -10%;
+  bottom: -60px;
+  height: 150px;
+  z-index: -1;
+  /* شعله‌ی زیر کارت — همان رنگ‌های هاله‌ی آتش نسخه‌ی اصلی */
+  background:
+    radial-gradient(ellipse 60% 100% at 50% 100%, rgba(255,175,70,0.38) 0%, rgba(250,140,40,0.16) 38%, transparent 72%),
+    radial-gradient(ellipse 90% 80% at 50% 100%, rgba(214,49,111,0.16) 0%, transparent 70%);
+  filter: blur(22px);
+  animation: flameFloat 4s infinite ease-in-out;
+  transition: height var(--dur-smooth) var(--ease-out);
+}
+.hd__card:hover .hd__ember { height: 190px; }
+
+.hd__card-top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+
+.hd__off {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px var(--sp-2);
+  border-radius: var(--r-sm);
+  /* بدون گرادیانت — متن روشن روی زمینه‌ی تیره خواناتر است */
+  background: rgba(6, 5, 12, 0.72);
+  border: 1px solid rgba(255, 200, 130, 0.4);
+  backdrop-filter: blur(8px);
+  color: #ffd9a3;
+  font-size: var(--text-2xs);
+  font-weight: 800;
+}
+.hd__off-icon { width: 12px; height: 12px; }
+
+.hd__tag {
+  padding: 3px var(--sp-2);
+  border-radius: var(--r-sm);
+  background: var(--accent-soft);
+  border: 1px solid var(--border-accent);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--phx-ember-300);
+}
+
+.hd__delivery {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+.hd__delivery-icon { width: 11px; height: 11px; color: var(--phx-ember-500); }
+
+.hd__card-body { text-decoration: none; display: flex; flex-direction: column; gap: 4px; }
+
+.hd__brand {
+  font-family: var(--font-en);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-en-wide);
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+
+.hd__name { margin: 0; font-size: var(--text-base); font-weight: 700; color: var(--text-primary); }
+.hd__desc { margin: 0; font-size: var(--text-2xs); color: var(--text-muted); line-height: var(--leading-snug); }
+
+.hd__warranty {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-2xs);
+  color: var(--phx-success);
+}
+.hd__warranty-icon { width: 12px; height: 12px; flex-shrink: 0; }
+
+.hd__foot {
+  margin-top: auto;
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-2);
+}
+
+.hd__price { display: flex; flex-direction: column; gap: 1px; font-size: var(--text-2xs); color: var(--text-muted); }
+.hd__price s { color: var(--text-faint); }
+.hd__price b { font-size: var(--text-base); font-weight: 800; color: var(--phx-ember-300); }
+
+.hd__buy { padding: var(--sp-2) var(--sp-4); font-size: var(--text-xs); }
+
+/* ============================================================
+   مرکز فرماندهی هوش مصنوعی
+   ============================================================ */
+
+.ai {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--sp-16) var(--gutter);
+}
+
+.ai__panel {
+  border-radius: var(--r-2xl);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.ai__tabs {
+  display: flex;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ai__tabs::-webkit-scrollbar { display: none; }
+
+.ai__tab {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-shrink: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: all var(--dur-instant) var(--ease-out);
+}
+
+.ai__tab:hover { background: rgba(255,255,255,0.04); }
+
+.ai__tab.is-active {
+  background: color-mix(in srgb, var(--ai-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--ai-accent) 45%, transparent);
+  color: var(--text-primary);
+}
+
+.ai__tab-dot {
+  width: 10px; height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--ai-accent);
+  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--ai-accent) 70%, transparent);
+}
+
+.ai__tab-text { display: flex; flex-direction: column; line-height: 1.25; }
+.ai__tab-text b { font-family: var(--font-en); font-size: var(--text-sm); font-weight: 700; }
+.ai__tab-text small { font-size: var(--text-2xs); color: var(--text-faint); }
+
+.ai__detail { padding: var(--sp-6); }
+
+.ai__tagline {
+  margin: 0 0 var(--sp-5);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  padding-inline-start: var(--sp-4);
+  border-inline-start: 3px solid var(--ai-accent);
+}
+
+.ai__cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+}
+@media (min-width: 768px) { .ai__cols { grid-template-columns: 1fr 1fr; gap: var(--sp-10); } }
+
+.ai__strengths { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+.ai__strengths li { display: flex; align-items: flex-start; gap: var(--sp-2); font-size: var(--text-sm); color: var(--text-secondary); }
+.ai__check { width: 15px; height: 15px; flex-shrink: 0; margin-top: 3px; color: var(--ai-accent); }
+
+.ai__specs { margin: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.ai__spec {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+.ai__spec dt { font-size: var(--text-xs); color: var(--text-faint); }
+.ai__spec dd { margin: 0; font-size: var(--text-sm); color: var(--text-secondary); text-align: end; }
+.ai__spec dd.is-strong { color: var(--ai-accent); font-weight: 700; }
+
+.ai__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.ai__price { display: flex; align-items: baseline; gap: var(--sp-2); font-size: var(--text-2xs); color: var(--text-faint); }
+.ai__price b { font-size: var(--text-xl); font-weight: 800; color: var(--phx-ember-300); }
+.ai__cta .btn { text-decoration: none; }
+
+.ai__more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+.ai__more-icon { width: 16px; height: 16px; color: var(--phx-ember-500); }
+
+.ai__more-link {
+  margin-inline-start: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--phx-ember-300);
+  text-decoration: none;
+}
+
+/* ============================================================
+   باشگاه مشتریان
+   ============================================================ */
+
+.pj {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--sp-16) var(--gutter);
+}
+
+.pj__progress {
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-6);
+  border-radius: var(--r-xl);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+}
+
+.pj__progress-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+  font-size: var(--text-sm);
+}
+
+.pj__current { display: inline-flex; align-items: center; gap: var(--sp-2); color: var(--text-muted); }
+.pj__current b { color: var(--text-primary); }
+.pj__current-icon { width: 17px; height: 17px; }
+
+.pj__remaining { font-size: var(--text-xs); color: var(--text-muted); }
+.pj__remaining b { color: var(--phx-ember-300); font-weight: 800; }
+.pj__remaining--max { color: var(--phx-success); }
+
+.pj__track {
+  height: 8px;
+  border-radius: var(--r-full);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.pj__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(118deg, #ffc46b 0%, #fb7a72 30%, #f2568f 52%, #9a5cf0 78%, #6b74f5 100%);
+  transition: width var(--dur-smooth) var(--ease-out);
+}
+
+.pj__cart {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+.pj__cart b { color: var(--text-secondary); }
+
+.pj__cart-link {
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--phx-ember-300);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- سطوح ---------- */
+
+.pj__tiers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--sp-4);
+}
+
+.pj__tier {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-5);
+  border-radius: var(--r-xl);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  opacity: 0.55;
+  transition: opacity var(--dur-quick) var(--ease-out),
+              border-color var(--dur-quick) var(--ease-out);
+}
+
+.pj__tier.is-unlocked { opacity: 1; }
+
+.pj__tier.is-current {
+  border-color: var(--tier-accent);
+  box-shadow: 0 0 0 1px var(--tier-accent) inset,
+              0 12px 32px -12px color-mix(in srgb, var(--tier-accent) 60%, transparent);
+}
+
+.pj__tier-badge {
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--tier-accent) 18%, transparent);
+  color: var(--tier-accent);
+  margin-bottom: var(--sp-1);
+}
+.pj__tier-badge svg { width: 16px; height: 16px; }
+
+.pj__tier-title { margin: 0; font-size: var(--text-base); font-weight: 800; color: var(--text-primary); }
+.pj__tier-threshold { font-size: var(--text-2xs); color: var(--text-faint); }
+.pj__tier-perk { margin: 0; font-size: var(--text-xs); color: var(--text-muted); line-height: var(--leading-snug); }
+
+.pj__coupon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  border: 1px dashed var(--tier-accent);
+  color: var(--tier-accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--dur-instant) var(--ease-out);
+}
+.pj__coupon:hover:not(:disabled) { background: color-mix(in srgb, var(--tier-accent) 14%, transparent); }
+.pj__coupon:disabled { opacity: 0.4; cursor: not-allowed; border-style: solid; }
+.pj__coupon-icon { width: 12px; height: 12px; }
+
+.pj__tier-locked {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+.pj__tier-locked-icon { width: 11px; height: 11px; }
+
+.pj__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  margin: var(--sp-6) 0 0;
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+/* ============================================================
+   نظرات و باشگاه VIP
+   ============================================================ */
+
+.vip {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--sp-16) var(--gutter) var(--sp-24);
+}
+
+.vip__ticker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-10);
+  border-radius: var(--r-full);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.vip__ticker-dot {
+  width: 8px; height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--phx-success);
+  box-shadow: 0 0 10px 1px rgba(46, 204, 143, 0.7);
+  animation: pulseDot 2.4s var(--ease-in-out) infinite;
+}
+
+.vip__ticker-text { animation: fadeUp var(--dur-smooth) var(--ease-out); }
+.vip__ticker-text b { color: var(--text-primary); }
+.vip__ticker-label { margin-inline-start: auto; font-size: var(--text-2xs); color: var(--text-faint); }
+
+/* ---------- نظرات ---------- */
+
+.vip__reviews {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-10);
+}
+
+.vip__review {
+  position: relative;
+  margin: 0;
+  padding: var(--sp-5);
+  border-radius: var(--r-xl);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.vip__quote {
+  position: absolute;
+  inset-block-start: var(--sp-4);
+  inset-inline-end: var(--sp-4);
+  width: 26px; height: 26px;
+  color: var(--phx-ember-500);
+  opacity: 0.18;
+}
+
+.vip__stars { display: flex; gap: 2px; }
+.vip__star { width: 14px; height: 14px; color: var(--border-strong); }
+.vip__star.is-on { color: var(--phx-warning); fill: var(--phx-warning); }
+
+.vip__text {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+}
+
+.vip__author {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: auto;
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.vip__avatar {
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #ffc46b 0%, #f2568f 55%, #7c3aed 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
+.vip__author-meta { display: flex; flex-direction: column; min-width: 0; }
+.vip__author-meta b { font-size: var(--text-xs); color: var(--text-primary); }
+.vip__author-meta small { font-size: var(--text-2xs); color: var(--text-faint); }
+
+.vip__product {
+  margin-inline-start: auto;
+  padding: 2px var(--sp-2);
+  border-radius: var(--r-sm);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-en);
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ---------- مزایا ---------- */
+
+.vip__perks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--sp-4);
+  padding: var(--sp-6);
+  border-radius: var(--r-2xl);
+  background: linear-gradient(135deg, rgba(232,134,46,0.07) 0%, rgba(139,63,212,0.07) 100%);
+  border: 1px solid var(--border-accent);
+}
+
+.vip__perk { display: flex; align-items: flex-start; gap: var(--sp-3); }
+
+.vip__perk-icon {
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  flex-shrink: 0;
+  border-radius: var(--r-md);
+  background: var(--accent-soft);
+  color: var(--phx-ember-500);
+}
+.vip__perk-icon svg { width: 18px; height: 18px; }
+
+.vip__perk b { display: block; font-size: var(--text-sm); color: var(--text-primary); margin-bottom: 2px; }
+.vip__perk small { font-size: var(--text-2xs); color: var(--text-faint); line-height: var(--leading-snug); }
+
+/* ============================================================
+   نوار نمایش Su-57
+   ============================================================ */
+
+.su57band {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--sp-16) var(--gutter);
+}
+
+.su57band__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-8);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .su57band__inner { grid-template-columns: 1fr 1.15fr; gap: var(--sp-12); }
+}
+
+.su57band__text { display: flex; flex-direction: column; gap: var(--sp-3); }
+.su57band__text .sec__kicker { align-self: flex-start; }
+
+.su57band__specs {
+  list-style: none;
+  margin: var(--sp-3) 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.su57band__specs li { display: flex; align-items: flex-start; gap: var(--sp-3); }
+
+.su57band__spec-icon {
+  width: 17px; height: 17px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--phx-ember-500);
+}
+
+.su57band__specs b { display: block; font-size: var(--text-xs); color: var(--text-primary); }
+.su57band__specs small { font-size: var(--text-2xs); color: var(--text-faint); }
+
+.su57band__fire { align-self: flex-start; }
+.su57band__fire.is-fired { background: var(--phx-success); color: #06231a; }
+
+.su57band__note { font-size: var(--text-2xs); color: var(--text-faint); }
+
+/* ============================================================
+   دکمه‌ی «نمایش بیشتر»
+
+   جای شبکه‌ای که ۲۶ محصول را یک‌جا می‌ریخت را گرفته. عمداً پررنگ و
+   بزرگ است: تنها راه ادامه‌ی فهرست همین دکمه است، پس نباید دنبالش
+   بگردی. همان زبان شیشه‌ای دکمه‌های دسته را دارد تا وصله به نظر نرسد.
+   ============================================================ */
+
+.btn-reveal {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-6);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 55%, transparent),
+    rgba(12, 9, 22, 0.5);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 800;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 10px 30px rgba(0, 0, 0, 0.45);
+  transition: transform 200ms var(--ease-out),
+              border-color 260ms var(--ease-out),
+              box-shadow 260ms var(--ease-out);
+}
+
+/* لبه‌ی نورانی گرادیانتی */
+.btn-reveal::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--grad-ember);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite: exclude;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 260ms var(--ease-out);
+}
+
+/* هاله‌ای که از زیر دکمه رد می‌شود */
+.btn-reveal__glow {
+  position: absolute;
+  inset-block: -60%;
+  inset-inline-start: -30%;
+  width: 45%;
+  background: radial-gradient(closest-side, rgba(245, 148, 64, 0.55), transparent);
+  filter: blur(14px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms var(--ease-out);
+}
+
+.btn-reveal:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 148, 64, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 14px 38px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(245, 148, 64, 0.35);
+}
+
+.btn-reveal:hover::after { opacity: 1; }
+.btn-reveal:hover .btn-reveal__glow { opacity: 1; animation: revealSweep 900ms var(--ease-out); }
+.btn-reveal:active { transform: translateY(0) scale(0.98); }
+
+.btn-reveal:focus-visible { outline: 2px solid var(--phx-ember-400, #f59440); outline-offset: 3px; }
+
+@keyframes revealSweep {
+  from { inset-inline-start: -30%; }
+  to   { inset-inline-start: 110%; }
+}
+
+.btn-reveal__icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  color: var(--phx-ember-400, #f59440);
+  transition: transform 300ms var(--ease-out);
+}
+
+.btn-reveal:hover .btn-reveal__icon { transform: rotate(90deg); }
+
+.btn-reveal > span:not(.btn-reveal__glow) { position: relative; }
+
+/* شمارنده‌ی باقی‌مانده — کاربر بداند چقدر دیگر مانده */
+.btn-reveal__count {
+  position: relative;
+  min-width: 26px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(245, 148, 64, 0.16);
+  border: 1px solid rgba(245, 148, 64, 0.3);
+  color: var(--phx-ember-400, #f59440);
+  font-size: var(--text-2xs);
+  font-weight: 800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-reveal, .btn-reveal__icon, .btn-reveal__glow { transition: none; }
+  .btn-reveal:hover { transform: none; }
+  .btn-reveal:hover .btn-reveal__glow { animation: none; }
+  .btn-reveal:hover .btn-reveal__icon { transform: none; }
+}
+
+/* ============================================================
+   کارت خبر با کاراکتر بیرون‌زده
+
+   کاراکتر روی لبه‌ی بالای کارت می‌ایستد و بخشی از آن بیرون می‌ماند.
+   چون absolute است، ارتفاع کارت را تغییر نمی‌دهد — همان اندازه‌ی
+   قبلی باقی می‌ماند و فقط تصویر از قاب می‌زند بیرون.
+   ============================================================ */
+
+.news-card {
+  --news-accent: #e8862e;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+  /* فضای سمت کاراکتر باز می‌ماند تا متن زیرش نرود.
+     منطقی نوشته می‌شود نه فیزیکی: کاراکتر روی inset-inline-start است
+     که در RTL یعنی راست، پس فاصله هم باید همان سمت باز شود. با
+     padding فیزیکیِ چپ، متن دقیقاً زیر تصویر می‌رفت. */
+  padding: var(--sp-5);
+  padding-inline-start: 138px;
+  border-radius: var(--r-lg);
+  background: rgba(14, 10, 27, 0.95);
+  border: 1px solid var(--border-subtle);
+  /* بریده نشود، وگرنه کاراکتر بیرون نمی‌زند */
+  overflow: visible;
+  transition: border-color 300ms var(--ease-out), transform 300ms var(--ease-out);
+}
+
+.news-card:hover {
+  border-color: color-mix(in srgb, var(--news-accent) 45%, transparent);
+  transform: translateY(-2px);
+}
+
+/* هاله‌ی رنگ خبر — داخل کارت می‌ماند تا اسکرول افقی نسازد */
+.news-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  width: 180px;
+  height: 100%;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--news-accent) 30%, transparent), transparent 70%);
+  filter: blur(26px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms var(--ease-out);
+}
+
+.news-card:hover::before { opacity: 1; }
+
+.news-card__art {
+  position: absolute;
+  inset-inline-start: 8px;
+  bottom: 0;
+  z-index: 2;
+  width: 118px;
+  /* بیرون‌زدگی از بالای کارت */
+  height: 138%;
+  max-height: 150px;
+  object-fit: contain;
+  object-position: bottom;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.75));
+  transition: transform 400ms var(--ease-out), filter 400ms var(--ease-out);
+}
+
+/* نشان‌واره‌ی پهن قد ندارد که از بالای کارت بزند بیرون — به‌جایش
+   وسط‌چین می‌شود و کوچک‌تر می‌ماند، وگرنه کشیده و بریده دیده می‌شود. */
+.news-card__art--wordmark {
+  height: 62%;
+  max-height: 62px;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  object-position: center;
+}
+
+.news-card:hover .news-card__art--wordmark {
+  transform: translateY(-50%) scale(1.06);
+}
+
+.news-card:hover .news-card__art {
+  transform: translateY(-6px) scale(1.04);
+  filter:
+    drop-shadow(0 0 16px color-mix(in srgb, var(--news-accent) 55%, transparent))
+    drop-shadow(0 14px 22px rgba(0, 0, 0, 0.8));
+}
+
+.news-card__tag {
+  position: relative;
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--news-accent) 14%, transparent);
+  color: var(--news-accent);
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.news-card__body { position: relative; flex: 1; min-width: 180px; }
+.news-card__title { margin: 0 0 4px; font-size: var(--text-sm); font-weight: 900; color: var(--text-primary); }
+.news-card__note { margin: 0; font-size: var(--text-2xs); color: var(--text-muted); line-height: var(--leading-relaxed); }
+
+.news-card__when {
+  position: relative;
+  flex-shrink: 0;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--news-accent);
+}
+
+.news-card__action {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 200ms var(--ease-out);
+}
+
+.news-card__action:hover {
+  border-color: color-mix(in srgb, var(--news-accent) 50%, transparent);
+  color: var(--text-primary);
+}
+.news-card__action:active { transform: scale(0.96); }
+
+.news-card__action.is-on {
+  background: rgba(46, 204, 143, 0.14);
+  border-color: rgba(46, 204, 143, 0.4);
+  color: #6ee7b7;
+}
+
+@media (max-width: 900px) {
+  /* روی صفحه‌ی باریک کاراکتر کنار متن جا نمی‌شود — می‌رود بالای گوشه */
+  .news-card { padding: var(--sp-5); padding-top: var(--sp-10); }
+  .news-card__art {
+    width: 82px;
+    height: 116px;
+    max-height: 116px;
+    inset-inline-start: auto;
+    inset-inline-end: 10px;
+    bottom: auto;
+    top: -30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-card, .news-card__art { transition: none; }
+  .news-card:hover { transform: none; }
+  .news-card:hover .news-card__art { transform: none; }
+}
+
+/* ============================================================
+   دکمه‌ی کروم — نقره‌ای فلزی و متحرک
+
+   برای دکمه‌ی تلگرام. برخلاف دکمه‌های گرادیانت‌دار سایت، این یکی
+   قرار است «فلز» به نظر برسد: چند توقف روشن و تیره‌ی پشت هم که
+   نور را می‌شکنند، و یک برق که آرام از رویش عبور می‌کند.
+   ============================================================ */
+
+.btn-chrome {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--r-md);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  /* نوارهای روشن و تیره = حس سطح فلزی */
+  background: linear-gradient(
+    160deg,
+    #f8fafc 0%, #cbd5e1 18%, #f1f5f9 34%,
+    #94a3b8 52%, #e2e8f0 68%, #b8c2cf 84%, #f8fafc 100%
+  );
+  background-size: 100% 260%;
+  color: #0b1220;
+  font-family: inherit;
+  font-size: var(--text-2xs);
+  font-weight: 900;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -2px 6px rgba(15, 23, 42, 0.28),
+    0 8px 22px rgba(0, 0, 0, 0.5);
+  /* حرکت آرام گرادیانت — بازتاب نور روی فلز */
+  animation: chromeShift 7s ease-in-out infinite;
+  transition: transform 200ms var(--ease-out), box-shadow 260ms var(--ease-out);
+}
+
+@keyframes chromeShift {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 0% 100%; }
+}
+
+/* برق کشیده که مدام از روی دکمه رد می‌شود */
+.btn-chrome__shine {
+  position: absolute;
+  inset-block: -50%;
+  inset-inline-start: -40%;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+  animation: chromeShine 3.6s ease-in-out infinite;
+}
+
+@keyframes chromeShine {
+  0%, 62% { inset-inline-start: -40%; }
+  100%    { inset-inline-start: 120%; }
+}
+
+.btn-chrome:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -2px 6px rgba(15, 23, 42, 0.3),
+    0 12px 30px rgba(0, 0, 0, 0.6),
+    0 0 26px rgba(226, 232, 240, 0.45);
+}
+
+.btn-chrome:active { transform: translateY(0) scale(0.98); }
+.btn-chrome:focus-visible { outline: 2px solid #e2e8f0; outline-offset: 3px; }
+
+.btn-chrome__icon { position: relative; width: 16px; height: 16px; }
+.btn-chrome__label { position: relative; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-chrome, .btn-chrome__shine { animation: none; }
+  .btn-chrome:hover { transform: none; }
+}
+
+/* ============================================================
+   انتخاب دنیا — دو بنر افقی
+
+   دو نسخه‌ی قبلی رد شد: اولی تمام‌عرض و تخت بود، دومی قائم و بلند.
+   این یکی کوتاه و افقی است و عرضش محدود — یک انتخاب دوگزینه‌ای باید
+   در یک نگاه تمام شود، نه اینکه نصف صفحه را بگیرد.
+
+   امضای طرح: کاراکتر از لبه‌ی بالای کارت می‌زند بیرون. همین یک چیز
+   کارت را از «مستطیل رنگی با متن» جدا می‌کند. برای همین بدنه‌ی رنگی
+   یک لایه‌ی جداست که بریده می‌شود، ولی خود کارت overflow باز دارد.
+   ============================================================ */
+
+.wsel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2.5vw, 20px);
+  max-width: 880px;
+  /* فضای بالا برای سرِ کاراکتر که بیرون زده */
+  margin: 44px auto var(--sp-8);
+}
+
+.wsel__card {
+  position: relative;
+  aspect-ratio: 2.45 / 1;
+  /* min-width صفر لازم است: بدون آن آیتم گرید از عرض ستون بیرون می‌زند.
+     min-height هم با aspect-ratio جمع می‌شود و عرض را بالا می‌برد، پس
+     روی موبایل برداشته می‌شود. */
+  min-width: 0;
+  min-height: 132px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  /* باز، تا کاراکتر بتواند بزند بیرون */
+  overflow: visible;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 300ms var(--ease-out),
+              filter 300ms var(--ease-out);
+}
+
+.wsel__card:hover,
+.wsel__card:focus-visible { transform: translateY(-5px); }
+.wsel__card:active { transform: translateY(-1px) scale(0.99); }
+.wsel__card.is-active { transform: translateY(-5px); }
+
+.wsel__card:focus-visible { outline: none; }
+.wsel__card:focus-visible .wsel__plate { outline: 2px solid var(--w-accent); outline-offset: 3px; }
+
+.wsel__card.is-dimmed { opacity: 0.45; filter: saturate(0.45); }
+.wsel__card.is-dimmed:hover { opacity: 0.85; filter: saturate(0.9); }
+
+/* ---------- بدنه‌ی رنگی ---------- */
+
+.wsel__plate {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  background:
+    radial-gradient(130% 120% at 12% 0%, color-mix(in srgb, var(--w-accent) 34%, transparent), transparent 58%),
+    linear-gradient(115deg, var(--w-from) 0%, var(--w-to) 100%);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 380ms var(--ease-out);
+}
+
+.wsel__card:hover .wsel__plate,
+.wsel__card.is-active .wsel__plate {
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.62),
+    0 0 38px color-mix(in srgb, var(--w-accent) 45%, transparent);
+}
+
+/* لبه‌ی نوری داخلی — بدون آن بدنه تخت می‌ماند */
+.wsel__plate::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 42%);
+  pointer-events: none;
+}
+
+/* برق کشیده — یک بار از روی کارت رد می‌شود */
+.wsel__sheen {
+  position: absolute;
+  inset-block: -20%;
+  width: 34%;
+  inset-inline-start: -45%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  transform: skewX(-16deg);
+  pointer-events: none;
+}
+
+.wsel__card:hover .wsel__sheen { animation: wselSheen 780ms var(--ease-out); }
+
+@keyframes wselSheen { to { inset-inline-start: 125%; } }
+
+/* ---------- کاراکتر ---------- */
+
+.wsel__art {
+  position: absolute;
+  /* پایین قاب می‌ایستد و از بالا بیرون می‌زند */
+  bottom: 0;
+  inset-inline-start: 2%;
+  height: calc(100% * var(--art-scale));
+  width: auto;
+  max-width: 56%;
+  object-fit: contain;
+  object-position: bottom;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.7));
+  transform-origin: bottom center;
+  /* شناوری همیشگی، مثل کاراکتر هیرو. دوره‌های ناهم‌اندازه (۷ و ۹ ثانیه)
+     باعث می‌شوند بالا-پایین و چرخش هم‌زمان به نقطه‌ی صفر نرسند، پس
+     حرکت هیچ‌وقت الگویش لو نمی‌رود و «تکرار» حس نمی‌شود. */
+  animation:
+    wselDrift 7s ease-in-out infinite,
+    wselTilt 9s ease-in-out infinite;
+  transition: filter 420ms var(--ease-out);
+}
+
+@keyframes wselDrift {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -11px; }
+}
+
+@keyframes wselTilt {
+  0%, 100% { rotate: 0deg;    scale: 1; }
+  50%      { rotate: -1.4deg; scale: 1.015; }
+}
+
+/* هاور روی translate/scale مستقل می‌نشیند، پس شناوری قطع نمی‌شود —
+   دو خاصیت جدا هستند و همدیگر را بازنویسی نمی‌کنند. */
+.wsel__card:hover .wsel__art,
+.wsel__card.is-active .wsel__art {
+  filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.8))
+          drop-shadow(0 0 24px color-mix(in srgb, var(--w-accent) 65%, transparent));
+  animation-duration: 4.2s, 5.4s;
+}
+
+/* ---------- متن ---------- */
+
+.wsel__body {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: clamp(14px, 3.5%, 26px);
+  inset-inline-start: 46%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  text-align: right;
+}
+
+.wsel__wordmark {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: clamp(15px, 3.4vw, 27px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wsel__card:hover .wsel__wordmark,
+.wsel__card.is-active .wsel__wordmark { transform: translateX(-4px); }
+
+.wsel__title {
+  font-size: clamp(9px, 1.7vw, 12px);
+  font-weight: 700;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.wsel__count {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+}
+
+.wsel__count b { color: #fff; font-weight: 900; }
+
+.wsel__arrow {
+  width: 11px;
+  height: 11px;
+  color: var(--w-accent);
+  transition: transform 300ms var(--ease-out);
+}
+
+.wsel__card:hover .wsel__arrow { transform: translateX(-3px); }
+.wsel__card.is-active .wsel__arrow { transform: rotate(-90deg); }
+
+/* روی موبایل دو کارت کنار هم خیلی باریک می‌شوند */
+@media (max-width: 560px) {
+  /* وقتی کارت‌ها روی هم می‌نشینند، کاراکترِ بیرون‌زده‌ی کارت پایینی
+     می‌رود روی کارت بالایی — پس فاصله‌ی عمودی باید جای سر را بدهد. */
+  .wsel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 58px;
+    margin-top: 52px;
+  }
+  /* ارتفاع از عرض ستون محاسبه شود، نه برعکس */
+  .wsel__card { aspect-ratio: 2.9 / 1; min-height: 0; }
+  .wsel__body { inset-inline-start: 42%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wsel__card,
+  .wsel__art,
+  .wsel__wordmark,
+  .wsel__arrow { transition: none; }
+  .wsel__art { animation: none; }
+  .wsel__card:hover,
+  .wsel__card.is-active { transform: none; }
+  .wsel__card:hover .wsel__sheen { animation: none; }
+}
+
+/* ============================================================
+   چرخ‌فلک تخفیف‌های روز
+
+   کارت‌ها روی یک قوس می‌نشینند و مرکز بزرگ‌تر است. موقعیت و اندازه‌ی
+   هر کارت را JavaScript هر فریم می‌نویسد (چون تابع فاصله تا مرکز
+   است)؛ اینجا فقط صحنه، پرسپکتیو و ظاهر ثابت تعریف می‌شود.
+
+   عمداً تمام‌عرض نیست: قوس وقتی معنی دارد که دو سرش دیده شود.
+   ============================================================ */
+
+.dmq {
+  position: relative;
+  z-index: 10;
+  padding-block: var(--sp-12) var(--sp-10);
+  overflow: hidden;
+}
+
+/* ---------- سربرگ ---------- */
+
+.dmq__head {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-6);
+  padding-inline: var(--sp-4);
+  text-align: center;
+}
+
+.dmq__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(214, 49, 111, 0.12);
+  border: 1px solid rgba(214, 49, 111, 0.35);
+  color: #f9a8c8;
+  font-size: var(--text-2xs);
+  font-weight: 800;
+}
+
+.dmq__eyebrow-icon { width: 13px; height: 13px; }
+
+.dmq__title {
+  margin: 0;
+  font-size: clamp(24px, 5vw, 34px);
+  font-weight: 900;
+  line-height: 1.25;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- شمارش معکوس ---------- */
+
+.dmq__clock {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-1);
+  padding: 7px 14px 7px 10px;
+  border-radius: 999px;
+  background: rgba(214, 49, 111, 0.1);
+  border: 1px solid rgba(214, 49, 111, 0.3);
+}
+
+.dmq__clock-label {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: #f9a8c8;
+}
+
+.dmq__clock-digits {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  /* عرض ثابت، وگرنه با عوض شدن ثانیه کل نوار می‌لرزد */
+  font-variant-numeric: tabular-nums;
+}
+
+.dmq__clock-digits b {
+  min-width: 26px;
+  padding: 3px 5px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: var(--text-xs);
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.dmq__clock-digits i {
+  font-style: normal;
+  color: rgba(249, 168, 200, 0.7);
+  font-weight: 900;
+}
+
+/* ---------- صحنه ---------- */
+
+.dmq__stage {
+  position: relative;
+  /* تمام‌عرض نیست — قوس باید دو سرش پیدا باشد */
+  max-width: 1180px;
+  margin-inline: auto;
+  height: 500px;
+  /* پرسپکتیو روی صحنه، تا همه‌ی کارت‌ها یک نقطه‌ی گریز مشترک بگیرند.
+     اگر روی خود کارت‌ها می‌گذاشتیم، هرکدام برای خودش کج می‌شد. */
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+}
+
+.dmq__slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 258px;
+  /* ترنسفورم را JS می‌نویسد؛ اینجا فقط مبدأ و پشتوانه‌ی سه‌بعدی */
+  transform-origin: 50% 45%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  /* بدون گذار: هر فریم مقدار تازه می‌گیرد و گذار فقط عقب می‌ماند */
+}
+
+/* ---------- هاله‌ی نئون دور کارت ---------- */
+
+/* نور دور تا دور کارت است، نه فقط زیرش. نور فقط از پایین یعنی جسم
+   روی یک سطح ایستاده و از بالا نور نمی‌گیرد — اینجا کارت‌ها شناورند،
+   پس هاله باید همه‌ی لبه‌ها را بگیرد.
+
+   سه لایه: هاله‌ی پخشِ دور، حلقه‌ی باریک روشن روی خود لبه، و کمی
+   تراکم بیشتر در پایین. لایه‌ی سوم لازم است چون نور کاملاً یکنواخت
+   مصنوعی به نظر می‌رسد — نور واقعی همیشه یک جهت غالب دارد. */
+.dmq__neon {
+  position: absolute;
+  inset: -18px;
+  border-radius: 40px;
+  background: var(--deal-accent);
+  filter: blur(24px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* حلقه‌ی روشن، درست روی لبه‌ی کارت — همان چیزی که هاله را از
+   «سایه‌ی رنگی» به «نئون» تبدیل می‌کند */
+.dmq__neon::after {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: 26px;
+  border: 2px solid color-mix(in srgb, var(--deal-accent) 22%, #fff);
+  filter: blur(3px);
+  opacity: 0.55;
+}
+
+/* تراکم بیشتر در پایین — جهت غالب نور */
+.dmq__neon::before {
+  content: '';
+  position: absolute;
+  inset-inline: 8%;
+  bottom: 2px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--deal-accent);
+  filter: blur(20px);
+  opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+  .dmq__stage { height: 470px; }
+}
+
+/* ============================================================
+   فیلتر مشترک سکشن‌ها
+
+   قرص‌های کوچک، نه تب‌های بزرگ: این فیلتر فرعی است و نباید از خود
+   کارت‌ها جا بگیرد. روی موبایل افقی اسکرول می‌شود تا سطر نشکند.
+   ============================================================ */
+
+.secfil {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.secfil::-webkit-scrollbar { display: none; }
+
+.secfil__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-faint);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 200ms var(--ease-out), border-color 200ms var(--ease-out),
+              background 200ms var(--ease-out);
+}
+
+.secfil__chip:hover {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--f-accent) 45%, transparent);
+}
+
+.secfil__chip.is-on {
+  color: var(--f-accent);
+  border-color: color-mix(in srgb, var(--f-accent) 55%, transparent);
+  background: color-mix(in srgb, var(--f-accent) 14%, transparent);
+}
+
+.secfil__icon { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* پیام خالی وقتی فیلتر چیزی برنمی‌گرداند */
+.secfil-empty {
+  padding: var(--sp-8);
+  text-align: center;
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--r-lg);
+}

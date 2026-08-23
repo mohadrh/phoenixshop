@@ -1,0 +1,29 @@
+/* ============================================================
+   ریویل اسکرول
+   ============================================================ */
+
+.reveal-on-scroll {
+  opacity: 0;
+  transition:
+    opacity var(--dur-smooth) var(--ease-out),
+    transform var(--dur-smooth) var(--ease-out);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-shown {
+  opacity: 1;
+  transform: none;
+  /* بعد از ورود، will-change باید برداشته شود — نگه داشتنش روی ده‌ها
+     المان، لایه‌های ترکیب اضافی می‌سازد و حافظه‌ی GPU را می‌خورد */
+  will-change: auto;
+}
+
+.reveal--up     { transform: translateY(26px); }
+.reveal--right  { transform: translateX(26px); }
+.reveal--left   { transform: translateX(-26px); }
+.reveal--scale  { transform: scale(0.965); }
+.reveal--none   { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll { opacity: 1; transform: none; transition: none; }
+}

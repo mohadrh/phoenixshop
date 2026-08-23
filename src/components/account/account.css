@@ -1,0 +1,614 @@
+/* ============================================================
+   پنل کاربری و تیکت
+   ============================================================ */
+
+.acc {
+  min-height: 100svh;
+  padding-block: calc(var(--nav-height) + var(--sp-10)) var(--sp-20);
+  background: var(--bg-base);
+}
+
+.acc__shell {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+}
+
+@media (min-width: 900px) {
+  .acc__shell { grid-template-columns: 260px 1fr; gap: var(--sp-8); }
+}
+
+/* ---------- ناوبری کناری ---------- */
+
+.acc__side {
+  align-self: start;
+  padding: var(--sp-4);
+  border-radius: var(--r-xl);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+}
+
+@media (min-width: 900px) {
+  .acc__side { position: sticky; top: calc(var(--nav-height) + var(--sp-4)); }
+}
+
+.acc__user {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-4);
+  margin-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.acc__avatar {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #ffc46b 0%, #f2568f 55%, #7c3aed 100%);
+  color: #fff;
+  font-weight: 800;
+  font-size: var(--text-lg);
+}
+
+.acc__user-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.acc__user-name { font-weight: 700; color: var(--text-primary); font-size: var(--text-sm); }
+
+.acc__user-tier {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+
+.acc__tier-icon { width: 12px; height: 12px; color: var(--phx-ember-500); }
+
+.acc__nav { display: flex; flex-direction: column; gap: 2px; }
+
+.acc__nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  padding: var(--sp-3);
+  border: none;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  text-align: right;
+  cursor: pointer;
+  transition: background var(--dur-instant) var(--ease-out),
+              color var(--dur-instant) var(--ease-out);
+}
+
+.acc__nav-item:hover { background: rgba(255, 255, 255, 0.04); color: var(--text-secondary); }
+
+.acc__nav-item.is-active {
+  background: var(--accent-soft);
+  color: var(--phx-ember-300);
+  font-weight: 600;
+}
+
+.acc__nav-icon { width: 17px; height: 17px; flex-shrink: 0; }
+
+.acc__badge {
+  margin-inline-start: auto;
+  min-width: 19px;
+  height: 19px;
+  padding-inline: 5px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-full);
+  background: var(--phx-rose-500);
+  color: #fff;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+}
+
+/* ---------- سربرگ محتوا ---------- */
+
+.acc__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--sp-6);
+}
+
+.acc__crumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+  margin-bottom: var(--sp-2);
+}
+
+.acc__crumb-sep { width: 12px; height: 12px; }
+.acc__crumb-current { color: var(--text-muted); }
+
+.acc__title {
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: var(--leading-snug);
+}
+
+/* ---------- اطلاعیه ---------- */
+
+.acc__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-5);
+  border-radius: var(--r-lg);
+  background: var(--accent-soft);
+  border: 1px solid var(--border-accent);
+}
+
+.acc__notice-icon {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--phx-ember-500);
+}
+
+.acc__notice p {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+/* ---------- فهرست تیکت‌ها ---------- */
+
+.acc__tickets { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.acc__ticket {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  width: 100%;
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  color: inherit;
+  font-family: inherit;
+  text-align: right;
+  cursor: pointer;
+  transition: border-color var(--dur-quick) var(--ease-out),
+              background var(--dur-quick) var(--ease-out),
+              transform var(--dur-instant) var(--ease-out);
+}
+
+.acc__ticket:hover {
+  background: var(--surface-2);
+  border-color: var(--border-strong);
+  transform: translateX(-3px); /* RTL — به سمت باز شدن */
+}
+
+.acc__ticket-status {
+  flex-shrink: 0;
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--r-full);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.acc__ticket-status.is-open     { background: rgba(240, 168, 54, 0.14); color: var(--phx-warning); }
+.acc__ticket-status.is-answered { background: rgba(46, 204, 143, 0.14); color: var(--phx-success); }
+.acc__ticket-status.is-closed   { background: rgba(255, 255, 255, 0.06); color: var(--text-faint); }
+
+.acc__ticket-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+
+.acc__ticket-subject {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.acc__dot {
+  width: 7px; height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--phx-rose-500);
+  box-shadow: 0 0 8px 1px rgba(222, 46, 107, 0.7);
+}
+
+.acc__ticket-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+
+.acc__ticket-time { display: inline-flex; align-items: center; gap: 4px; }
+.acc__ticket-clock { width: 11px; height: 11px; }
+.acc__ticket-chevron { width: 16px; height: 16px; flex-shrink: 0; color: var(--text-faint); }
+
+/* ---------- جای‌نگهدار بخش‌های نساخته ---------- */
+
+.acc__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--sp-3);
+  padding: var(--sp-16) var(--sp-6);
+  border-radius: var(--r-xl);
+  background: var(--surface-1);
+  border: 1px dashed var(--border-default);
+}
+
+.acc__placeholder-icon { width: 34px; height: 34px; color: var(--text-faint); }
+.acc__placeholder-title { margin: 0; font-size: var(--text-lg); color: var(--text-secondary); }
+.acc__placeholder-text { margin: 0; font-size: var(--text-sm); color: var(--text-faint); max-width: 40ch; }
+
+.acc__placeholder-path {
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-sm);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--text-xs);
+  color: var(--phx-ember-300);
+}
+
+/* ============================================================
+   فرم تیکت
+   ============================================================ */
+
+.tk {
+  padding: var(--sp-5);
+  border-radius: var(--r-xl);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.tk__head { display: flex; align-items: flex-start; gap: var(--sp-3); }
+
+.tk__head-icon {
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  flex-shrink: 0;
+  border-radius: var(--r-md);
+  background: var(--accent-soft);
+  color: var(--phx-ember-500);
+}
+.tk__head-icon svg { width: 19px; height: 19px; }
+
+.tk__title { margin: 0 0 2px; font-size: var(--text-lg); font-weight: 700; color: var(--text-primary); }
+.tk__subtitle { margin: 0; font-size: var(--text-xs); color: var(--text-faint); line-height: var(--leading-snug); }
+
+.tk__close {
+  margin-inline-start: auto;
+  display: grid; place-items: center;
+  width: 30px; height: 30px;
+  border: none; border-radius: var(--r-sm);
+  background: transparent; color: var(--text-faint);
+  cursor: pointer;
+}
+.tk__close:hover { background: rgba(255,255,255,0.06); color: var(--text-primary); }
+.tk__close svg { width: 16px; height: 16px; }
+
+/* ---------- فیلدها ---------- */
+
+.tk__field { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.tk__row { display: grid; grid-template-columns: 1fr; gap: var(--sp-4); }
+@media (min-width: 640px) { .tk__row { grid-template-columns: 1fr 1fr; } }
+
+.tk__label { font-size: var(--text-xs); font-weight: 600; color: var(--text-secondary); }
+.tk__optional { font-weight: 400; color: var(--text-faint); font-size: var(--text-2xs); }
+
+.tk__input {
+  width: 100%;
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  transition: border-color var(--dur-instant) var(--ease-out),
+              box-shadow var(--dur-instant) var(--ease-out);
+}
+
+.tk__input::placeholder { color: var(--text-faint); }
+
+.tk__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.tk__textarea { resize: vertical; min-height: 120px; line-height: var(--leading-normal); }
+
+.tk__hint { font-size: var(--text-2xs); color: var(--text-faint); }
+
+/* ---------- پیشنهاد مقالات ---------- */
+
+.tk__suggest {
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--accent-soft);
+  border: 1px solid var(--border-accent);
+  animation: tkSuggestIn var(--dur-smooth) var(--ease-out);
+}
+
+@keyframes tkSuggestIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tk__suggest-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--phx-ember-300);
+}
+
+.tk__suggest-icon { width: 15px; height: 15px; }
+
+.tk__articles { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.tk__article {
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.tk__article.is-open { border-color: var(--border-accent); }
+
+.tk__article-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  padding: var(--sp-3);
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  text-align: right;
+  cursor: pointer;
+}
+
+.tk__article-cat {
+  flex-shrink: 0;
+  padding: 2px var(--sp-2);
+  border-radius: var(--r-sm);
+  background: rgba(255,255,255,0.05);
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+
+.tk__article-title { flex: 1; font-size: var(--text-sm); color: var(--text-primary); }
+
+.tk__article-chevron {
+  width: 15px; height: 15px;
+  flex-shrink: 0;
+  color: var(--text-faint);
+  transition: transform var(--dur-quick) var(--ease-out);
+}
+.tk__article.is-open .tk__article-chevron { transform: rotate(180deg); }
+
+.tk__article-body {
+  padding: 0 var(--sp-3) var(--sp-3);
+  animation: tkBodyIn var(--dur-quick) var(--ease-out);
+}
+
+@keyframes tkBodyIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.tk__article-answer {
+  margin: 0 0 var(--sp-3);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.tk__steps {
+  margin: 0 0 var(--sp-3);
+  padding-inline-start: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-snug);
+}
+
+.tk__article-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.tk__article-count { font-size: var(--text-2xs); color: var(--text-faint); }
+
+/* ---------- کنش‌ها ---------- */
+
+.tk__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
+.tk__actions--split { justify-content: space-between; }
+
+.tk__form { display: flex; flex-direction: column; gap: var(--sp-5); animation: tkSuggestIn var(--dur-smooth) var(--ease-out); }
+
+.btn--soft {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+.btn--soft:hover { background: rgba(255, 255, 255, 0.09); color: var(--text-primary); }
+
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* ---------- حالت موفقیت ---------- */
+
+.tk--resolved { align-items: center; text-align: center; padding-block: var(--sp-12); }
+
+.tk__resolved-icon { width: 44px; height: 44px; color: var(--phx-success); }
+.tk__resolved-title { margin: 0; font-size: var(--text-xl); font-weight: 700; color: var(--text-primary); }
+
+.tk__resolved-text {
+  margin: 0;
+  max-width: 46ch;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-normal);
+}
+
+/* ============================================================
+   گفتگوی تیکت
+
+   تا امروز کلیک روی تیکت هیچ کاری نمی‌کرد. این نما همان صفحه‌ی
+   گمشده است: کل رفت‌وبرگشت، جعبه‌ی پاسخ، و بستن تیکت.
+   ============================================================ */
+
+.thr { display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.thr__head { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.thr__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-faint);
+  font-family: inherit;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 160ms var(--ease-out);
+}
+.thr__back:hover { color: var(--phx-ember-400, #f59440); }
+
+.thr__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.thr__subject { margin: 0; font-size: var(--text-base); font-weight: 900; color: var(--text-primary); }
+
+.thr__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+.thr__time { display: inline-flex; align-items: center; gap: 4px; }
+
+/* ---------- پیام‌ها ---------- */
+
+.thr__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  max-height: 420px;
+  overflow-y: auto;
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.thr__msg { display: flex; flex-direction: column; gap: 4px; max-width: 88%; }
+.thr__msg--user { align-self: flex-start; }
+.thr__msg--support { align-self: flex-end; }
+
+.thr__msg-who { font-size: 10px; font-weight: 800; color: var(--text-faint); }
+
+.thr__bubble {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  font-size: var(--text-2xs);
+  line-height: var(--leading-relaxed);
+  white-space: pre-wrap;
+}
+
+.thr__msg--user .thr__bubble {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.thr__msg--support .thr__bubble {
+  background: rgba(245, 148, 64, 0.1);
+  border: 1px solid rgba(245, 148, 64, 0.28);
+  color: #fcd9a8;
+}
+
+.thr__msg-time { font-size: 10px; color: var(--text-faint); }
+
+.thr__waiting,
+.thr__closed {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+
+.thr__closed {
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ---------- جعبه‌ی پاسخ ---------- */
+
+.thr__form { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.thr__form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+/* نمونه‌های نمایشی نباید کلیک‌پذیر به نظر برسند */
+.acc__ticket--demo { opacity: 0.5; cursor: default; }
+.acc__tickets-empty { margin-bottom: var(--sp-3); }

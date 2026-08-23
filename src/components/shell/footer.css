@@ -1,0 +1,163 @@
+/* ============================================================
+   فوتر
+   ============================================================ */
+
+.ft {
+  position: relative;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-raised);
+  padding-inline: var(--gutter);
+}
+
+/* ---------- تعهدها ---------- */
+
+.ft__promises {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--sp-8);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--sp-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ft__promise {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+
+.ft__promise-icon {
+  width: 20px; height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--phx-ember-500);
+}
+
+.ft__promise b {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.ft__promise small { font-size: var(--text-2xs); color: var(--text-faint); line-height: var(--leading-snug); }
+
+/* ---------- بدنه ---------- */
+
+.ft__main {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--sp-10);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-10);
+}
+
+@media (min-width: 900px) {
+  .ft__main { grid-template-columns: 1.3fr 2fr; gap: var(--sp-16); }
+}
+
+.ft__brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+  margin-bottom: var(--sp-4);
+}
+
+.ft__brand-mark {
+  width: 38px; height: 33px;
+  overflow: visible;
+  filter: drop-shadow(0 0 10px rgba(224, 37, 127, 0.4));
+}
+
+.ft__brand-link span { display: flex; flex-direction: column; line-height: 1.2; }
+
+.ft__brand-link b {
+  font-family: var(--font-en);
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+}
+
+.ft__brand-link b i {
+  font-style: normal;
+  background: var(--grad-ember);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ft__brand-link small { font-size: var(--text-2xs); color: var(--text-faint); }
+
+.ft__brand-text {
+  margin: 0 0 var(--sp-5);
+  max-width: 42ch;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--text-muted);
+}
+
+.ft__cats { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.ft__cat {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-full);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  text-decoration: none;
+  transition: all var(--dur-instant) var(--ease-out);
+}
+.ft__cat:hover { border-color: var(--border-accent); color: var(--text-primary); }
+
+.ft__cat-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* ---------- ستون‌های لینک ---------- */
+
+.ft__cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--sp-8);
+}
+
+.ft__col { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.ft__col-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-1);
+}
+
+.ft__link {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--dur-instant) var(--ease-out);
+  width: fit-content;
+}
+.ft__link:hover { color: var(--phx-ember-300); }
+
+/* ---------- نوار پایین ---------- */
+
+.ft__bottom {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--sp-5);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  justify-content: space-between;
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+
+.ft__bottom-note { color: var(--text-faint); opacity: 0.75; }

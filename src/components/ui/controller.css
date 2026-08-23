@@ -1,0 +1,240 @@
+/* ============================================================
+   ناوبری هیرو — چهار شکل دسته، شیشه‌ای و نئونی
+
+   بدنه‌ای در کار نیست: نه قرص، نه دایره، نه پس‌زمینه. فقط خود چهار
+   شکل شناور. هر پس‌زمینه‌ای اینجا با تصویر هیرو رقابت می‌کرد.
+
+   حس سه‌بعدی از سه چیز می‌آید و هر سه لازم‌اند:
+     ۱. پرکردنِ نیمه‌شفاف داخل شکل  → جنس شیشه
+     ۲. درخشش بیرونی چندلایه         → نئون
+     ۳. یک لبه‌ی روشن بالا و سایه‌ی پایین → حجم
+   با حذف هرکدام، شکل دوباره تخت می‌شود.
+   ============================================================ */
+
+.ctrl {
+  position: relative;
+  width: 132px;
+  height: 132px;
+}
+
+.ctrl__slot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.ctrl__btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: none;      /* هیچ پس‌زمینه‌ای */
+  color: var(--btn-color);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+              filter 260ms var(--ease-out);
+  /* شناوری آرام، تا شکل‌ها در حالت عادی مرده به نظر نرسند */
+  animation: ctrlFloat 5.5s ease-in-out infinite;
+}
+
+.ctrl__slot:nth-child(2) .ctrl__btn { animation-delay: -1.4s; }
+.ctrl__slot:nth-child(3) .ctrl__btn { animation-delay: -2.8s; }
+.ctrl__slot:nth-child(4) .ctrl__btn { animation-delay: -4.1s; }
+
+@keyframes ctrlFloat {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -5px; }
+}
+
+/* ---------- خود شکل ---------- */
+
+.ctrl__svg {
+  position: relative;   /* روی بدنه‌ی شیشه */
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  overflow: visible;
+  /* درخشش سه‌لایه: تیز، متوسط، پخش. یک لایه فقط «سایه‌ی رنگی» می‌دهد،
+     سه لایه است که نئون می‌سازد. */
+  filter:
+    drop-shadow(0 0 2px color-mix(in srgb, var(--btn-color) 90%, #fff))
+    drop-shadow(0 0 7px var(--btn-color))
+    drop-shadow(0 0 16px color-mix(in srgb, var(--btn-color) 65%, transparent));
+  transition: filter 260ms var(--ease-out);
+}
+
+.ctrl__glyph {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* هاله‌ی رنگی پشت شکل — نور داخلی شیشه */
+.ctrl__glyph::before {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 34% 28%,
+    color-mix(in srgb, var(--btn-color) 55%, transparent),
+    transparent 68%
+  );
+  filter: blur(6px);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ---------- بدنه‌ی شیشه ----------
+
+   چهار چیز با هم «شیشه» می‌سازند و هیچ‌کدام به‌تنهایی کافی نیست:
+
+     ۱. backdrop-filter → پس‌زمینه از پشت شکل تار و اشباع‌تر دیده شود.
+        این تنها چیزی است که «شفاف» را از «شیشه‌ای» جدا می‌کند.
+     ۲. گرادیانت سطح → نوری که روی جسم می‌افتد، از یک گوشه روشن‌تر.
+     ۳. لبه‌ی روشن → ضخامت شیشه در لبه بیشتر دیده می‌شود.
+     ۴. بازتاب نقطه‌ای → همان لکه‌ی سفیدی که روی هر جسم صیقلی هست.
+
+   clip-path هم خود لایه و هم فرزندانش را می‌برد، پس بازتاب نقطه‌ای
+   هم داخل شکل می‌ماند و از لبه بیرون نمی‌زند. */
+.ctrl__glass {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  backdrop-filter: blur(4px) saturate(1.8) brightness(1.2);
+  -webkit-backdrop-filter: blur(4px) saturate(1.8) brightness(1.2);
+  background:
+    linear-gradient(148deg,
+      rgba(255, 255, 255, 0.42) 0%,
+      rgba(255, 255, 255, 0.10) 38%,
+      color-mix(in srgb, var(--btn-color) 22%, transparent) 100%);
+  transition: backdrop-filter 260ms var(--ease-out),
+              background 260ms var(--ease-out);
+}
+
+/* بازتاب نقطه‌ای — یک نوار مورب روشن در گوشه‌ی بالا */
+.ctrl__glass::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  inset-inline-start: -10%;
+  width: 46%;
+  height: 90%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transform: rotate(28deg);
+  filter: blur(2px);
+}
+
+/* شکل‌ها — درصدها از viewBox ۲۶ خود SVG گرفته شده‌اند تا شیشه دقیقاً
+   زیر خط نئون بنشیند، نه یک پیکسل این‌ور و آن‌ور. */
+.ctrl__glass--triangle {
+  clip-path: polygon(50% 17.3%, 85.4% 80.4%, 14.6% 80.4%);
+}
+
+.ctrl__glass--circle {
+  clip-path: circle(33.1% at 50% 50%);
+}
+
+.ctrl__glass--square {
+  clip-path: inset(17.7% round 12%);
+}
+
+/* ضربدر تنها شکلی است که در SVG خط است نه ناحیه، پس چندضلعی‌اش باید
+   دستی با ضخامت همان خط ساخته شود. سرها روی ۲۲٪ و ۷۸٪ می‌نشینند —
+   همان‌جایی که مسیر SVG شروع و تمام می‌شود — وگرنه شیشه از زیر نئون
+   بیرون می‌زند. */
+.ctrl__glass--cross {
+  clip-path: polygon(
+    29% 22%, 50% 43%, 71% 22%,
+    78% 29%, 57% 50%, 78% 71%,
+    71% 78%, 50% 57%, 29% 78%,
+    22% 71%, 43% 50%, 22% 29%
+  );
+}
+
+/* روی هاور شیشه ضخیم‌تر و روشن‌تر می‌شود */
+.ctrl__btn:hover .ctrl__glass {
+  backdrop-filter: blur(7px) saturate(2.2) brightness(1.35);
+  -webkit-backdrop-filter: blur(7px) saturate(2.2) brightness(1.35);
+  background:
+    linear-gradient(148deg,
+      rgba(255, 255, 255, 0.58) 0%,
+      rgba(255, 255, 255, 0.16) 38%,
+      color-mix(in srgb, var(--btn-color) 34%, transparent) 100%);
+}
+
+/* ---------- هاور و فشردن ---------- */
+
+.ctrl__btn:hover {
+  transform: scale(1.16);
+}
+
+.ctrl__btn:hover .ctrl__svg {
+  filter:
+    drop-shadow(0 0 3px #fff)
+    drop-shadow(0 0 11px var(--btn-color))
+    drop-shadow(0 0 26px var(--btn-color));
+}
+
+.ctrl__btn:focus-visible {
+  outline: 2px solid var(--btn-color);
+  outline-offset: 6px;
+  border-radius: 12px;
+}
+
+/* فشردن: شکل کمی فرو می‌رود و نورش جمع می‌شود — مثل دکمه‌ی واقعی */
+.ctrl__btn.is-down {
+  transform: scale(0.9);
+  animation-play-state: paused;
+}
+
+.ctrl__btn.is-down .ctrl__svg {
+  filter:
+    drop-shadow(0 0 1px #fff)
+    drop-shadow(0 0 4px var(--btn-color));
+}
+
+/* ---------- برچسب کوچک زیر هر شکل ---------- */
+
+.ctrl__tip {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(8, 4, 15, 0.85);
+  border: 1px solid color-mix(in srgb, var(--btn-color) 40%, transparent);
+  color: var(--btn-color);
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-out);
+}
+
+.ctrl__btn:hover .ctrl__tip,
+.ctrl__btn:focus-visible .ctrl__tip { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ctrl__btn { animation: none; transition: none; }
+  .ctrl__btn:hover { transform: none; }
+  .ctrl__glass { transition: none; }
+}
+
+/* روی مرورگری که backdrop-filter ندارد، شیشه به یک پرکردنِ مات
+   نیمه‌شفاف تنزل می‌کند — کم‌رنگ‌تر ولی هنوز خوانا */
+@supports not (backdrop-filter: blur(1px)) {
+  .ctrl__glass {
+    background:
+      linear-gradient(148deg,
+        rgba(255, 255, 255, 0.3) 0%,
+        color-mix(in srgb, var(--btn-color) 34%, transparent) 100%);
+  }
+}

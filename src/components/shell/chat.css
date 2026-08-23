@@ -1,0 +1,365 @@
+/* ============================================================
+   دستیار خرید
+   ============================================================ */
+
+.chat__fab {
+  position: fixed;
+  right: var(--sp-6);   /* فیزیکی — در RTL هم واقعاً راست می‌ماند */
+  inset-block-end: var(--sp-6);
+  z-index: var(--z-sticky);
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  /* گوشه‌ی نرم، نه دایره */
+  border-radius: 30%;
+  border: none;
+  /* بدنه شیشه‌ای است، نه پرشده — رنگ از خط دور می‌آید نه از سطح */
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 55%, transparent),
+    rgba(10, 7, 20, 0.62);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  transition: transform 220ms var(--ease-out), box-shadow 260ms var(--ease-out);
+}
+
+/* خط دور نورانی و گرادیانتی — همان چیزی که به‌جای دایره‌ی توپر نشسته.
+   ماسک ترکیبی باعث می‌شود فقط حاشیه رنگ بگیرد نه سطح. */
+.chat__fab::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from 0deg,
+    #22d3ee, #a855f7 25%, #f59440 50%, #ec4899 75%, #22d3ee);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite: exclude;
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.65));
+  animation: chatEdgeSpin 6s linear infinite;
+}
+
+@keyframes chatEdgeSpin {
+  to { transform: rotate(1turn); }
+}
+
+.chat__fab:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 34px rgba(168, 85, 247, 0.45);
+}
+
+.chat__fab:active { transform: translateY(-1px) scale(0.97); }
+.chat__fab:focus-visible { outline: 2px solid #a855f7; outline-offset: 4px; }
+
+.chat__fab-icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+}
+
+.chat__fab svg { width: 23px; height: 23px; }
+
+/* نقطه‌ی آنلاین — سبز، چون ادعای «الان هستیم» می‌کند */
+.chat__fab-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #2ecc8f;
+  box-shadow: 0 0 0 2px rgba(10, 7, 20, 0.9), 0 0 10px rgba(46, 204, 143, 0.9);
+}
+
+.chat__fab.is-open::before { animation: none; opacity: 0.5; }
+
+/* ---------- حباب یادآوری ---------- */
+
+/* هر چند دقیقه یک بار سمت چپ دکمه ظاهر می‌شود. عمداً کم‌تکرار است:
+   حبابی که همیشه باز باشد تبلیغ است، نه دعوت. */
+.chat__nudge {
+  position: fixed;
+  right: calc(var(--sp-6) + 70px);
+  inset-block-end: calc(var(--sp-6) + 10px);
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  max-width: min(240px, calc(100vw - 120px));
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  background: rgba(14, 10, 27, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--text-secondary);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  text-align: right;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  animation: nudgeIn 420ms var(--ease-out) both;
+}
+
+/* دم حباب، رو به دکمه */
+.chat__nudge::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  bottom: 16px;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  border-right: 1px solid rgba(168, 85, 247, 0.3);
+  border-top: 1px solid rgba(168, 85, 247, 0.3);
+  transform: rotate(45deg);
+}
+
+.chat__nudge.is-leaving { animation: nudgeOut 300ms var(--ease-out) both; }
+
+.chat__nudge-close {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-faint);
+  cursor: pointer;
+}
+.chat__nudge-close:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+.chat__nudge-close svg { width: 11px; height: 11px; }
+
+@keyframes nudgeIn {
+  from { opacity: 0; transform: translateX(14px) scale(0.94); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes nudgeOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(14px); }
+}
+
+@media (max-width: 640px) {
+  .chat__nudge { max-width: calc(100vw - 110px); font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat__fab, .chat__fab::before { transition: none; animation: none; }
+  .chat__fab:hover { transform: none; }
+  .chat__nudge { animation: none; }
+}
+
+/* ---------- پنجره ---------- */
+
+.chat {
+  position: fixed;
+  right: var(--sp-6);
+  inset-block-end: calc(var(--sp-6) + 68px);
+  z-index: var(--z-drawer);
+  width: min(380px, calc(100vw - var(--sp-8)));
+  max-height: min(560px, calc(100svh - 160px));
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-xl);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  animation: chatIn var(--dur-quick) var(--ease-out);
+}
+
+@keyframes chatIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 640px) {
+  .chat {
+    left: var(--sp-3);
+    right: var(--sp-3);
+    width: auto;
+    inset-block-end: calc(var(--sp-4) + 62px);
+  }
+}
+
+.chat__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.chat__head-icon {
+  display: grid; place-items: center;
+  width: 34px; height: 34px;
+  flex-shrink: 0;
+  border-radius: var(--r-md);
+  background: var(--accent-soft);
+  color: var(--phx-ember-500);
+}
+.chat__head-icon svg { width: 17px; height: 17px; }
+
+.chat__head-text { display: flex; flex-direction: column; min-width: 0; }
+.chat__head-text b { font-size: var(--text-sm); color: var(--text-primary); }
+.chat__head-text small { font-size: var(--text-2xs); color: var(--text-faint); }
+
+.chat__close {
+  margin-inline-start: auto;
+  display: grid; place-items: center;
+  width: 28px; height: 28px;
+  border: none; border-radius: var(--r-sm);
+  background: transparent; color: var(--text-faint);
+  cursor: pointer;
+}
+.chat__close:hover { background: rgba(255,255,255,0.06); color: var(--text-primary); }
+.chat__close svg { width: 15px; height: 15px; }
+
+/* ---------- پیام‌ها ---------- */
+
+.chat__list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.chat__msg { display: flex; flex-direction: column; gap: var(--sp-2); max-width: 88%; }
+.chat__msg--bot  { align-self: flex-start; align-items: flex-start; }
+.chat__msg--user { align-self: flex-end;   align-items: flex-end; }
+
+.chat__bubble {
+  margin: 0;
+  padding: var(--sp-3);
+  border-radius: var(--r-lg);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  white-space: pre-line;
+}
+
+.chat__msg--bot .chat__bubble {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  border-start-end-radius: var(--r-sm);
+}
+
+.chat__msg--user .chat__bubble {
+  background: var(--accent-soft);
+  border: 1px solid var(--border-accent);
+  color: var(--text-primary);
+  border-start-start-radius: var(--r-sm);
+}
+
+/* ---------- محصولات پیشنهادی ---------- */
+
+.chat__products { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); width: 100%; }
+
+.chat__product {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  transition: border-color var(--dur-instant) var(--ease-out),
+              background var(--dur-instant) var(--ease-out);
+}
+.chat__product:hover { border-color: var(--border-accent); background: var(--surface-1); }
+
+.chat__product-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.chat__product-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.chat__product-body b { font-size: var(--text-xs); color: var(--text-primary); }
+.chat__product-body small { font-size: var(--text-2xs); color: var(--text-faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat__product-price { font-size: var(--text-xs); font-weight: 700; color: var(--phx-ember-300); flex-shrink: 0; }
+
+/* ---------- تراشه‌های پیشنهاد ---------- */
+
+.chat__chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.chat__chip {
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-full);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-2xs);
+  cursor: pointer;
+  transition: all var(--dur-instant) var(--ease-out);
+}
+.chat__chip:hover { border-color: var(--border-accent); color: var(--phx-ember-300); background: var(--accent-soft); }
+
+/* ---------- در حال نوشتن ---------- */
+
+.chat__typing { display: flex; gap: 4px; align-items: center; }
+.chat__typing i {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  animation: typingDot 1.3s var(--ease-in-out) infinite;
+}
+.chat__typing i:nth-child(2) { animation-delay: 0.18s; }
+.chat__typing i:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+  30%           { opacity: 1;    transform: translateY(-3px); }
+}
+
+/* ---------- ورودی ---------- */
+
+.chat__form {
+  display: flex;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.chat__input {
+  flex: 1;
+  min-width: 0;
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: var(--text-sm);
+}
+.chat__input::placeholder { color: var(--text-faint); }
+.chat__input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.chat__send {
+  display: grid; place-items: center;
+  width: 40px; height: 40px;
+  flex-shrink: 0;
+  border: none; border-radius: var(--r-md);
+  background: var(--grad-ember);
+  color: var(--text-on-accent);
+  cursor: pointer;
+}
+.chat__send:disabled { opacity: 0.4; cursor: not-allowed; }
+.chat__send svg { width: 16px; height: 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chat__fab-pulse, .chat__typing i { animation: none; }
+}

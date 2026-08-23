@@ -1,0 +1,306 @@
+/* ============================================================
+   ققنوس شاپ — توکن‌های دیزاین
+   پالت مستقیماً از لوگو استخراج شده:
+   کهربایی → مرجانی → سرخابی → بنفش
+   ============================================================ */
+
+:root {
+  /* ---------- ۱. رنگ‌های خام (Primitive) ---------- */
+
+  /* محور گرادیانت ققنوس — پنج ایستگاه */
+  --phx-ember-300: #f5c07a;   /* بال‌های روشن، بالاترین نقطه */
+  --phx-ember-500: #e8862e;   /* کهربایی اصلی */
+  --phx-ember-700: #b85f16;
+
+  --phx-flame-300: #ef8878;
+  --phx-flame-500: #e24a3c;   /* مرجانی-قرمز، بدنه‌ی پرنده */
+  --phx-flame-700: #b02b20;
+
+  --phx-rose-300:  #ee6d99;
+  --phx-rose-500:  #de2e6b;   /* سرخابی، پرتکرارترین رنگ لوگو */
+  --phx-rose-700:  #a81549;
+
+  --phx-magenta-300: #e474c0;
+  --phx-magenta-500: #d4278f;
+  --phx-magenta-700: #9c1265;
+
+  --phx-violet-300: #b184e0;
+  --phx-violet-500: #8b3fd4;  /* نوک بال‌ها */
+  --phx-violet-700: #5e208f;
+
+  /* خنثی‌ها — با ته‌رنگ بنفش، نه خاکستری مرده */
+  --phx-ink-950: #08060d;     /* پس‌زمینه‌ی اصلی */
+  --phx-ink-900: #0d0a15;
+  --phx-ink-850: #120e1d;
+  --phx-ink-800: #1a1428;
+  --phx-ink-700: #251d38;
+  --phx-ink-600: #382c52;
+  --phx-ink-400: #6b5c8a;
+  --phx-ink-300: #9a8cb5;
+  --phx-ink-200: #c4bad6;
+  --phx-ink-100: #e8e3f0;
+  --phx-ink-050: #f7f5fa;
+
+  /* رنگ‌های وضعیت — اشباع پایین‌تر تا با پالت برند دعوا نکنن */
+  --phx-success: #2ecc8f;
+  --phx-success-dim: #1a7d57;
+  --phx-warning: #f0a836;
+  --phx-danger:  #f2564d;
+  --phx-info:    #4aa3e8;
+
+  /* ---------- ۲. نقش‌های معنایی (Semantic) ---------- */
+
+  --bg-base:      var(--phx-ink-950);
+  --bg-raised:    var(--phx-ink-900);
+  --bg-overlay:   var(--phx-ink-850);
+  --bg-sunken:    #050409;
+
+  --surface-1:    rgba(26, 20, 40, 0.55);
+  --surface-2:    rgba(37, 29, 56, 0.70);
+  --surface-glass: rgba(18, 14, 29, 0.62);
+
+  --border-subtle:  rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.11);
+  --border-strong:  rgba(255, 255, 255, 0.18);
+  --border-accent:  rgba(232, 134, 46, 0.42);
+
+  --text-primary:   var(--phx-ink-050);
+  --text-secondary: var(--phx-ink-200);
+  --text-muted:     var(--phx-ink-300);
+  --text-faint:     var(--phx-ink-400);
+  --text-accent:    var(--phx-ember-500);
+  --text-on-accent: #14100c;
+
+  /* رنگ کنشی — کهربایی، چون در کارت محصول ققنوس هم همین لهجه استفاده شده */
+  --accent:        var(--phx-ember-500);
+  --accent-hover:  var(--phx-ember-300);
+  --accent-press:  var(--phx-ember-700);
+  --accent-soft:   rgba(232, 134, 46, 0.13);
+
+  /* ---------- ۳. گرادیانت‌ها ---------- */
+
+  /* گرادیانت امضای برند — همون مسیر رنگی لوگو */
+  /* گرادیانت امضای برند — عیناً همان text-phoenix-gradient نسخه‌ی اصلی */
+  --grad-phoenix: linear-gradient(135deg, #ffb347 0%, #ff5f9e 38%, #a855f7 70%, #6366f1 100%);
+
+  /* نسخه‌ی کوتاه برای سطوح کوچک (دکمه، بج) — دو ایستگاه کافیه */
+  /* گرادیانت دکمه‌ها — عیناً همان bg-phoenix-gradient نسخه‌ی اصلی */
+  --grad-ember: linear-gradient(135deg, #f59440 0%, #d6316f 45%, #7c3aed 100%);
+
+  /* گرادیانت کنش اصلی — همان که روی «شرایط عضویت و شروع» بود.
+     یک توکن مشترک، نه چهار نسخه‌ی جدا: دکمه‌های اصلی سایت باید یک
+     شکل باشند، وگرنه کاربر یاد نمی‌گیرد کدام رنگ یعنی «این را بزن». */
+  --grad-action: linear-gradient(90deg, #a855f7 0%, #d946ef 50%, #f59e0b 100%);
+  --glow-action: rgba(168, 85, 247, 0.42);
+  --glow-action-strong: rgba(168, 85, 247, 0.68);
+  --grad-rose:  linear-gradient(135deg, var(--phx-rose-500) 0%, var(--phx-violet-500) 100%);
+
+  /* هاله — برای نور پشت عناصر، نه برای پرکردن سطح */
+  --glow-ember: radial-gradient(circle, rgba(232,134,46,0.30) 0%, rgba(226,74,60,0.14) 42%, transparent 72%);
+  --glow-rose:  radial-gradient(circle, rgba(222,46,107,0.26) 0%, rgba(139,63,212,0.12) 45%, transparent 74%);
+
+  /* ماسک محو لبه — برای هیرو و کاروسل */
+  --fade-bottom: linear-gradient(to top, var(--bg-base) 0%, transparent 55%);
+  --fade-side:   linear-gradient(to left, var(--bg-base) 0%, transparent 42%);
+
+  /* ---------- ۴. تایپوگرافی ---------- */
+
+  --font-fa: 'Vazirmatn', system-ui, sans-serif;      /* فارسی — متن و تیتر */
+  --font-en: 'Space Grotesk', 'Vazirmatn', sans-serif; /* لاتین — تیتر و برچسب */
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace; /* قیمت، کد، شناسه */
+
+  /* مقیاس — نسبت ۱.۲۵، لنگر ۱۶px */
+  --text-2xs:  0.6875rem;  /* 11 */
+  --text-xs:   0.75rem;    /* 12 */
+  --text-sm:   0.875rem;   /* 14 */
+  --text-base: 1rem;       /* 16 */
+  --text-lg:   1.25rem;    /* 20 */
+  --text-xl:   1.5625rem;  /* 25 */
+  --text-2xl:  1.9531rem;  /* 31 */
+  --text-3xl:  2.4414rem;  /* 39 */
+  --text-4xl:  3.0518rem;  /* 49 */
+  --text-5xl:  3.8147rem;  /* 61 */
+  --text-6xl:  4.7684rem;  /* 76 — فقط تیتر هیرو */
+
+  --leading-tight: 1.15;   /* تیترهای بزرگ */
+  --leading-snug:  1.35;
+  --leading-normal: 1.7;   /* متن فارسی به فضای بیشتری نیاز داره */
+
+  /* فارسی فاصله‌ی حروف منفی نمی‌خواد — فقط لاتین */
+  --tracking-en-tight: -0.02em;
+  --tracking-en-wide:  0.14em;
+
+  /* ---------- ۵. فاصله — مقیاس ۴px ---------- */
+
+  --sp-1: 0.25rem;  --sp-2: 0.5rem;   --sp-3: 0.75rem;  --sp-4: 1rem;
+  --sp-5: 1.25rem;  --sp-6: 1.5rem;   --sp-8: 2rem;     --sp-10: 2.5rem;
+  --sp-12: 3rem;    --sp-16: 4rem;    --sp-20: 5rem;    --sp-24: 6rem;
+  --sp-32: 8rem;    --sp-40: 10rem;
+
+  /* ---------- ۶. گردی گوشه ---------- */
+
+  --r-sm: 0.375rem;  --r-md: 0.625rem;  --r-lg: 1rem;
+  --r-xl: 1.375rem;  --r-2xl: 1.75rem;  --r-full: 9999px;
+
+  /* ---------- ۷. سایه و ارتفاع ---------- */
+
+  /* سایه‌ها روی زمینه‌ی تیره باید عمیق و کم‌کنتراست باشن، نه سیاهِ مطلق */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 12px -2px rgba(0,0,0,0.5);
+  --shadow-lg: 0 12px 32px -8px rgba(0,0,0,0.6);
+  --shadow-xl: 0 24px 60px -16px rgba(0,0,0,0.7);
+
+  /* هاله‌ی کنشی — جایگزین سایه برای عناصر فعال */
+  --shadow-accent: 0 8px 28px -6px rgba(232,134,46,0.42);
+  --shadow-accent-lg: 0 16px 48px -10px rgba(232,134,46,0.55);
+
+  /* ---------- ۸. موشن ---------- */
+
+  /* منحنی‌ها — «سریع بیرون، نرم فرود» */
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);      /* پیش‌فرض ورود */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);  /* فقط برای لحظه‌های تأیید */
+
+  /* مدت‌ها — ۹۰٪ سایت باید در دو تای اول بمونه */
+  --dur-instant: 120ms;   /* هاور، فشردن */
+  --dur-quick:   240ms;   /* باز/بسته شدن، جابه‌جایی */
+  --dur-smooth:  420ms;   /* ورود بخش‌ها */
+  --dur-slow:    720ms;   /* ماسک‌رویل تیتر */
+  --dur-cinema: 1200ms;   /* گذار اسلاید هیرو */
+
+  /* ---------- ۹. لایه‌بندی ---------- */
+
+  --z-base: 0;        --z-raised: 10;    --z-sticky: 100;
+  --z-nav: 200;       --z-drawer: 300;   --z-modal: 400;
+  --z-toast: 500;     --z-cursor: 600;
+
+  /* ---------- ۱۰. چیدمان ---------- */
+
+  --container: 1280px;
+  --container-wide: 1536px;
+  --gutter: var(--sp-4);
+  --nav-height: 4.5rem;
+}
+
+@media (min-width: 768px) {
+  :root { --gutter: var(--sp-8); }
+}
+
+/* ============================================================
+   قواعد پایه
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-base);
+  color: var(--text-secondary);
+  font-family: var(--font-fa);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   ارقام
+
+   باگی که اینجا بود: قیمت‌ها با toLocaleString('fa-IR') رقم فارسی
+   تولید می‌کنند (۱۲۳)، ولی کلاس روی آن‌ها JetBrains Mono می‌گذاشت —
+   فونتی که اصلاً گلیف فارسی ندارد. مرورگر به یک فونت تصادفی سیستم
+   می‌افتاد و ارقام ناهماهنگ و زشت می‌شدند.
+
+   حالا ارقام فارسی از Vazirmatn می‌آیند (گلیف درست دارد) با
+   tabular-nums تا در جدول و لیست قیمت‌ها زیر هم تراز بمانند.
+   ============================================================ */
+
+.num-en {
+  font-family: var(--font-fa);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: 0.01em;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* فقط برای کد، شناسه و مقدار لاتین — جایی که رقم واقعاً لاتین است */
+.code-en {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* ============================================================
+   ابزارهای برند
+   ============================================================ */
+
+.phx-gradient-text {
+  background: var(--grad-phoenix);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.phx-gradient-border {
+  position: relative;
+  background: var(--surface-1);
+}
+.phx-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--grad-phoenix);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.phx-glass {
+  background: var(--surface-glass);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--border-subtle);
+}
+
+/* ============================================================
+   دسترسی‌پذیری
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* قاعده‌ی سخت: هر موشنی زیر این تنظیم خاموش می‌شه */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: var(--phx-rose-500);
+  color: #fff;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-sunken); }
+::-webkit-scrollbar-thumb {
+  background: var(--grad-phoenix);
+  border-radius: var(--r-full);
+  border: 2px solid var(--bg-sunken);
+}
