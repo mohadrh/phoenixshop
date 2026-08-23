@@ -711,7 +711,7 @@
   position: absolute;
   z-index: 6;
   inset-inline: 0;
-  bottom: var(--sp-4);
+  bottom: var(--sp-6);
   overflow: hidden;
 
   /* روی موبایل خوشه‌ی دکمه‌های دسته وجود ندارد، پس نواری برای دور
@@ -726,7 +726,7 @@
    قبل از رسیدن به آن محو شود — دو چیز متحرک روی هم، هر دو ناخوانا. */
 @media (min-width: 1024px) {
   .hero__dock {
-    bottom: var(--sp-5);
+    bottom: var(--sp-8);
     -webkit-mask-image: linear-gradient(to left,
       transparent 0%, #000 5%, #000 68%, transparent 84%);
     mask-image: linear-gradient(to left,
@@ -810,4 +810,135 @@
 @media (prefers-reduced-motion: reduce) {
   .hdock__track { animation: none; }
   .hdock__item { transition: none; }
+}
+
+/* ---------- شفق پس‌زمینه ---------- */
+
+/* گرادیانت برند، خیلی محو، در حال جابه‌جایی آرام.
+
+   پشتِ تصویرِ محصول می‌نشیند نه رویش. تصویر در کف و کناره‌های هیرو
+   محو می‌شود؛ دقیقاً همان‌جاست که این لایه بیرون می‌زند و به‌جای یک
+   سطحِ خالی، رنگِ زنده می‌گذارد.
+
+   حرکت از background-position می‌آید نه از transform: لایه تمام‌قد
+   است و جابه‌جا کردنش با transform لبه‌ی خالی پشت سرش می‌گذاشت.
+   با background-size: 200% خودِ گرادیانت داخل قاب می‌لغزد. */
+.hero__aurora {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 70% at 18% 22%, rgba(232, 134, 46, 0.22), transparent 62%),
+    radial-gradient(55% 65% at 78% 30%, rgba(222, 46, 107, 0.2), transparent 60%),
+    radial-gradient(65% 75% at 60% 82%, rgba(139, 63, 212, 0.22), transparent 64%),
+    radial-gradient(50% 60% at 28% 78%, rgba(56, 130, 246, 0.16), transparent 62%);
+  background-size: 200% 200%;
+  animation: heroAurora 34s ease-in-out infinite alternate;
+}
+
+@keyframes heroAurora {
+  0%   { background-position:   0% 40%,  100% 20%,  40% 100%,   0% 80%; }
+  50%  { background-position:  40% 10%,   60% 60%,  80%  60%,  50% 40%; }
+  100% { background-position: 100% 60%,    0% 90%,   0%  20%, 100% 10%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__aurora { animation: none; }
+}
+
+/* ---------- تیتر نئونی ---------- */
+
+/* عنوان لاتین است، پس جهتش هم باید لاتین باشد.
+
+   تا وقتی یک گره‌ی متنی بود، الگوریتم دوجهته کل رشته را یک قطعه‌ی
+   LTR می‌دید و درست می‌چید. حالا که هر کلمه یک inline-block جداست،
+   هر کدام یک جعبه‌ی خنثی است و چیدمانِ RTL آن‌ها را برعکس می‌کند —
+   «Battlefield 6 · EA» می‌شد «EA · 6 Battlefield».
+
+   text-align از والد ارث می‌رسد، پس تیتر همچنان به راست می‌چسبد. */
+.hero__title-en { direction: ltr; }
+
+.hero__neon-word {
+  display: inline-block;
+  /* فاصله‌ی بین کلمه‌ها از اینجا می‌آید نه از فضای متنی: کلمه‌ها با
+     map ساخته می‌شوند و یک فاصله‌ی متنی به آخری هم می‌چسبید. */
+  margin-inline-end: 0.28em;
+}
+
+.hero__neon-word:last-child { margin-inline-end: 0; }
+
+/* روشن شدن مثل تابلوی نئون — فقط در حالت شب.
+
+   نئون روی زمینه‌ی تیره معنی دارد؛ روی کاغذ یک متنِ محوِ بدرنگ
+   می‌شود. برای همین کل افکت زیر [data-theme='dark'] است و حالت
+   روشن همان تیترِ توپرِ خودش را نگه می‌دارد.
+
+   دو رنگ یک‌درمیان: کلمه‌ها با هم یکی نباشند تا شبیه تابلوی واقعی
+   شود که با چند تیوب ساخته شده. */
+[data-theme='dark'] .hero__neon-word {
+  --neon: var(--phx-ember-500, #f59440);
+  color: #fff6ec;
+  animation: heroNeonOn 2.4s cubic-bezier(0.3, 0.7, 0.3, 1)
+             calc(var(--i) * 340ms + 500ms) both;
+}
+
+[data-theme='dark'] .hero__neon-word:nth-child(even) {
+  --neon: var(--phx-violet-500, #8b3fd4);
+  color: #f5ecff;
+}
+
+@keyframes heroNeonOn {
+  /* تیوبِ خاموش */
+  0%, 16% {
+    color: rgba(255, 255, 255, 0.14);
+    text-shadow: none;
+  }
+  /* اولین جرقه */
+  18%, 21% {
+    color: inherit;
+    text-shadow: 0 0 4px #fff, 0 0 14px var(--neon);
+  }
+  /* دوباره می‌پرد */
+  23%, 31% {
+    color: rgba(255, 255, 255, 0.14);
+    text-shadow: none;
+  }
+  /* می‌گیرد ولی هنوز ناپایدار */
+  33%, 41% {
+    color: inherit;
+    text-shadow: 0 0 4px #fff, 0 0 16px var(--neon);
+  }
+  44%, 48% {
+    color: rgba(255, 255, 255, 0.2);
+    text-shadow: none;
+  }
+  /* پایدار */
+  52%, 100% {
+    color: inherit;
+    text-shadow:
+      0 0 5px #fff,
+      0 0 14px var(--neon),
+      0 0 32px var(--neon),
+      0 0 68px color-mix(in oklab, var(--neon) 70%, transparent);
+  }
+}
+
+/* بعد از روشن شدن، تابلو آرام نفس می‌کشد — نئون واقعی هیچ‌وقت
+   کاملاً ثابت نیست. */
+[data-theme='dark'] .hero__title-en {
+  animation: heroNeonHum 4.2s ease-in-out 3.4s infinite;
+}
+
+@keyframes heroNeonHum {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.09); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='dark'] .hero__neon-word {
+    animation: none;
+    text-shadow: 0 0 5px #fff, 0 0 14px var(--neon), 0 0 32px var(--neon);
+  }
+  [data-theme='dark'] .hero__title-en { animation: none; }
 }

@@ -362,15 +362,56 @@ export function CheckoutFlow() {
           </span>
         </header>
 
-        {/* ---------- گام‌ها ---------- */}
-        <ol className="co__steps">
-          {STEPS.map((s, i) => (
-            <li key={s.id} className={`co__step ${i <= stepIndex ? 'is-active' : ''}`}>
-              <span className="co__step-num num-en">{(i + 1).toLocaleString('fa-IR')}</span>
-              {s.label}
-            </li>
-          ))}
-        </ol>
+        {/* ---------- مسیر گام‌ها ----------
+
+            هر حالت بصری از یک عدد می‌آید: stepIndex. گره‌های قبلی
+            تیک می‌خورند، گره‌ی جاری نبض می‌زند، و ریل تا همان‌جا پر
+            می‌شود. هیچ کلاسِ وضعیتِ دستی جای دیگری ست نمی‌شود. */}
+        <div
+          className="cop"
+          style={{
+            /* درصد پرشدگی تا مرکز گره‌ی جاری. با یک گام، تقسیم بر
+               صفر می‌شد؛ آن حالت را صفر می‌گیریم. */
+            ['--cop-p' as string]:
+              STEPS.length > 1
+                ? `${(stepIndex / (STEPS.length - 1)) * 100}%`
+                : '100%',
+            /* ریل باید از مرکز اولین گره تا مرکز آخری برسد، و مرکز
+               هر گره یک‌دومِ عرضِ ستون خودش است. تعداد گام‌ها را از
+               اینجا می‌دهیم تا CSS عدد ثابت نداشته باشد. */
+            ['--cop-count' as string]: STEPS.length,
+          }}
+        >
+          <span className="cop__rail" aria-hidden="true">
+            <span className="cop__fill" />
+          </span>
+
+          <ol
+            className="cop__list"
+            role="list"
+            aria-label={`مرحله ${stepIndex + 1} از ${STEPS.length}`}
+          >
+            {STEPS.map((s, i) => (
+              <li
+                key={s.id}
+                className={`cop__node ${
+                  i < stepIndex ? 'is-done' : i === stepIndex ? 'is-current' : ''
+                }`}
+                aria-current={i === stepIndex ? 'step' : undefined}
+              >
+                <span className="cop__dot" aria-hidden="true">
+                  <span className="cop__num num-en">
+                    {(i + 1).toLocaleString('fa-IR')}
+                  </span>
+                  <svg viewBox="0 0 24 24" className="cop__tick" focusable="false">
+                    <path d="m5.5 12.6 4.3 4.3L18.5 7.6" />
+                  </svg>
+                </span>
+                <span className="cop__name">{s.label}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
 
         <div className="co__grid">
           <div className="co__main">

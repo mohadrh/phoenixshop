@@ -128,6 +128,13 @@ export const HeroCinematic: React.FC = () => {
       className="hero"
     >
       {/* ============ لایه ۱ — پس‌زمینه، Ken Burns + پارالاکس ۶px ============ */}
+      {/* شفق — گرادیانت برند که خیلی آرام جابه‌جا می‌شود.
+
+          پشت همه‌چیز می‌نشیند (z-index صفر)، پس تصویر محصول رویش
+          است و فقط جایی دیده می‌شود که تصویر محو شده — یعنی همان
+          کف و کناره‌های هیرو. */}
+      <div className="hero__aurora" aria-hidden="true" />
+
       <div ref={backdropRef} className="hero__backdrop-layer">
         {HERO_SLIDES.map((s, i) => (
           <div
@@ -210,7 +217,19 @@ export const HeroCinematic: React.FC = () => {
             <span className="reveal-mask">
               <span className="reveal-inner hero__title-en"
                     style={{ '--d': '90ms' } as React.CSSProperties}>
-                {slide.englishTitle}
+                {/* کلمه‌به‌کلمه، چون تابلوی نئون کلمه‌به‌کلمه روشن
+                    می‌شود. هر کلمه با --i تأخیر خودش را می‌گیرد.
+                    فاصله‌ها را CSS می‌گذارد نه فضای متنی، وگرنه
+                    کلمه‌ی آخر هم یک فاصله‌ی اضافه می‌گرفت. */}
+                {slide.englishTitle.split(' ').map((word, i) => (
+                  <span
+                    key={`${slide.id}-${i}`}
+                    className="hero__neon-word"
+                    style={{ '--i': i } as React.CSSProperties}
+                  >
+                    {word}
+                  </span>
+                ))}
               </span>
             </span>
           </h1>

@@ -216,7 +216,7 @@ export function AICommandCenter() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-5">
         {/* ---------- ستون انتخاب مدل ---------- */}
-        <div className="flex lg:flex-col gap-2.5 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 lg:sticky lg:top-24 lg:self-start [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
+        <div className="flex lg:flex-col gap-2.5 overflow-x-auto lg:overflow-visible pt-3 pb-3 lg:pt-0 lg:pb-0 lg:sticky lg:top-24 lg:self-start [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
           {MODELS.map((m) => {
             const isActive = m.id === selectedId;
             const p = getProductBySlug(m.slug);

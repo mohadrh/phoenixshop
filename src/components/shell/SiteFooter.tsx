@@ -7,6 +7,7 @@ import {
   MessageCircle, Heart, Ticket, UserCheck, Sparkles, CheckCircle,
 } from 'lucide-react';
 import { sound } from '../../lib/sound';
+import { OrbitSeal } from './OrbitSeal';
 import { asset } from '../../lib/asset';
 
 /**
@@ -99,7 +100,7 @@ export function SiteFooter() {
       {/* لینک‌های اصلی */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-x-5 gap-y-8 [&>*:first-child]:col-span-2 md:[&>*:first-child]:col-span-1">
         {/* برند */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-4 relative">
           <Link href="/" className="flex items-center gap-3 w-fit">
             <img
               src={asset('/brand/phoenix-logo.png')}
@@ -121,7 +122,10 @@ export function SiteFooter() {
             و تا آخرین روز اشتراک پشتش هستیم.
           </p>
 
-          <div className="flex items-center gap-2.5 pt-2 flex-wrap">
+          {/* مُهر چرخان — کنار شبکه‌های اجتماعی، جایی که ستون برند
+              فضای خالی دارد. روی موبایل زیرشان می‌نشیند. */}
+          <div className="flex items-center gap-4 pt-2 flex-wrap">
+            <div className="flex items-center gap-2.5 flex-wrap">
             {SOCIALS.map(({ icon: Icon, title, cls, ic }) => (
               <a
                 key={title}
@@ -138,6 +142,9 @@ export function SiteFooter() {
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
               <span>سرورها آنلاین</span>
             </div>
+            </div>
+
+            <OrbitSeal />
           </div>
         </div>
 

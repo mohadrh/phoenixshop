@@ -1579,3 +1579,17 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     inset 0 -20px 40px -30px rgba(109, 40, 217, 0.4) !important;
 }
+
+/* شفق هیرو روی کاغذ باید غلیظ‌تر باشد.
+
+   در حالت شب این لایه روی زمینه‌ی تقریباً سیاه می‌نشیند و کم‌ترین
+   رنگ هم دیده می‌شود. روی کاغذِ روشن همان مقدار گم می‌شود، پس هم
+   اشباع بالاتر می‌رود هم لکه‌ها بزرگ‌تر می‌شوند. */
+[data-theme='light'] .hero__aurora {
+  background:
+    radial-gradient(62% 72% at 18% 22%, rgba(232, 134, 46, 0.3), transparent 64%),
+    radial-gradient(58% 68% at 78% 30%, rgba(222, 46, 107, 0.26), transparent 62%),
+    radial-gradient(68% 78% at 60% 82%, rgba(139, 63, 212, 0.3), transparent 66%),
+    radial-gradient(54% 64% at 28% 78%, rgba(56, 130, 246, 0.22), transparent 64%);
+  background-size: 200% 200%;
+}
