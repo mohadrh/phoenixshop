@@ -105,7 +105,7 @@ export function ArticlesSection() {
                 {/* محو شدن به سمت کارت، تا تصویر بریده به نظر نرسد */}
                 <span
                   className="absolute inset-0 pointer-events-none"
-                  style={{ background: 'linear-gradient(to top, #0e0a1b 4%, transparent 60%)' }}
+                  style={{ background: 'linear-gradient(to top, var(--card-img-fade) 4%, transparent 60%)' }}
                 />
               </span>
             )}

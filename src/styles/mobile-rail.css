@@ -1,0 +1,134 @@
+/* ============================================================
+   ریل کشویی موبایل
+
+   سه سکشن روی گوشی به یک ستون بلند تبدیل می‌شدند: نظرات، شماره‌ی
+   مجازی و «چی تو راهه». کاربر برای رد شدن از هرکدام باید چند صفحه
+   اسکرول می‌کرد، و کارت‌هایی که کنار هم معنی داشتند دیگر کنار هم
+   دیده نمی‌شدند.
+
+   راه‌حل عمداً CSS خالص است، نه JS. scroll-snap لمسِ بومیِ مرورگر
+   را می‌گیرد — با همان اینرسی، همان رفتار لبه، همان دسترس‌پذیری
+   صفحه‌کلید — و چیزی برای هماهنگ نگه‌داشتن با React نمی‌ماند. کاروسل
+   دستیِ چرخ‌فلک تخفیف‌ها آنجا لازم بود چون افکت coverflow دارد؛
+   اینجا لازم نیست.
+
+   همه‌ی قوانین داخل media query موبایل‌اند و !important دارند: بیرون
+   از آن هیچ قانونی وجود ندارد، پس چیدمان grid دسکتاپ دست‌نخورده
+   می‌ماند و لازم نیست هر breakpoint تیلویند را اینجا تکرار کنم.
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .mrail {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+
+    /* بیرون از گاتر می‌رود تا کارت‌ها لبه‌به‌لبه‌ی صفحه بلغزند، ولی
+       اولی و آخری با padding سر جای خودشان می‌نشینند. */
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+
+    /* فضای عمودی برای هاله‌ی رنگیِ کارت‌ها — بدون این، سایه‌ی پایین
+       کارت با overflow-x: auto بریده می‌شود. */
+    padding-block: 6px 18px;
+
+    scrollbar-width: none;
+  }
+
+  .mrail::-webkit-scrollbar { display: none; }
+
+  .mrail > * {
+    /* ۸۲٪ عمدی است: لبه‌ی کارت بعدی پیداست، پس کاربر بدون راهنما
+       می‌فهمد که ورق می‌خورد. کارت تمام‌عرض این نشانه را نمی‌دهد. */
+    flex: 0 0 82% !important;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  /* ---------- ریل دوردیفه ---------- */
+
+  /* «چی تو راهه» شش کارت دارد. یک ردیفه یعنی شش بار کشیدن؛ دو ردیفه
+     یعنی سه بار، و ارتفاع سکشن هم نصف می‌شود. */
+  .mrail--two-row {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-columns: 82%;
+    align-items: start;
+  }
+
+  .mrail--two-row > * { flex: none !important; }
+
+  /* ---------- نشانگر ---------- */
+
+  /* خط باریکی که نسبت پیمایش را نشان می‌دهد. نقطه‌های شمارشی جواب
+     نمی‌دهند وقتی تعداد کارت‌ها متغیر است. */
+  .mrail-wrap { position: relative; }
+
+  .mrail-hint {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 2px;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    align-items: center;
+  }
+
+  .mrail-hint::before,
+  .mrail-hint::after {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.4;
+  }
+}
+
+/* بالای این عرض نشانه‌ی کشیدن معنی ندارد — ماوس هست */
+@media (min-width: 768px) {
+  .mrail-hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mrail { scroll-behavior: auto; }
+}
+
+/* ---------- کارت خبر داخل ریل ---------- */
+
+/* sections.css از ۹۰۰px به پایین کاراکتر را به گوشه می‌برد ولی متن
+   را تمام‌عرض می‌گذارد، پس کاراکتر روی تیتر و سطر اول متن می‌افتد —
+   در ستون بلندِ قبلی هم همین بود، فقط کمتر به چشم می‌آمد.
+
+   بار اول از سمت اشتباه برایش فضا گرفتم: قانونِ ۹۰۰px کاراکتر را روی
+   inset-inline-end می‌گذارد، پس فضای خالی هم باید padding-inline-end
+   باشد. با padding-inline-start متن به یک کلمه در هر سطر رسید و
+   کاراکتر همچنان رویش بود. */
+@media (max-width: 767px) {
+  .mrail .news-card {
+    padding-top: var(--sp-5);
+    padding-inline-end: 104px;
+  }
+
+  .mrail .news-card__art {
+    top: -18px;
+    height: 108px;
+    max-height: 108px;
+  }
+
+  /* متن min-width: 180px دارد و از جعبه‌ی ۱۵۷پیکسلی بیرون می‌زد —
+     یعنی دوباره زیر کاراکتر می‌رفت، این بار از سمت دیگر. با
+     flex-basis: 100% سطر خودش را می‌گیرد و برچسب بالای آن می‌نشیند. */
+  .mrail .news-card__body {
+    min-width: 0;
+    flex-basis: 100%;
+  }
+
+  /* کاراکتر از بالای کارت بیرون می‌زند و overflow افقیِ ریل می‌بردش */
+  .mrail--two-row { padding-block: 26px 18px; }
+}

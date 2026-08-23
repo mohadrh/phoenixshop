@@ -55,6 +55,8 @@
   --bg-overlay:   var(--phx-ink-850);
   /* پس‌زمینه‌ی نوبار شناور */
   --nav-bg: rgba(10, 8, 19, 0.85);
+  /* پنل جایگزین محصولات بدون تصویر */
+  --art-panel-bg: rgba(6, 5, 12, 0.72);
   --bg-sunken:    #050409;
 
   --surface-1:    rgba(26, 20, 40, 0.55);
@@ -106,6 +108,11 @@
   --fade-side:   linear-gradient(to left, var(--bg-base) 0%, transparent 42%);
 
   /* ---------- ۴. تایپوگرافی ---------- */
+
+  /* محو شدن تصویر به کف کارت. توکن است چون در حالت روشن باید
+     کاغذ باشد نه شب — و به‌صورت inline نوشته شده بود، جایی که هیچ
+     قانون CSS بدون !important بهش نمی‌رسید. */
+  --card-img-fade: #0e0a1b;
 
   --font-fa: 'Vazirmatn', system-ui, sans-serif;      /* فارسی — متن و تیتر */
   --font-en: 'Space Grotesk', 'Vazirmatn', sans-serif; /* لاتین — تیتر و برچسب */
@@ -223,10 +230,17 @@ body {
    ============================================================ */
 
 .num-en {
+  /* عمداً وزیرمتن، نه یک فونت لاتین.
+
+     قیمت‌ها با ارقام فارسی نوشته می‌شوند (۹۸۰٬۰۰۰) و هیچ فونت لاتینی
+     این گلیف‌ها را ندارد؛ اگر اول بیاید مرورگر رقم‌به‌رقم به یک فونت
+     سیستمیِ تصادفی برمی‌گردد و همان چیزی می‌شود که قیمت‌ها را زشت
+     کرده بود. وزیرمتن هر دو دستگاه رقم را دارد، و tabular عرضشان را
+     یکسان می‌کند تا ستون قیمت‌ها نلرزد. */
   font-family: var(--font-fa);
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: 'tnum' 1;
-  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  letter-spacing: 0.005em;
   direction: ltr;
   unicode-bidi: embed;
 }

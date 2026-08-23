@@ -118,7 +118,7 @@ export function NewsSection() {
         {/* ---------- فهرست اخبار ---------- */}
         {/* فاصله‌ی بیشتر از حد معمول: کاراکتر هر کارت روی هاور بزرگ
             می‌شود و با فاصله‌ی کم، تصویر کارت بغلی را قطع می‌کرد. */}
-        <div className="flex flex-col gap-5">
+        <div className="mrail mrail--two-row flex flex-col gap-5">
           {NEWS.map((n) => {
             const isOn = reminded.has(n.id);
             return (
@@ -175,7 +175,7 @@ export function NewsSection() {
         </div>
 
         {/* ---------- کانال تلگرام ---------- */}
-        <aside className="relative p-6 rounded-3xl bg-gradient-to-br from-sky-950/50 via-[#0d0718] to-[#08040f]
+        <aside className="news-aside relative p-6 rounded-3xl bg-gradient-to-br from-sky-950/50 via-[#0d0718] to-[#08040f]
                           border border-sky-500/25 overflow-hidden flex flex-col">
           <span className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-sky-500/20 blur-3xl pointer-events-none" aria-hidden="true" />
 

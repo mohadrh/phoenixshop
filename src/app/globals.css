@@ -30,6 +30,8 @@
 @import '../components/ui/controller.css';
 @import '../components/home/levelup.css';
 
+@import '../styles/mobile-rail.css';
+
 /* حالت روشن — آخر از همه، تا بازنویسی‌هایش بر بقیه غالب شود */
 @import '../styles/light.css';
 
@@ -67,3 +69,4 @@
   body > * { position: relative; z-index: 1; }
   body > .phx-bg { z-index: 0; }
 }
+

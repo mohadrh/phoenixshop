@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Vazirmatn, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import { Providers } from './providers';
 import { SiteChrome } from '../components/shell/SiteChrome';
+import { LiquidGlass } from '../components/motion/LiquidGlass';
 import './globals.css';
 
 const vazir = Vazirmatn({
@@ -89,6 +90,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               نوبار، سبد، ققنوسِ بازگشت به بالا، چت هوش مصنوعی، اورلی پرواز سوخو.
               چون در لایوت ریشه است، روی هر روتی حاضرند — از خانه تا ۴۰۴. */}
           <SiteChrome>{children}</SiteChrome>
+          {/* انکسار نور روی کارت‌ها — فقط عدد می‌نویسد، ظاهرش در CSS
+              حالت روشن ساخته می‌شود. */}
+          <LiquidGlass />
         </Providers>
       </body>
     </html>

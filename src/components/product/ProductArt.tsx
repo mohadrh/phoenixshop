@@ -61,7 +61,10 @@ export function ProductArt({
         className="relative flex flex-col items-center justify-center gap-1 px-6 py-5 rounded-2xl border backdrop-blur-sm"
         style={{
           borderColor: `${accent}66`,
-          background: 'rgba(6, 5, 12, 0.72)',
+          /* از توکن می‌خواند نه رنگ ثابت — استایل درون‌خطی را CSS
+             نمی‌تواند بازنویسی کند و این پنل در حالت روشن تیره
+             می‌ماند. */
+          background: 'var(--art-panel-bg)',
           boxShadow: `0 0 34px -6px ${accent}88, inset 0 0 22px -10px ${accent}`,
         }}
       >

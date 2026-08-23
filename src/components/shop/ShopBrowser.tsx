@@ -50,6 +50,16 @@ function ShopBrowserInner({ initialCategory }: { initialCategory?: CategorySlug 
   const [warrantyOnly, setWarrantyOnly] = useState(false);
   const [activeTags, setActiveTags] = useState<string[]>([]);
 
+  /* روی موبایل پنل فیلتر بسته باز می‌شود.
+
+     پانزده گزینه‌ی چیده‌شده روی هم، محصولات را دو صفحه پایین‌تر
+     می‌فرستاد — کاربر موبایل قبل از دیدن اولین محصول باید از کل
+     فیلترها رد می‌شد. حالا بسته شروع می‌شود و ریل دسته‌بندی بالای
+     نتایج، همان کاری را که بیشتر کاربرها می‌خواهند یک‌ضربه‌ای می‌کند.
+
+     روی دسکتاپ این وضعیت خوانده نمی‌شود؛ آنجا پنل همیشه باز است. */
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
   /* ?tag=... از صفحه‌ی محصول می‌آید — کلیک روی یک برچسب باید مستقیم
      همان فیلتر را باز کند، نه فروشگاه خالی. */
   const params = useSearchParams();
@@ -147,9 +157,27 @@ function ShopBrowserInner({ initialCategory }: { initialCategory?: CategorySlug 
 
         <div className="shop__layout">
           {/* ---------- فیلترهای کناری ---------- */}
-          <aside className="shop__filters" aria-label="فیلترها">
+          <aside
+            className={`shop__filters ${filtersOpen ? 'is-open' : ''}`}
+            aria-label="فیلترها"
+          >
             <div className="shop__filter-head">
-              <span><SlidersHorizontal className="shop__filter-icon" /> فیلترها</span>
+              <button
+                type="button"
+                className="shop__filter-toggle"
+                onClick={() => setFiltersOpen((v) => !v)}
+                aria-expanded={filtersOpen}
+                aria-controls="shop-filter-body"
+              >
+                <SlidersHorizontal className="shop__filter-icon" />
+                فیلترها
+                {activeFilters > 0 && (
+                  <span className="shop__filter-badge num-en">
+                    {activeFilters.toLocaleString('fa-IR')}
+                  </span>
+                )}
+                <ChevronLeft className="shop__filter-caret" aria-hidden="true" />
+              </button>
               {activeFilters > 0 && (
                 <button type="button" className="shop__clear" onClick={clearAll}>
                   <X className="shop__clear-icon" />
@@ -158,6 +186,7 @@ function ShopBrowserInner({ initialCategory }: { initialCategory?: CategorySlug 
               )}
             </div>
 
+            <div className="shop__filter-body" id="shop-filter-body">
             <div className="shop__group">
               <span className="shop__group-title">دسته‌بندی</span>
               <button
@@ -234,10 +263,37 @@ function ShopBrowserInner({ initialCategory }: { initialCategory?: CategorySlug 
                 </div>
               </div>
             ))}
+            </div>
           </aside>
 
           {/* ---------- نتایج ---------- */}
           <div className="shop__results">
+            {/* میان‌بر دسته‌بندی — فقط موبایل.
+
+                بیشترین فیلتری که زده می‌شود دسته است. وقتی پنل بسته
+                است، این ریل همان کار را بدون باز کردن پنل می‌کند. */}
+            <div className="shop__catrail" role="group" aria-label="دسته‌بندی">
+              <button
+                type="button"
+                onClick={() => setCategory('all')}
+                className={`shop__catchip ${category === 'all' ? 'is-on' : ''}`}
+              >
+                همه
+              </button>
+              {CATEGORIES.map((c) => (
+                <button
+                  key={c.slug}
+                  type="button"
+                  onClick={() => setCategory(c.slug)}
+                  className={`shop__catchip ${category === c.slug ? 'is-on' : ''}`}
+                  style={{ ['--chip-accent' as string]: c.accent }}
+                >
+                  <span className="shop__catchip-dot" />
+                  {c.title}
+                </button>
+              ))}
+            </div>
+
             <div className="shop__bar">
               <div className="cf__search">
                 <Search className="cf__search-icon" />

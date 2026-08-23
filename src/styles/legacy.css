@@ -280,3 +280,11 @@
   .glow-hover::before,
   .glow-hover::after { transition: none; }
 }
+
+/* آواتار نظردهنده — رنگ تخت به‌جای گرادیانت سه‌رنگ.
+   گرادیانت روی یک دایره‌ی ۳۶ پیکسلی فقط گِل می‌شود و هیچ‌کدام از
+   سه رنگ خوانده نمی‌شود. */
+.rev__avatar {
+  background: var(--phx-ember-500, #e8862e);
+  color: #fff;
+}

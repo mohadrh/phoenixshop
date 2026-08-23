@@ -87,8 +87,15 @@ export function DealsMarquee() {
   /* افست را بیرون از افکت نگه می‌داریم تا کشیدن با انگشت بتواند
      مستقیم رویش بنویسد بدون اینکه حلقه‌ی رندر از نو ساخته شود. */
   const offsetRef = useRef(0);
-  const dragRef = useRef<{ active: boolean; startX: number; startOffset: number; moved: number }>({
-    active: false, startX: 0, startOffset: 0, moved: 0,
+  /* کمتر از این یعنی کلیک بوده، نه کشیدن. یک عدد برای هر دو
+     تصمیم — گرفتنِ pointer capture و بلعیدنِ کلیک — تا نتوانند از
+     هم جدا بیفتند. */
+  const DRAG_THRESHOLD = 8;
+
+  const dragRef = useRef<{
+    active: boolean; startX: number; startOffset: number; moved: number; captured: boolean;
+  }>({
+    active: false, startX: 0, startOffset: 0, moved: 0, captured: false,
   });
 
   useEffect(() => {
@@ -224,23 +231,50 @@ export function DealsMarquee() {
             startX: e.clientX,
             startOffset: offsetRef.current,
             moved: 0,
+            captured: false,
           };
-          e.currentTarget.setPointerCapture(e.pointerId);
+          /* عمداً اینجا pointer capture گرفته نمی‌شود.
+
+             وقتی یک المان پوینتر را می‌گیرد، مرورگر رویداد click را
+             هم به همان المان می‌فرستد، نه به چیزی که واقعاً زیر
+             نشانگر است. با گرفتنِ capture روی pointerdown، دکمه‌ی +
+             داخل کارت‌ها هیچ‌وقت کلیک نمی‌گرفت — کلیک برنامه‌ای کار
+             می‌کرد ولی کلیک واقعی نه.
+
+             پس capture به pointermove موکول می‌شود و فقط وقتی گرفته
+             می‌شود که کشیدن واقعاً شروع شده باشد. کلیکِ ساده هیچ‌وقت
+             از این مسیر رد نمی‌شود. */
         }}
         onPointerMove={(e) => {
           const d = dragRef.current;
           if (!d.active) return;
           const dx = e.clientX - d.startX;
           d.moved = Math.abs(dx);
+
+          /* از آستانه که گذشت، این دیگر کشیدن است نه کلیک — از اینجا
+             capture لازم است تا اگر انگشت از روی نوار بیرون رفت،
+             کشیدن قطع نشود. */
+          if (!d.captured && d.moved > DRAG_THRESHOLD) {
+            d.captured = true;
+            e.currentTarget.setPointerCapture(e.pointerId);
+          }
+
           /* در RTL کارت‌ها از راست می‌آیند، پس کشیدن به راست یعنی
              جلو رفتن — علامت برعکس حرکت انگشت است. */
           offsetRef.current = d.startOffset + dx;
         }}
         onPointerUp={(e) => {
-          dragRef.current.active = false;
-          e.currentTarget.releasePointerCapture(e.pointerId);
+          const d = dragRef.current;
+          d.active = false;
+          if (d.captured && e.currentTarget.hasPointerCapture(e.pointerId)) {
+            e.currentTarget.releasePointerCapture(e.pointerId);
+          }
+          d.captured = false;
         }}
-        onPointerCancel={() => { dragRef.current.active = false; }}
+        onPointerCancel={() => {
+          dragRef.current.active = false;
+          dragRef.current.captured = false;
+        }}
         /* کشیدن افقی را ما مدیریت می‌کنیم، اسکرول عمودی دست مرورگر
            می‌ماند — بدون این، مرورگر کشیدن افقی را هم می‌دزدد. */
         style={{ touchAction: 'pan-y' }}
@@ -252,9 +286,9 @@ export function DealsMarquee() {
             className="dmq__slot"
             style={{ ['--deal-accent' as string]: p.media.accent }}
             /* بعد از کشیدن، کلیکِ ناخواسته نباید صفحه‌ی محصول را باز
-               کند. آستانه‌ی ۸ پیکسل: کمتر از آن یعنی واقعاً کلیک بوده. */
+               کند. همان آستانه‌ای که capture را روشن می‌کند. */
             onClickCapture={(e) => {
-              if (dragRef.current.moved > 8) {
+              if (dragRef.current.moved > DRAG_THRESHOLD) {
                 e.preventDefault();
                 e.stopPropagation();
               }

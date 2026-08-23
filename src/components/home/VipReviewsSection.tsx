@@ -364,7 +364,7 @@ export function VipReviewsSection() {
           <p className="text-sm text-zinc-400">برای این دسته هنوز نظری ثبت نشده.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mrail grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((r) => {
             const isLiked = liked.has(r.id);
             return (
@@ -391,7 +391,7 @@ export function VipReviewsSection() {
                 </blockquote>
 
                 <figcaption className="mt-auto pt-3 border-t border-white/[0.08] flex items-center gap-2.5">
-                  <span className="w-9 h-9 rounded-full grid place-items-center text-sm font-black text-white shrink-0 bg-gradient-to-br from-amber-500 via-rose-500 to-purple-600">
+                  <span className="rev__avatar w-9 h-9 rounded-full grid place-items-center text-sm font-black shrink-0">
                     {r.name.charAt(0)}
                   </span>
 

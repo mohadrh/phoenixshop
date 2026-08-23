@@ -36,7 +36,7 @@ export function VirtualNumbersSection() {
   return (
     <section
       id="numbers"
-      className="relative z-10 py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-zinc-100"
+      className="vnum relative z-10 py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-zinc-100"
     >
       {/* سربرگ */}
       <div className="text-center mb-8">
@@ -45,7 +45,7 @@ export function VirtualNumbersSection() {
           <span>شماره مجازی</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
-          شماره‌ای که فقط برای ثبت‌نام لازم داری
+          شماره‌ی واقعی از هر کشوری، بدون شماره‌ی خودت
         </h2>
         <p className="text-xs sm:text-sm text-zinc-400 max-w-2xl mx-auto leading-relaxed">
           شماره‌ی خودت را جایی وارد نکن. برای ساختن حساب در سرویس‌هایی که
@@ -54,7 +54,7 @@ export function VirtualNumbersSection() {
       </div>
 
       {/* انتخاب نوع */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+      <div className="mrail grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
         {NUMBER_KINDS.map((k) => {
           const Icon = ICONS[k.id];
           const on = kind === k.id;
@@ -92,10 +92,12 @@ export function VirtualNumbersSection() {
       {/* محدودیت نوع انتخاب‌شده — قبل از خرید گفته می‌شود، نه بعدش */}
       <p
         className="flex items-start gap-2 p-3.5 rounded-2xl mb-8 text-[11px] leading-relaxed"
+        /* رنگ متن از توکن می‌آید نه ثابت — با رنگ ثابتِ روشن، این
+           متن روی کاغذ اصلاً خوانده نمی‌شد. */
         style={{
           background: `${active.accent}12`,
           border: `1px solid ${active.accent}38`,
-          color: '#d6dae4',
+          color: 'var(--text-secondary)',
         }}
       >
         <span
@@ -108,7 +110,7 @@ export function VirtualNumbersSection() {
       </p>
 
       {/* سرویس‌های پرتقاضا */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
+      <div className="mrail grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2.5 mb-8">
         {popular.map((s) => {
           const price = cheapestFor(kind, s.id);
           return (
@@ -117,25 +119,25 @@ export function VirtualNumbersSection() {
               href={`/numbers?service=${s.id}&kind=${kind}`}
               onClick={() => sound.click()}
               onMouseEnter={() => sound.hover()}
-              className="glow-hover group relative flex flex-col items-center gap-2 p-4 rounded-2xl
+              className="glow-hover group relative flex flex-col items-center gap-1.5 p-2.5 rounded-xl
                          bg-[#0e0a1b]/95 border border-white/[0.08]
                          hover:border-white/25 hover:-translate-y-1 transition-all duration-300"
               style={{ ['--glow-accent' as string]: s.accent }}
             >
               <span
-                className="w-11 h-11 rounded-2xl grid place-items-center text-base font-black shrink-0
+                className="w-8 h-8 rounded-xl grid place-items-center text-sm font-black shrink-0
                            transition-transform duration-300 group-hover:scale-110"
                 style={{ background: `${s.accent}1f`, color: s.accent }}
               >
                 {s.mark}
               </span>
-              <b className="text-xs font-black text-white">{s.name}</b>
+              <b className="text-[11px] font-black text-white text-center leading-tight">{s.name}</b>
               {price !== null ? (
-                <span className="text-[10px] text-zinc-400">
-                  از <b className="num-en text-zinc-200">{fmt(price)}</b> تومان
+                <span className="text-[9px] text-zinc-400">
+                  از <b className="num-en text-zinc-200">{fmt(price)}</b>
                 </span>
               ) : (
-                <span className="text-[10px] text-zinc-600">ناموجود</span>
+                <span className="text-[9px] text-zinc-600">ناموجود</span>
               )}
             </Link>
           );

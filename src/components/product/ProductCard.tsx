@@ -131,7 +131,7 @@ export function ProductCard({ product }: { product: Product }) {
                   ({product.reviewsCount.toLocaleString('fa-IR')})
                 </span>
               </div>
-              <span className="text-zinc-500 text-[11px] font-mono">
+              <span className="text-zinc-500 text-[11px] num-en">
                 {product.platforms?.[0] ?? product.brand}
               </span>
             </div>
@@ -174,7 +174,7 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             )}
             <div className="flex items-baseline gap-1 text-white font-extrabold text-sm sm:text-base">
-              <span className="text-white group-hover:text-amber-300 transition-colors font-mono">
+              <span className="text-white group-hover:text-amber-300 transition-colors num-en">
                 {variant.price.toLocaleString('fa-IR')}
               </span>
               <span className="text-[10px] text-zinc-400 font-normal">تومان</span>
