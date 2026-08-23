@@ -100,6 +100,13 @@
   background-color: var(--l-paper) !important;
 }
 
+/* ---------- کارت‌ها ----------
+
+   سفیدِ تخت روی کاغذِ روشن گم می‌شود — «سفید روی سفید». پس کارت‌ها
+   شیشه‌ای می‌شوند: کمی شفاف، با بلورِ پس‌زمینه و یک لبه‌ی روشن در
+   بالا. همان زبانی که در حالت شب داشتند، فقط با نور روز.
+
+   جدا شدنشان از کاغذ کار سایه است نه رنگ. */
 [data-theme='light'] .bg-\[\#0c0817\],
 [data-theme='light'] .bg-\[\#0c0916\],
 [data-theme='light'] .bg-\[\#0c0919\],
@@ -131,7 +138,12 @@
 [data-theme='light'] .bg-\[\#110c22\]\/95,
 [data-theme='light'] .bg-\[\#140e2b\]\/95,
 [data-theme='light'] .bg-\[\#18112e\]\/95 {
-  background-color: var(--l-raised) !important;
+  background-color: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 10px 28px -10px rgba(22, 17, 31, 0.16);
 }
 
 /* ---------- مقیاس متن ---------- */
@@ -232,15 +244,34 @@
    لبه‌ی تیزی بین هیرو و بقیه‌ی صفحه نماند. */
 
 [data-theme='light'] .hero__fade-bottom {
+  /* محو شدن کوتاه و ملایم فقط در کف، تا لبه‌ی تیزی بین هیرو و
+     کاغذ نماند. بلندتر از این، تصویر را از پایین می‌خورد. */
   background: linear-gradient(to top,
-    var(--l-paper) 0%, rgba(244, 242, 248, 0.55) 20%, transparent 52%);
+    var(--l-paper) 0%, rgba(244, 242, 248, 0.75) 8%, transparent 34%);
 }
 
-/* وینیت در حالت روشن، لبه‌ها را به کاغذ می‌برد نه به سیاهی */
+/* وینیت در حالت روشن تقریباً برداشته می‌شود.
+
+   نسخه‌ی اول کاغذ را روی کل لبه‌های تصویر می‌ریخت و نتیجه‌اش مه بود:
+   عکس شسته می‌شد بدون اینکه چیزی به خوانایی اضافه کند. کنتراست متن
+   کار اسکریم جهت‌دار پایین است، نه وینیت. */
 [data-theme='light'] .hero__vignette {
-  background: radial-gradient(ellipse 82% 74% at 50% 45%,
-    transparent 34%, var(--l-paper) 100%);
-  opacity: 0.55;
+  background: radial-gradient(ellipse 95% 90% at 50% 45%,
+    transparent 62%, rgba(244, 242, 248, 0.85) 100%);
+  opacity: 0.75;
+}
+
+/* اسکریم جهت‌دار — تنها چیزی که متن را خوانا نگه می‌دارد.
+
+   از سمت متن (راست در RTL) تیره شروع می‌شود و تا وسط قاب محو
+   می‌شود. این‌طور نیمه‌ی تصویر که کاراکتر رویش است دست‌نخورده و
+   غنی می‌ماند، و نیمه‌ی متن پس‌زمینه‌ی لازم را می‌گیرد. */
+[data-theme='light'] .hero__fade-side {
+  background: linear-gradient(to left,
+    rgba(14, 10, 24, 0.82) 0%,
+    rgba(14, 10, 24, 0.62) 26%,
+    rgba(14, 10, 24, 0.22) 52%,
+    transparent 74%);
 }
 
 /* متن هیرو سفید می‌ماند، چون روی عکس می‌نشیند نه روی کاغذ */
@@ -260,7 +291,7 @@
 
 /* سایه‌ی متن قوی‌تر، چون کف قاب حالا روشن‌تر است و کنتراست کم می‌شود */
 [data-theme='light'] .hero__content {
-  text-shadow: 0 2px 18px rgba(8, 6, 13, 0.55);
+  text-shadow: 0 2px 14px rgba(8, 6, 13, 0.4);
 }
 
 [data-theme='light'] .hero__dock { background: transparent; }
@@ -276,9 +307,12 @@
 
 /* ---------- پس‌زمینه‌ی ذرات ---------- */
 
-/* بوم ذرات برای زمینه‌ی تیره ساخته شده و روی کاغذ مثل نویز دیده
-   می‌شود. کم‌رنگش می‌کنیم تا بافت بماند بدون اینکه شلوغ کند. */
-[data-theme='light'] .phx-bg { opacity: 0.20; }
+/* شفافیت بوم.
+
+   نسخه‌ی اول ۰٫۲ بود، چون آن موقع ذرات هنوز رنگ روشن داشتند و روی
+   کاغذ مثل نویز دیده می‌شدند. حالا که رنگشان تیره شده، همان ۰٫۲
+   نامرئی‌شان می‌کند — دقیقاً برعکس. */
+[data-theme='light'] .phx-bg { opacity: 0.55; }
 
 /* ---------- اسکرول‌بار ---------- */
 
@@ -299,3 +333,594 @@
 [data-theme='light'] .wsel__wordmark,
 [data-theme='light'] .wsel__title,
 [data-theme='light'] .wsel__count b { color: #fff !important; }
+
+/* ============================================================
+   پرداخت نهایی حالت روشن
+   ============================================================ */
+
+/* ---------- سایه‌ی نئونی پررنگ‌تر ----------
+
+   روی کاغذِ روشن، سایه‌ی کم‌رنگ اصلاً دیده نمی‌شود. رنگ محصول باید
+   واقعاً روی کاغذ بیفتد — همان چیزی که جای نئونِ شب را می‌گیرد. */
+
+[data-theme='light'] .dmq__neon {
+  box-shadow:
+    0 18px 34px -8px color-mix(in srgb, var(--deal-accent) 72%, transparent),
+    0 6px 14px -4px color-mix(in srgb, var(--deal-accent) 50%, transparent);
+}
+
+[data-theme='light'] .dmq__slot:hover .dmq__neon {
+  box-shadow:
+    0 24px 44px -8px color-mix(in srgb, var(--deal-accent) 88%, transparent),
+    0 8px 18px -4px color-mix(in srgb, var(--deal-accent) 62%, transparent);
+}
+
+[data-theme='light'] .glow-hover::before {
+  box-shadow: 0 20px 36px -10px color-mix(in srgb, var(--glow-accent) 62%, transparent);
+}
+
+/* کارت محصول در حالت عادی هم کمی رنگ زیرش دارد، نه فقط روی هاور */
+[data-theme='light'] .glow-hover::before { opacity: 0.55; }
+[data-theme='light'] .glow-hover:hover::before { opacity: 1; }
+
+/* ---------- تصویر محصول روی کاغذ ----------
+
+   جلدها برای زمینه‌ی تیره ساخته شده‌اند و لبه‌شان روی کاغذ سفید
+   ناگهانی قطع می‌شود. یک قاب روشن پشتشان می‌گذاریم تا تصویر در
+   کاغذ حل شود نه اینکه رویش بچسبد. */
+
+[data-theme='light'] .bg-gradient-to-b.from-\[\#1c1433\] {
+  background: linear-gradient(180deg, #f2eefb, #e6e1f2) !important;
+}
+
+/* ---------- نوار دسته‌بندی هیرو ----------
+
+   قرص‌ها شیشه‌ای می‌شوند: هم در شب هم در روز پشت خودشان را نشان
+   می‌دهند، چون روی تصویر می‌نشینند نه روی رنگ ثابت. */
+
+[data-theme='light'] .hdock__item {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px) saturate(1.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 6px 18px rgba(22, 17, 31, 0.14);
+}
+
+[data-theme='light'] .hdock__item:hover {
+  background: color-mix(in srgb, var(--d-accent) 16%, rgba(255, 255, 255, 0.75));
+  border-color: color-mix(in srgb, var(--d-accent) 45%, transparent);
+}
+
+/* ---------- سکشن‌های رنگی ---------- */
+
+[data-theme='light'] .dmq__eyebrow {
+  background: rgba(190, 24, 93, 0.08);
+  border-color: rgba(190, 24, 93, 0.25);
+}
+
+[data-theme='light'] .dmq__clock {
+  background: rgba(190, 24, 93, 0.07);
+  border-color: rgba(190, 24, 93, 0.22);
+}
+
+[data-theme='light'] .secfil__chip {
+  background: rgba(22, 17, 31, 0.035);
+  border-color: var(--l-line);
+  color: var(--l-ink-3);
+}
+
+[data-theme='light'] .secfil__chip.is-on {
+  color: var(--f-accent);
+  background: color-mix(in srgb, var(--f-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--f-accent) 45%, transparent);
+}
+
+/* ---------- بازی و بوم‌ها ---------- */
+
+/* بوم بازی صحنه‌ی شبانه‌ی خودش را می‌کشد و در روز هم همان می‌ماند —
+   یک قاب بازی روشن، بازی را از خودش می‌اندازد. فقط قابش با کاغذ
+   هماهنگ می‌شود. */
+[data-theme='light'] .lvl {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: var(--l-line);
+  box-shadow: 0 12px 32px -12px rgba(22, 17, 31, 0.2);
+}
+
+/* ---------- ورودی‌ها ---------- */
+
+[data-theme='light'] input,
+[data-theme='light'] textarea,
+[data-theme='light'] select {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--l-line);
+  color: var(--l-ink);
+}
+
+[data-theme='light'] input::placeholder,
+[data-theme='light'] textarea::placeholder { color: var(--l-ink-4); }
+
+/* ---------- چت و کشوها ---------- */
+
+[data-theme='light'] .chat,
+[data-theme='light'] .cart__panel,
+[data-theme='light'] .vs__panel {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+[data-theme='light'] .cart__scrim,
+[data-theme='light'] .vs__scrim { background: rgba(22, 17, 31, 0.35); }
+
+/* ---------- زیرمنوی فروشگاه ---------- */
+
+[data-theme='light'] .navshop__panel {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--l-line);
+  box-shadow: 0 24px 60px rgba(22, 17, 31, 0.18);
+}
+
+/* ---------- صفحه‌ی شماره مجازی ----------
+
+   دو رنگ اینجا برای زمینه‌ی تیره سخت‌کد شده بودند و روی کاغذ
+   نسبت کنتراستشان زیر ۱٫۳ می‌شد — یعنی عملاً نامرئی. */
+
+[data-theme='light'] .nb__chip {
+  background: rgba(22, 17, 31, 0.04);
+  border-color: var(--l-line);
+  color: var(--l-ink-2);
+}
+
+[data-theme='light'] .nb__chip:hover {
+  color: var(--l-ink);
+  border-color: var(--l-line-strong);
+}
+
+[data-theme='light'] .nb__row-price { color: var(--l-amber); }
+[data-theme='light'] .nb__row-price small { color: var(--l-ink-4); }
+
+[data-theme='light'] .nb__row,
+[data-theme='light'] .nb__service,
+[data-theme='light'] .nb__kind {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px) saturate(1.3);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+  border-color: var(--l-line);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+[data-theme='light'] .nb__service-name,
+[data-theme='light'] .nb__kind-body b,
+[data-theme='light'] .nb__row-service b { color: var(--l-ink); }
+
+[data-theme='light'] .nb__kind-body small,
+[data-theme='light'] .nb__row-country,
+[data-theme='light'] .nb__count { color: var(--l-ink-3); }
+
+/* ---------- پنل کاربری ---------- */
+
+[data-theme='light'] .acc__nav-item,
+[data-theme='light'] .acc__ticket,
+[data-theme='light'] .numpanel__card,
+[data-theme='light'] .thr__list {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: var(--l-line);
+}
+
+[data-theme='light'] .numpanel__number {
+  background: rgba(22, 17, 31, 0.04);
+  border-color: var(--l-line);
+}
+
+[data-theme='light'] .thr__msg--user .thr__bubble {
+  background: rgba(22, 17, 31, 0.05);
+  border-color: var(--l-line);
+  color: var(--l-ink-2);
+}
+
+/* ---------- چک‌اوت ---------- */
+
+[data-theme='light'] .co__card,
+[data-theme='light'] .co__line,
+[data-theme='light'] .co__done {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: var(--l-line);
+}
+
+/* ---------- ۴۰۴ ---------- */
+
+/* صفحه‌ی ۴۰۴ ویدیوی تمام‌صفحه دارد و مثل هیرو در هر دو حالت تیره
+   می‌ماند — متن روشن روی ویدیو ناخوانا می‌شد. */
+[data-theme='light'] .nf__title,
+[data-theme='light'] .nf__lead,
+[data-theme='light'] .nf__kicker { color: #fff !important; }
+
+/* ---------- قرص‌های رنگی ----------
+
+   الگوی مشترکی در سایت هست: قرصی با پس‌زمینه‌ی بسیار کم‌رنگِ رنگ
+   شاخص و متنی به همان رنگ ولی روشن. روی زمینه‌ی شب خوانا بود، روی
+   کاغذ نسبت کنتراستش زیر ۱٫۷ می‌شود.
+
+   راهش تیره کردن متن است نه پررنگ کردن پس‌زمینه — پس‌زمینه‌ی پررنگ
+   قرص را به دکمه تبدیل می‌کند و سلسله‌مراتب را به‌هم می‌زند. */
+
+[data-theme='light'] .nb__eyebrow,
+[data-theme='light'] .hero__kind,
+[data-theme='light'] .navshop__all,
+[data-theme='light'] .navshop__more {
+  color: var(--l-violet) !important;
+}
+
+/* قرص‌های Tailwind با متن روشنِ رنگی */
+[data-theme='light'] .text-sky-300,
+[data-theme='light'] .text-sky-400   { color: #0369a1 !important; }
+[data-theme='light'] .text-amber-200,
+[data-theme='light'] .text-amber-300,
+[data-theme='light'] .text-amber-400 { color: var(--l-amber) !important; }
+[data-theme='light'] .text-emerald-300,
+[data-theme='light'] .text-emerald-400 { color: #047857 !important; }
+[data-theme='light'] .text-purple-300,
+[data-theme='light'] .text-purple-400,
+[data-theme='light'] .text-fuchsia-300 { color: var(--l-violet) !important; }
+[data-theme='light'] .text-rose-300,
+[data-theme='light'] .text-rose-400,
+[data-theme='light'] .text-pink-300   { color: var(--l-magenta) !important; }
+[data-theme='light'] .text-cyan-300,
+[data-theme='light'] .text-cyan-400   { color: #0e7490 !important; }
+[data-theme='light'] .text-orange-300,
+[data-theme='light'] .text-orange-400 { color: #c2410c !important; }
+
+/* ولی نه وقتی روی سطح رنگیِ پررنگ نشسته‌اند — آنجا باید روشن بمانند */
+[data-theme='light'] [class*='bg-gradient-to'] [class*='text-'],
+[data-theme='light'] .hero__content [class*='text-'],
+[data-theme='light'] .wsel__card [class*='text-'],
+[data-theme='light'] .btn--primary [class*='text-'],
+[data-theme='light'] .btn--action [class*='text-'] {
+  color: inherit !important;
+}
+
+/* ============================================================
+   پرداخت دوم — بازخورد روی نسخه‌ی روشن
+   ============================================================ */
+
+/* ---------- سایه‌های سنگین ----------
+
+   کارت‌های «تا وقتی هست» سایه‌ی سیاهِ عمیق داشتند که برای زمینه‌ی
+   شب ساخته شده بود. روی کاغذ، سایه‌ی سیاه کثیف دیده می‌شود — سایه
+   باید ته‌رنگ همان کاغذ را داشته باشد، نه مشکی خالص. */
+
+[data-theme='light'] .hot-fire-glow,
+[data-theme='light'] [class*='shadow-\[0_15px_35px_rgba\(0\,0\,0'],
+[data-theme='light'] [class*='shadow-\[0_18px_45px_rgba\(0\,0\,0'],
+[data-theme='light'] [class*='shadow-\[0_20px_45px'] {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 10px 26px -10px rgba(109, 40, 217, 0.18) !important;
+}
+
+/* کارت‌های پیشنهاد داغ — گرادیانت تیره‌شان هم باید کاغذی شود */
+[data-theme='light'] .hot-fire-glow {
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.85), rgba(252, 249, 255, 0.75)) !important;
+  border-color: rgba(190, 24, 93, 0.28) !important;
+}
+
+[data-theme='light'] .hot-fire-glow:hover {
+  border-color: rgba(190, 24, 93, 0.5) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 16px 34px -10px rgba(190, 24, 93, 0.34) !important;
+}
+
+/* ---------- کارت محصول: شیشه با نور رنگی زیرش ----------
+
+   «سفید روی سفید» با شفافیت حل نمی‌شود، با نور حل می‌شود. هر کارت
+   رنگ محصول خودش را زیرش می‌اندازد؛ روی هاور آن نور بزرگ‌تر و
+   نئونی‌تر می‌شود. همان زبانِ شب، با نور روز. */
+
+[data-theme='light'] .glow-hover::before {
+  transition: opacity 380ms var(--ease-out), box-shadow 380ms var(--ease-out),
+              inset 380ms var(--ease-out);
+}
+
+[data-theme='light'] .glow-hover:hover::before {
+  inset: auto 2% -16px 2%;
+  height: 34px;
+  box-shadow:
+    0 22px 40px -8px color-mix(in srgb, var(--glow-accent) 78%, transparent),
+    0 8px 18px -6px color-mix(in srgb, var(--glow-accent) 55%, transparent);
+}
+
+/* لبه‌ی کارت هم رنگ محصول را می‌گیرد، نه خاکستری خنثی */
+[data-theme='light'] .glow-hover {
+  border-color: color-mix(in srgb, var(--glow-accent) 24%, var(--l-line)) !important;
+}
+
+[data-theme='light'] .glow-hover:hover {
+  border-color: color-mix(in srgb, var(--glow-accent) 55%, transparent) !important;
+}
+
+/* ---------- دکمه‌ی + افزودن ----------
+
+   خواسته‌ی صریح: در حالت روشن کادرش رنگی‌تر باشد. */
+
+[data-theme='light'] .pc__add,
+[data-theme='light'] .bg-white\/10.rounded-full,
+[data-theme='light'] button[aria-label*='افزودن'] {
+  background: color-mix(in srgb, var(--l-violet) 10%, rgba(255, 255, 255, 0.8)) !important;
+  border: 1.5px solid color-mix(in srgb, var(--l-violet) 45%, transparent) !important;
+  color: var(--l-violet) !important;
+  box-shadow: 0 4px 12px -4px rgba(109, 40, 217, 0.3);
+}
+
+[data-theme='light'] button[aria-label*='افزودن']:hover {
+  background: var(--l-violet) !important;
+  border-color: var(--l-violet) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 20px -5px rgba(109, 40, 217, 0.55);
+}
+
+/* ---------- چت کنار صفحه ---------- */
+
+[data-theme='light'] .chat__head {
+  background: rgba(22, 17, 31, 0.03);
+  border-bottom-color: var(--l-line);
+}
+
+[data-theme='light'] .chat__head-text b { color: var(--l-ink); }
+[data-theme='light'] .chat__head-text small { color: var(--l-ink-3); }
+
+[data-theme='light'] .chat__bubble {
+  background: rgba(22, 17, 31, 0.05);
+  color: var(--l-ink-2);
+}
+
+[data-theme='light'] .chat__msg--bot .chat__bubble {
+  background: color-mix(in srgb, var(--l-violet) 9%, transparent);
+  color: var(--l-ink);
+}
+
+[data-theme='light'] .chat__chip {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: color-mix(in srgb, var(--l-violet) 30%, transparent);
+  color: var(--l-violet);
+}
+
+[data-theme='light'] .chat__chip:hover {
+  background: var(--l-violet);
+  color: #fff;
+}
+
+[data-theme='light'] .chat__product {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--l-line);
+}
+
+[data-theme='light'] .chat__product b { color: var(--l-ink); }
+[data-theme='light'] .chat__product small { color: var(--l-ink-3); }
+[data-theme='light'] .chat__form { border-top-color: var(--l-line); }
+
+/* دکمه‌ی شناور چت — روی کاغذ سایه لازم دارد نه هاله */
+[data-theme='light'] .chat__fab {
+  box-shadow:
+    0 10px 26px -6px rgba(190, 24, 93, 0.45),
+    0 3px 8px -2px rgba(22, 17, 31, 0.16);
+}
+
+[data-theme='light'] .chat__fab:hover {
+  box-shadow:
+    0 16px 34px -8px rgba(190, 24, 93, 0.6),
+    0 4px 10px -2px rgba(22, 17, 31, 0.2);
+}
+
+[data-theme='light'] .chat__fab-dot { box-shadow: 0 0 0 2px #fff, 0 0 8px rgba(46, 204, 143, 0.8); }
+
+/* ---------- فوتر ---------- */
+
+[data-theme='light'] .ft,
+[data-theme='light'] footer {
+  background: linear-gradient(180deg,
+    var(--l-paper) 0%, var(--l-sunken) 100%);
+  border-top: 1px solid var(--l-line);
+}
+
+[data-theme='light'] .ft__cols a,
+[data-theme='light'] footer a { color: var(--l-ink-3); }
+
+[data-theme='light'] .ft__cols a:hover,
+[data-theme='light'] footer a:hover { color: var(--l-amber); }
+
+[data-theme='light'] footer h4 { color: var(--l-ink); }
+
+/* ---------- نوار پیشرفت و سکشن‌های داخلی ---------- */
+
+[data-theme='light'] [role='progressbar'] {
+  background: rgba(22, 17, 31, 0.08);
+  border-color: var(--l-line);
+}
+
+/* ---------- کارت‌های سطح باشگاه ---------- */
+
+[data-theme='light'] .pj__cards .grid > div {
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.9), rgba(250, 248, 253, 0.8)) !important;
+}
+
+[data-theme='light'] .pj__bullet {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--l-line);
+}
+
+/* ---------- کارت‌های دو دنیا ---------- */
+
+/* بدنه‌ی رنگی دارند و در هر دو حالت رنگی می‌مانند — فقط سایه‌شان
+   روی کاغذ باید دیده شود. */
+[data-theme='light'] .wsel__plate {
+  box-shadow:
+    0 14px 34px -10px color-mix(in srgb, var(--w-accent) 45%, transparent),
+    0 4px 10px -3px rgba(22, 17, 31, 0.14);
+}
+
+/* ---------- بازی ---------- */
+
+[data-theme='light'] .lvl__hud,
+[data-theme='light'] .lvl__overlay {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--l-line);
+}
+
+[data-theme='light'] .lvl__overlay h3,
+[data-theme='light'] .lvl__overlay p { color: var(--l-ink); }
+
+/* ============================================================
+   پاس نهایی — کاغذِ زنده
+
+   تا اینجا کاغذ یک رنگ تخت بود و نتیجه‌اش «تمیز ولی سرد» می‌شد.
+   سه تغییر، به ترتیب اثر:
+
+     ۱. زمینه‌ی گرادیانتی: چند لکه‌ی نور بسیار کم‌رنگ از رنگ‌های خود
+        برند، ثابت روی قاب. مثل نوری که از پنجره روی کاغذ می‌افتد.
+        بدون این، هر چقدر هم کارت‌ها را شیشه‌ای کنیم، پشتشان چیزی
+        برای شکستن نیست و شیشه دیده نمی‌شود.
+
+     ۲. سایه‌ی لایه‌ای: دو یا سه سایه با فاصله و رنگ متفاوت به‌جای
+        یکی. سایه‌ی تک‌لایه همیشه چسبانده به نظر می‌رسد.
+
+     ۳. اشباع در شیشه: backdrop-filter رنگِ پشت را غلیظ‌تر می‌کند، پس
+        همان لکه‌های نور از پشت کارت پررنگ‌تر دیده می‌شوند.
+   ============================================================ */
+
+[data-theme='light'] body {
+  background-color: var(--l-paper);
+  /* لکه‌های نور — ثابت می‌مانند تا با اسکرول حرکت نکنند و صحنه
+     آرام بماند */
+  background-image:
+    radial-gradient(ellipse 70% 50% at 12% 0%,  rgba(245, 158, 11, 0.10), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 88% 8%,  rgba(190, 24, 93, 0.09),  transparent 62%),
+    radial-gradient(ellipse 80% 55% at 50% 100%, rgba(109, 40, 217, 0.10), transparent 65%);
+  background-attachment: fixed;
+}
+
+/* ---------- شیشه‌ی اشباع‌شده ---------- */
+
+/* کارت‌ها کمی شفاف‌تر می‌شوند تا لکه‌های نور از پشتشان دیده شود،
+   و اشباع بالاتر آن رنگ را غلیظ‌تر می‌کند. */
+[data-theme='light'] .glow-hover {
+  backdrop-filter: blur(16px) saturate(1.7) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.7) !important;
+}
+
+/* ---------- سایه‌ی لایه‌ای ---------- */
+
+[data-theme='light'] .glow-hover,
+[data-theme='light'] .hot-fire-glow,
+[data-theme='light'] .nb__row,
+[data-theme='light'] .nb__kind,
+[data-theme='light'] .numpanel__card {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 2px 4px -1px rgba(22, 17, 31, 0.05),
+    0 8px 16px -6px rgba(22, 17, 31, 0.08),
+    0 20px 34px -14px rgba(109, 40, 217, 0.16) !important;
+}
+
+[data-theme='light'] .glow-hover:hover,
+[data-theme='light'] .hot-fire-glow:hover {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 3px 6px -1px rgba(22, 17, 31, 0.06),
+    0 12px 22px -6px rgba(22, 17, 31, 0.1),
+    0 28px 46px -14px color-mix(in srgb, var(--glow-accent, #6d28d9) 42%, transparent) !important;
+}
+
+/* ---------- لبه‌ی گرادیانتی روی کارت شاخص ----------
+
+   فقط روی کارت مرکزی چرخ‌فلک، نه همه‌جا. لبه‌ی گرادیانتی روی هر
+   کارت، صفحه را شبیه رنگین‌کمان می‌کند؛ روی یکی، آن یکی را «الان»
+   نشان می‌دهد. */
+
+[data-theme='light'] .dmq__slot .glow-hover {
+  border-color: color-mix(in srgb, var(--deal-accent) 38%, transparent) !important;
+}
+
+/* ---------- نوبار و فوتر با ته‌رنگ ---------- */
+
+[data-theme='light'] .glass-pill {
+  background:
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(252, 250, 255, 0.82)) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 4px 10px -2px rgba(22, 17, 31, 0.06),
+    0 14px 30px -12px rgba(109, 40, 217, 0.22) !important;
+}
+
+/* ---------- دکمه‌ها روی کاغذ ---------- */
+
+[data-theme='light'] .btn--action,
+[data-theme='light'] .btn--primary {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.3) inset,
+    0 4px 10px -2px rgba(22, 17, 31, 0.1),
+    0 12px 26px -8px var(--glow-action) !important;
+}
+
+[data-theme='light'] .btn--soft {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--l-line);
+  color: var(--l-ink-2);
+}
+
+[data-theme='light'] .btn--ghost {
+  border-color: var(--l-line-strong);
+  color: var(--l-ink-2);
+}
+
+/* ---------- ریل و فیلترها ---------- */
+
+[data-theme='light'] .secfil__chip:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: color-mix(in srgb, var(--f-accent) 40%, transparent);
+}
+
+/* دکمه‌های ورق زدن ریل */
+[data-theme='light'] .snap-x + div button,
+[data-theme='light'] [aria-label='بعدی'],
+[data-theme='light'] [aria-label='قبلی'] {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: var(--l-line) !important;
+  color: var(--l-ink-2) !important;
+}
+
+/* ---------- سکشن اخبار و مقالات ---------- */
+
+[data-theme='light'] #news article,
+[data-theme='light'] #articles a {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(14px) saturate(1.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+}
+
+/* پنل تلگرام رنگ خودش را نگه می‌دارد */
+[data-theme='light'] #news aside {
+  background: linear-gradient(140deg,
+    rgba(14, 165, 233, 0.12), rgba(255, 255, 255, 0.85)) !important;
+  border-color: rgba(14, 165, 233, 0.3) !important;
+}
+
+[data-theme='light'] #news aside h3,
+[data-theme='light'] #news aside li { color: var(--l-ink) !important; }
+[data-theme='light'] #news aside p { color: var(--l-ink-3) !important; }
+
+/* ---------- نظرات ---------- */
+
+[data-theme='light'] figure.glow-hover blockquote,
+[data-theme='light'] figure.glow-hover p { color: var(--l-ink-2); }
+
+/* قرص فیلترِ غیرفعال ۲٫۴ کنتراست داشت — زیر حد ۳:۱ برای عناصر
+   رابط. تیره‌تر می‌شود بدون اینکه با قرص فعال اشتباه گرفته شود:
+   تفاوتشان رنگ و پس‌زمینه است، نه صرفاً روشنی. */
+[data-theme='light'] .secfil__chip { color: var(--l-ink-2) !important; }

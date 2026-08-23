@@ -755,10 +755,16 @@
   flex-shrink: 0;
   padding: 6px 12px 6px 8px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  /* شیشه‌ای، چون روی تصویر می‌نشیند نه روی رنگ ثابت */
-  background: rgba(10, 8, 19, 0.55);
-  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  /* شیشه‌ی واقعی: پشت خودش را تار و اشباع‌تر نشان می‌دهد، به‌جای
+     اینکه یک لایه‌ی تیره‌ی نیمه‌شفاف باشد. روی تصویر متغیر هیرو
+     می‌نشیند، پس باید با هر پس‌زمینه‌ای کار کند. */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.18) inset,
+    0 6px 18px rgba(0, 0, 0, 0.35);
   text-decoration: none;
   transition: transform 240ms var(--ease-out), border-color 240ms var(--ease-out),
               background 240ms var(--ease-out);
@@ -766,8 +772,11 @@
 
 .hdock__item:hover {
   transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--d-accent) 65%, transparent);
-  background: color-mix(in srgb, var(--d-accent) 18%, rgba(10, 8, 19, 0.75));
+  border-color: color-mix(in srgb, var(--d-accent) 70%, transparent);
+  background: color-mix(in srgb, var(--d-accent) 22%, rgba(255, 255, 255, 0.1));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.25) inset,
+    0 8px 22px color-mix(in srgb, var(--d-accent) 35%, transparent);
 }
 
 .hdock__icon {

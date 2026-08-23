@@ -84,6 +84,12 @@ export function DealsMarquee() {
   const stageRef = useRef<HTMLDivElement>(null);
   const slotsRef = useRef<(HTMLDivElement | null)[]>([]);
   const pausedRef = useRef(false);
+  /* افست را بیرون از افکت نگه می‌داریم تا کشیدن با انگشت بتواند
+     مستقیم رویش بنویسد بدون اینکه حلقه‌ی رندر از نو ساخته شود. */
+  const offsetRef = useRef(0);
+  const dragRef = useRef<{ active: boolean; startX: number; startOffset: number; moved: number }>({
+    active: false, startX: 0, startOffset: 0, moved: 0,
+  });
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -93,7 +99,6 @@ export function DealsMarquee() {
     const span = deals.length * step;   // طول یک دور کامل
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    let offset = 0;
     let last = performance.now();
     let raf = 0;
     let visible = true;
@@ -107,6 +112,8 @@ export function DealsMarquee() {
 
     const layout = () => {
       const half = stage.clientWidth / 2;
+
+      const offset = offsetRef.current;
 
       slotsRef.current.forEach((el, i) => {
         if (!el) return;
@@ -148,10 +155,11 @@ export function DealsMarquee() {
     const frame = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
-      if (!pausedRef.current && visible && !document.hidden && !reduced) {
-        offset += SPEED * dt;
-        if (offset > span) offset -= span;
+      if (!pausedRef.current && !dragRef.current.active && visible && !document.hidden && !reduced) {
+        offsetRef.current += SPEED * dt;
       }
+      // در بازه بماند، چه حرکت خودکار باشد چه کشیدن با انگشت
+      offsetRef.current = ((offsetRef.current % span) + span) % span;
       layout();
       raf = requestAnimationFrame(frame);
     };
@@ -195,6 +203,14 @@ export function DealsMarquee() {
         </div>
       </header>
 
+      {/* کشیدن با انگشت و ماوس.
+
+          روی موبایل تنها راه ورق زدن همین است — نه هاوری هست که
+          متوقفش کند نه دکمه‌ای. با Pointer Events هر دو ورودی یک
+          مسیر دارند و لازم نیست جدا برایشان کد بنویسیم.
+
+          setPointerCapture یعنی اگر انگشت از روی نوار بیرون رفت،
+          کشیدن قطع نشود — وگرنه کارت وسط راه رها می‌شود. */}
       <div
         ref={stageRef}
         className="dmq__stage"
@@ -202,6 +218,32 @@ export function DealsMarquee() {
         onMouseLeave={() => { pausedRef.current = false; }}
         onFocusCapture={() => { pausedRef.current = true; }}
         onBlurCapture={() => { pausedRef.current = false; }}
+        onPointerDown={(e) => {
+          dragRef.current = {
+            active: true,
+            startX: e.clientX,
+            startOffset: offsetRef.current,
+            moved: 0,
+          };
+          e.currentTarget.setPointerCapture(e.pointerId);
+        }}
+        onPointerMove={(e) => {
+          const d = dragRef.current;
+          if (!d.active) return;
+          const dx = e.clientX - d.startX;
+          d.moved = Math.abs(dx);
+          /* در RTL کارت‌ها از راست می‌آیند، پس کشیدن به راست یعنی
+             جلو رفتن — علامت برعکس حرکت انگشت است. */
+          offsetRef.current = d.startOffset + dx;
+        }}
+        onPointerUp={(e) => {
+          dragRef.current.active = false;
+          e.currentTarget.releasePointerCapture(e.pointerId);
+        }}
+        onPointerCancel={() => { dragRef.current.active = false; }}
+        /* کشیدن افقی را ما مدیریت می‌کنیم، اسکرول عمودی دست مرورگر
+           می‌ماند — بدون این، مرورگر کشیدن افقی را هم می‌دزدد. */
+        style={{ touchAction: 'pan-y' }}
       >
         {deals.map((p, i) => (
           <div
@@ -209,6 +251,14 @@ export function DealsMarquee() {
             ref={(el) => { slotsRef.current[i] = el; }}
             className="dmq__slot"
             style={{ ['--deal-accent' as string]: p.media.accent }}
+            /* بعد از کشیدن، کلیکِ ناخواسته نباید صفحه‌ی محصول را باز
+               کند. آستانه‌ی ۸ پیکسل: کمتر از آن یعنی واقعاً کلیک بوده. */
+            onClickCapture={(e) => {
+              if (dragRef.current.moved > 8) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            }}
           >
             <span className="dmq__neon" aria-hidden="true" />
             <ProductCard product={p} />

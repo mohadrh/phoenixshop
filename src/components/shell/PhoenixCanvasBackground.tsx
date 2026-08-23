@@ -24,7 +24,9 @@ interface Particle {
   x: number;
   y: number;
   size: number;
-  color: string;
+  /* اندیس در پالت، نه خود رنگ — تا با تعویض شب و روز رنگ عوض شود
+     بدون اینکه ذرات از نو ساخته شوند. */
+  colorIndex: number;
   alpha: number;
   phase: number;
   speed: number;
@@ -48,6 +50,12 @@ interface Ember {
 
 /** پالت از روی گرادیانت لوگو */
 const PALETTE = ['#f5a623', '#ef5f3c', '#e0257f', '#c02fb8', '#8b3fd4', '#6366f1'];
+
+/* همان شش رنگ، ولی برای کاغذ: روشنایی پایین‌تر و اشباع بالاتر.
+   رنگ روشن روی سفید ناپدید می‌شود — رنگ باید تیره‌تر از زمینه باشد
+   تا دیده شود، نه روشن‌تر. ترتیب یکی است، پس هر ذره در هر دو حالت
+   خانواده‌ی رنگی خودش را نگه می‌دارد. */
+const PALETTE_LIGHT = ['#b45309', '#c2410c', '#be185d', '#a21caf', '#6d28d9', '#4338ca'];
 const EMBER_COLORS = ['#ff6a1a', '#ff2d6f'];
 
 export function PhoenixCanvasBackground() {
@@ -108,7 +116,7 @@ export function PhoenixCanvasBackground() {
           x: px,
           y: py,
           size: Math.random() * 2.4 + 1.1,
-          color: PALETTE[i % PALETTE.length],
+          colorIndex: i % PALETTE.length,
           alpha: Math.random() * 0.55 + 0.3,
           phase: Math.random() * Math.PI * 2,
           speed: Math.random() * 0.02 + 0.01,
@@ -140,6 +148,7 @@ export function PhoenixCanvasBackground() {
 
       const scroll = scrollRef.current;
       const mouse = mouseRef.current;
+      const light = document.documentElement.dataset.theme === 'light';
 
       // شدت آتش — سینوسی بین ۰٫۲۲ و ۰٫۶۵ اسکرول
       const fire = Math.max(
@@ -170,8 +179,10 @@ export function PhoenixCanvasBackground() {
         grad.addColorStop(0.7, 'rgba(100, 30, 200, 0.035)');
         grad.addColorStop(1, 'rgba(8, 6, 13, 0)');
       }
+      ctx.globalAlpha = light ? 0.35 : 1;
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
+      ctx.globalAlpha = 1;
 
       /* ۲. خطوط انرژی بین ذرات نزدیک */
       const flap = Math.sin(frame * 0.035) * (18 + fire * 24);
@@ -185,7 +196,10 @@ export function PhoenixCanvasBackground() {
           const by = b.drawY ?? b.y;
           const d = Math.hypot(a.x - b.x, ay - by);
           if (d < 75) {
-            ctx.strokeStyle = `rgba(255, 120, 180, ${(1 - d / 75) * 0.24 * (1 - fire * 0.55)})`;
+            const linkA = (1 - d / 75) * (1 - fire * 0.55);
+            ctx.strokeStyle = light
+              ? `rgba(120, 60, 160, ${linkA * 0.30})`
+              : `rgba(255, 120, 180, ${linkA * 0.24})`;
             ctx.beginPath();
             ctx.moveTo(a.x, ay);
             ctx.lineTo(b.x, by);
@@ -199,7 +213,11 @@ export function PhoenixCanvasBackground() {
       const mx = (mouse.x - 0.5) * 44;
       const my = (mouse.y - 0.5) * 30;
 
-      ctx.globalCompositeOperation = 'lighter';
+      /* lighter رنگ‌ها را روی هم جمع می‌کند و فقط روی زمینه‌ی تیره
+         معنی دارد — روی کاغذ سفید، هر رنگ روشنی سفید می‌شود و ذره
+         ناپدید. در حالت روشن به ترکیب معمولی برمی‌گردیم و در عوض
+         رنگ‌ها را تیره‌تر می‌کنیم. */
+      ctx.globalCompositeOperation = light ? 'source-over' : 'lighter';
 
       particles.forEach((p, i) => {
         p.phase += p.speed;
@@ -229,7 +247,7 @@ export function PhoenixCanvasBackground() {
         if (alpha <= 0.01) return;
 
         ctx.globalAlpha = alpha;
-        ctx.fillStyle = p.color;
+        ctx.fillStyle = (light ? PALETTE_LIGHT : PALETTE)[p.colorIndex];
         ctx.beginPath();
         ctx.arc(p.x, drawY, size, 0, Math.PI * 2);
         ctx.fill();

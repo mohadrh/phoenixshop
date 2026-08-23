@@ -155,6 +155,13 @@ export function SiteFooter() {
             <li><Link href="/#hot-deals" className={linkCls} onClick={() => sound.click()}>پیشنهادهای داغ</Link></li>
             <li><Link href="/shop/gaming" className={linkCls} onClick={() => sound.click()}>اکانت‌های قانونی بازی</Link></li>
             <li><Link href="/blog" className={linkCls} onClick={() => sound.click()}>مقالات و راهنماها</Link></li>
+            {/* میان‌بر پیش‌نمایش ۴۰۴ — برای دیدن و تنظیم طراحی‌اش.
+                پیش از انتشار عمومی باید برداشته شود. */}
+            <li>
+              <Link href="/preview-404" className={linkCls} onClick={() => sound.click()}>
+                صفحه‌ی ۴۰۴ <span className="text-[9px] text-zinc-600">(پیش‌نمایش)</span>
+              </Link>
+            </li>
           </ul>
         </div>
 
