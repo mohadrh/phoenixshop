@@ -13,7 +13,6 @@ import {
 } from '../../data/catalog';
 import { ProductCard } from './ProductCard';
 import { ProductArt } from './ProductArt';
-import { asset } from '../../lib/asset';
 
 const fmt = (n: number) => n.toLocaleString('fa-IR');
 
@@ -88,7 +87,7 @@ export function ProductDetail({ product }: { product: Product }) {
                 همان دو لایه‌ی کارت محصول: پس‌زمینه‌ی محو، کاتاوت روی آن. */}
             <figure className="pd__art">
               <ProductArt
-                src={asset(product.media.cover ?? product.media.thumbnail)}
+                src={product.media.cover ?? product.media.thumbnail}
                 accent={product.media.accent}
                 brand={product.brand}
                 title={product.englishTitle}
@@ -97,7 +96,7 @@ export function ProductDetail({ product }: { product: Product }) {
               />
               <div className="pd__art-front">
                 <ProductArt
-                  src={asset(product.media.cutout ?? product.media.thumbnail)}
+                  src={product.media.cutout ?? product.media.thumbnail}
                   accent={product.media.accent}
                   brand={product.brand}
                   title={product.englishTitle}

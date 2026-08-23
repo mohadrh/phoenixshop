@@ -26,5 +26,12 @@ export function asset(path: string | undefined): string | undefined {
   if (!path) return path;
   // مسیرهای بیرونی و data: دست نمی‌خورند
   if (!path.startsWith('/')) return path;
+  /* اگر پیشوند از قبل خورده، دوباره نزن.
+
+     یک مسیر ممکن است از دو جا رد شود — مثلاً کارت محصول مسیر را
+     تبدیل می‌کند و بعد به کامپوننت تصویر می‌دهد که آن هم تبدیل
+     می‌کند. نتیجه‌اش /phoenixshop/phoenixshop/... بود و تصویر
+     نمی‌آمد. این نگهبان کل آن دسته خطا را می‌بندد. */
+  if (BASE && path.startsWith(`${BASE}/`)) return path;
   return `${BASE}${path}`;
 }

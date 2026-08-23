@@ -162,7 +162,7 @@ export function HotDealsSection() {
                 {/* پوستر با هاله‌ی آتش */}
                 <div className="relative w-full h-44 rounded-2xl overflow-hidden mb-3.5 bg-black/50 border border-orange-500/20 group-hover:border-orange-400/50 transition-colors">
                   <ProductArt
-                    src={asset(product.media.cover)}
+                    src={product.media.cover}
                     accent={product.media.accent}
                     brand={product.brand}
                     title={product.englishTitle}
