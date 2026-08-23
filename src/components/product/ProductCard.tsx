@@ -8,6 +8,7 @@ import { getDefaultVariant, needsCustomerInput, type Product } from '../../data/
 import { VariantSheet } from './VariantSheet';
 import { ProductArt } from './ProductArt';
 import { sound } from '../../lib/sound';
+import { asset } from '../../lib/asset';
 
 /**
  * کارت محصول — پورت مستقیم طراحی نسخه‌ی قبلی.
@@ -66,7 +67,7 @@ export function ProductCard({ product }: { product: Product }) {
         {/* بنر تصویر */}
         <div className="relative w-full h-44 sm:h-48 rounded-2xl overflow-hidden bg-gradient-to-b from-[#1c1433] to-[#07050e] flex items-center justify-center">
           <ProductArt
-            src={art}
+            src={asset(art)}
             accent={product.media.accent}
             brand={product.brand}
             title={product.englishTitle}
@@ -79,7 +80,7 @@ export function ProductCard({ product }: { product: Product }) {
 
           <div className="relative z-10 w-full h-full flex items-end justify-center p-2">
             <ProductArt
-              src={cutout}
+              src={asset(cutout)}
               accent={product.media.accent}
               brand={product.brand}
               title={product.englishTitle}

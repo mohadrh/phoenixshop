@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { sound } from '../lib/sound';
+import { asset } from '../lib/asset';
 
 /** مدت صعود — برابر با طول انیمیشن phoenixFlightUp در استایل اصلی */
 const FLIGHT_MS = 900;
@@ -76,7 +77,7 @@ export const PhoenixScrollToTop: React.FC = () => {
             }}
           />
           <img
-            src="/brand/phoenix-logo.png"
+            src={asset('/brand/phoenix-logo.png')}
             alt=""
             draggable={false}
             className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 w-20 h-20 sm:w-24 sm:h-24 object-contain animate-phoenix-flight-up"
@@ -96,7 +97,7 @@ export const PhoenixScrollToTop: React.FC = () => {
         } ${flying ? 'opacity-0' : ''}`}
       >
         <img
-          src="/brand/phoenix-logo.png"
+          src={asset('/brand/phoenix-logo.png')}
           alt=""
           draggable={false}
           className="phx-idle w-20 h-20 sm:w-24 sm:h-24 object-contain select-none drop-shadow-[0_0_18px_rgba(255,65,108,0.65)] transition-transform duration-300 hover:scale-110"

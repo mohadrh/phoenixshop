@@ -7,6 +7,7 @@ import {
   MessageCircle, Heart, Ticket, UserCheck, Sparkles, CheckCircle,
 } from 'lucide-react';
 import { sound } from '../../lib/sound';
+import { asset } from '../../lib/asset';
 
 /**
  * فوتر — پورت مستقیم طراحی نسخه‌ی قبلی.
@@ -101,7 +102,7 @@ export function SiteFooter() {
         <div className="lg:col-span-2 space-y-4">
           <Link href="/" className="flex items-center gap-3 w-fit">
             <img
-              src="/brand/phoenix-logo.png"
+              src={asset('/brand/phoenix-logo.png')}
               alt=""
               draggable={false}
               className="w-12 h-12 object-contain select-none drop-shadow-[0_0_12px_rgba(255,65,108,0.5)]"

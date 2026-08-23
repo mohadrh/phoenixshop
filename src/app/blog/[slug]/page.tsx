@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Clock } from 'lucide-react';
 import { ARTICLES, getArticleBySlug, getRelatedArticles } from '../../../data/articles';
 import { ArticleBody } from '../../../components/blog/ArticleBody';
+import { asset } from '../../../lib/asset';
 
 /* فهرست کامل است و هر چیز خارج از آن ۴۰۴ می‌شود، پس پارامتر پویا
    نداریم. بدون این خط، Next برای slugهای ناشناخته یک تابع سروری
@@ -89,7 +90,7 @@ export default async function ArticlePage(
         {article.cover && (
           <figure className="relative mt-6 h-48 sm:h-64 rounded-3xl overflow-hidden bg-[#0a0713] border border-white/[0.08]">
             <img
-              src={article.cover}
+              src={asset(article.cover)}
               alt=""
               aria-hidden="true"
               className="w-full h-full object-cover opacity-70"

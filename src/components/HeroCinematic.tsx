@@ -7,6 +7,7 @@ import { ArrowLeft, Check, ChevronLeft, ChevronRight, Sparkles } from 'lucide-re
 import { sound } from '../lib/sound';
 import { ControllerNav } from './ui/ControllerNav';
 import { HeroCategoryDock } from './home/HeroCategoryDock';
+import { asset } from '../lib/asset';
 
 /* ---------------------------------------------------------------
    دامنه‌ی پارالاکس — طبق مشخصات
@@ -135,7 +136,7 @@ export const HeroCinematic: React.FC = () => {
             aria-hidden={i !== index}
           >
             <img
-              src={s.backdrop}
+              src={asset(s.backdrop)}
               alt=""
               className="hero__backdrop-img"
               loading={i === 0 ? 'eager' : 'lazy'}
@@ -283,7 +284,7 @@ export const HeroCinematic: React.FC = () => {
             {slide.cutout && (
               <img
                 key={slide.cutout}
-                src={slide.cutout}
+                src={asset(slide.cutout)}
                 alt={slide.englishTitle}
                 className={`hero__character-img hero__character-img--${slide.cutoutKind ?? 'character'}`}
                 onError={(e) => {

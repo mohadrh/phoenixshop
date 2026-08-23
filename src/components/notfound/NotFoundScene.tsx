@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Home, RotateCcw, Search } from 'lucide-react';
 import { PhoenixMark } from '../brand/PhoenixMark';
+import { asset } from '../../lib/asset';
 
 /**
  * صفحه‌ی ۴۰۴ سینمایی.
@@ -44,7 +45,7 @@ export function NotFoundScene() {
       <video
         ref={videoRef}
         className={`nf__video ${ready ? 'is-ready' : ''}`}
-        src="/video/game-over.mp4"
+        src={asset('/video/game-over.mp4')}
         poster="/video/game-over-poster.jpg"
         autoPlay
         muted

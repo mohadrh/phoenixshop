@@ -4,8 +4,9 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
+import { asset } from '../../lib/asset';
 
-const MODEL_URL = '/models/su57.glb';
+const MODEL_URL = asset('/models/su57.glb');
 
 /* ---------------------------------------------------------------
    Su-57 — مدل glTF

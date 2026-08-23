@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, BookOpen, Clock } from 'lucide-react';
 import { ARTICLES, type ArticleTopic } from '../../data/articles';
 import { sound } from '../../lib/sound';
+import { asset } from '../../lib/asset';
 
 /**
  * مقالات آموزشی.
@@ -94,7 +95,7 @@ export function ArticlesSection() {
             {a.cover && (
               <span className="relative -mx-2 -mt-2 mb-1 block h-32 rounded-2xl overflow-hidden bg-[#0a0713]">
                 <img
-                  src={a.cover}
+                  src={asset(a.cover)}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"

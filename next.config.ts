@@ -12,12 +12,19 @@ import type { NextConfig } from 'next';
 */
 const isStatic = process.env.STATIC_EXPORT === '1';
 
+/* روی GitHub Pages سایت زیر یک زیرمسیر می‌نشیند (مثلاً /phoenixshop).
+   basePath به Next می‌گوید همه‌ی مسیرها را با آن پیشوند بسازد، و
+   asset() در src/lib/asset.ts همین کار را برای تگ‌های <img> خام و
+   فایل‌هایی که مستقیم fetch می‌شوند انجام می‌دهد. */
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   ...(isStatic
     ? {
         output: 'export' as const,
+        ...(basePath ? { basePath, assetPrefix: basePath } : {}),
         /* بهینه‌سازی تصویر Next به سرور نیاز دارد و در خروجی ایستا
            در دسترس نیست. تصویرها همان‌طور که هستند سرو می‌شوند —
            چون از قبل به webp تبدیل و فشرده شده‌اند. */

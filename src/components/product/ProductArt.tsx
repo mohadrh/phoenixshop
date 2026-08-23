@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { asset } from '../../lib/asset';
 
 /**
  * تصویر محصول، با جای‌گزین برندشده.
@@ -32,7 +33,7 @@ export function ProductArt({
   if (hasArt) {
     return (
       <img
-        src={src}
+        src={asset(src)}
         alt={layer === 'cutout' ? '' : title}
         className={className}
         onError={() => setFailed(true)}

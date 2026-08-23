@@ -15,6 +15,7 @@ import { sound } from '../../lib/sound';
 import { CATEGORIES, PRODUCTS } from '../../data/catalog';
 import { NUMBER_OFFERS } from '../../data/numbers';
 import type { CategorySlug } from '../../data/catalog';
+import { asset } from '../../lib/asset';
 
 /* آیکن هر دسته. عمداً آیکن است نه جلد محصول: جلد به موجود بودن
    تصویرِ یک محصول خاص وابسته است و اگر آن محصول تصویر نداشته باشد،
@@ -126,7 +127,7 @@ export function Navbar({
             title="فونیکس شاپ | بازگشت به بالا"
           >
             <img
-              src="/brand/phoenix-logo.png"
+              src={asset('/brand/phoenix-logo.png')}
               alt=""
               draggable={false}
               className="w-12 h-12 sm:w-14 sm:h-14 object-contain select-none drop-shadow-[0_0_14px_rgba(255,65,108,0.6)] transition-transform duration-300 group-hover:scale-110"

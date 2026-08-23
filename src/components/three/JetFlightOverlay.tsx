@@ -5,8 +5,9 @@ import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Trail, useGLTF } from '@react-three/drei';
 import { useFlight } from '../../app/providers';
+import { asset } from '../../lib/asset';
 
-const MODEL_URL = '/models/su57.glb';
+const MODEL_URL = asset('/models/su57.glb');
 const DURATION_MS = 1100;
 
 const easeInOutCubic = (t: number) =>

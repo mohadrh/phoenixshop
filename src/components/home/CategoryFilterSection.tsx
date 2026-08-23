@@ -13,6 +13,7 @@ import {
 } from '../../data/catalog';
 import { ProductCard } from '../product/ProductCard';
 import { sound } from '../../lib/sound';
+import { asset } from '../../lib/asset';
 
 /**
  * پورتال دسته‌بندی و فیلتر — پورت مستقیم طراحی نسخه‌ی قبلی.
@@ -241,7 +242,7 @@ export function CategoryFilterSection() {
               {/* اگر فایل کاراکتر هنوز نرسیده، کارت بدون تصویر نماند —
                   ققنوس برند جایگزین می‌شود */}
               <img
-                src={w.art}
+                src={asset(w.art)}
                 alt=""
                 aria-hidden="true"
                 draggable={false}

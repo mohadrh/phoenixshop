@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Bell, BellRing, CalendarClock, Check, Send, Sparkles } from 'lucide-react';
 import { sound } from '../../lib/sound';
+import { asset } from '../../lib/asset';
 
 /**
  * چی تو راهه — اخبار و عرضه‌های نزدیک.
@@ -128,7 +129,7 @@ export function NewsSection() {
               >
                 {/* کاراکتر بیرون‌زده — بیرون از جریان، پس ارتفاع کارت ثابت می‌ماند */}
                 <img
-                  src={n.art}
+                  src={asset(n.art)}
                   alt=""
                   aria-hidden="true"
                   className={`news-card__art news-card__art--${n.artKind ?? 'character'}`}

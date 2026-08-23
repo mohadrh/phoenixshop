@@ -9,6 +9,7 @@ import { VariantSheet } from '../product/VariantSheet';
 import { ProductArt } from '../product/ProductArt';
 import { sound } from '../../lib/sound';
 import { SectionFilter, applyScope, type SectionScope } from './SectionFilter';
+import { asset } from '../../lib/asset';
 
 /**
  * پیشنهادهای آتشین — پورت مستقیم طراحی نسخه‌ی قبلی.
@@ -161,7 +162,7 @@ export function HotDealsSection() {
                 {/* پوستر با هاله‌ی آتش */}
                 <div className="relative w-full h-44 rounded-2xl overflow-hidden mb-3.5 bg-black/50 border border-orange-500/20 group-hover:border-orange-400/50 transition-colors">
                   <ProductArt
-                    src={product.media.cover}
+                    src={asset(product.media.cover)}
                     accent={product.media.accent}
                     brand={product.brand}
                     title={product.englishTitle}
@@ -173,7 +174,7 @@ export function HotDealsSection() {
 
                   {product.media.cutout && (
                     <img
-                      src={product.media.cutout}
+                      src={asset(product.media.cutout)}
                       alt=""
                       className="absolute bottom-0 right-2 h-36 object-contain filter drop-shadow-[0_10px_20px_rgba(249,115,22,0.6)] transition-transform duration-500 group-hover:scale-[1.12] group-hover:-translate-y-1.5"
                     />
