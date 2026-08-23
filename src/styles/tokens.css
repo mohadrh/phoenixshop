@@ -53,6 +53,8 @@
   --bg-base:      var(--phx-ink-950);
   --bg-raised:    var(--phx-ink-900);
   --bg-overlay:   var(--phx-ink-850);
+  /* پس‌زمینه‌ی نوبار شناور */
+  --nav-bg: rgba(10, 8, 19, 0.85);
   --bg-sunken:    #050409;
 
   --surface-1:    rgba(26, 20, 40, 0.55);

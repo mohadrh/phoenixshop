@@ -62,6 +62,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${vazir.variable} ${grotesk.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        {/* حالت پیش از رنگ‌آمیزی صفحه تعیین می‌شود.
+
+            اگر این تصمیم به React سپرده شود، مرورگر یک فریم با
+            حالت اشتباه رنگ می‌کند و بعد عوضش می‌کند — همان پرشِ
+            سفیدی که در سایت‌های دیگر می‌بینی. اسکریپت هم‌زمان و
+            پیش از body این را می‌بندد.
+
+            ترتیب: انتخاب ذخیره‌شده، بعد ترجیح سیستم، و اگر هیچ‌کدام
+            نبود شب — چون هویت این فروشگاه رویش ساخته شده. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{
+  var s = localStorage.getItem('phoenix.theme');
+  var t = s === 'light' || s === 'dark' ? s
+        : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.documentElement.dataset.theme = t;
+}catch(e){document.documentElement.dataset.theme='dark';}})();`,
+          }}
+        />
+      </head>
       <body>
         <Providers>
           {/* SiteChrome همه‌ی چیزهای همیشه‌حاضر را نگه می‌دارد:

@@ -14,6 +14,7 @@ import { useCart, useFlight } from '../../app/providers';
 import { sound } from '../../lib/sound';
 import { CATEGORIES, PRODUCTS } from '../../data/catalog';
 import { NUMBER_OFFERS } from '../../data/numbers';
+import { ThemeToggle } from './ThemeToggle';
 import type { CategorySlug } from '../../data/catalog';
 import { asset } from '../../lib/asset';
 
@@ -117,7 +118,9 @@ export function Navbar({
       <header className="fixed top-3 left-0 right-0 z-40 flex justify-center px-3 sm:px-6 transition-all duration-300">
         <nav
           className="glass-pill flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 rounded-full w-full max-w-6xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] border border-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-2xl"
-          style={{ background: 'rgba(10, 8, 19, 0.85)' }}
+          /* رنگ از توکن می‌آید نه درون‌خطی — استایل درون‌خطی را CSS
+             نمی‌تواند بازنویسی کند و نوبار در حالت روشن تیره می‌ماند. */
+          style={{ background: 'var(--nav-bg)' }}
         >
           {/* برند */}
           <Link
@@ -293,6 +296,8 @@ export function Navbar({
             >
               <Search className="w-4 h-4" />
             </button>
+
+            <ThemeToggle />
 
             {/* صدا */}
             <button

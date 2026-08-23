@@ -711,21 +711,27 @@
   position: absolute;
   z-index: 6;
   inset-inline: 0;
-  bottom: var(--sp-5);
-  display: none;
+  bottom: var(--sp-4);
   overflow: hidden;
 
-  /* سمت چپ زودتر تمام می‌شود تا به دکمه‌های دسته نرسد. در RTL
-     محتوا از راست می‌آید، پس محوِ سمت چپ یعنی «قبل از ناوبری». */
+  /* روی موبایل خوشه‌ی دکمه‌های دسته وجود ندارد، پس نواری برای دور
+     زدن نیست و محو شدن دو طرف متقارن است. */
   -webkit-mask-image: linear-gradient(to left,
-    transparent 0%, #000 5%, #000 68%, transparent 84%);
+    transparent 0%, #000 8%, #000 92%, transparent 100%);
   mask-image: linear-gradient(to left,
-    transparent 0%, #000 5%, #000 68%, transparent 84%);
+    transparent 0%, #000 8%, #000 92%, transparent 100%);
 }
 
-/* روی صفحه‌های کوچک، خوشه‌ی دسته اصلاً نیست و متن تا پایین می‌آید */
+/* از این عرض به بالا خوشه‌ی دسته پایین‌چپ ظاهر می‌شود، پس نوار باید
+   قبل از رسیدن به آن محو شود — دو چیز متحرک روی هم، هر دو ناخوانا. */
 @media (min-width: 1024px) {
-  .hero__dock { display: block; }
+  .hero__dock {
+    bottom: var(--sp-5);
+    -webkit-mask-image: linear-gradient(to left,
+      transparent 0%, #000 5%, #000 68%, transparent 84%);
+    mask-image: linear-gradient(to left,
+      transparent 0%, #000 5%, #000 68%, transparent 84%);
+  }
 }
 
 .hdock { width: 100%; overflow: hidden; }
@@ -778,6 +784,16 @@
 .hdock__body { display: flex; align-items: baseline; gap: 5px; }
 .hdock__body b { font-size: 11px; font-weight: 800; color: #fff; white-space: nowrap; }
 .hdock__body small { font-size: 9px; color: rgba(255, 255, 255, 0.5); }
+
+/* روی موبایل قاب تنگ است: قرص‌ها کوچک‌تر و سریع‌تر می‌شوند تا در
+   همان زمان دور کامل بزنند و کاربر همه‌ی دسته‌ها را ببیند. */
+@media (max-width: 640px) {
+  .hdock__track { gap: 6px; padding-inline: var(--sp-4); animation-duration: 46s; }
+  .hdock__item { padding: 5px 10px 5px 6px; }
+  .hdock__icon { width: 20px; height: 20px; }
+  .hdock__icon svg { width: 12px; height: 12px; }
+  .hdock__body b { font-size: 10px; }
+}
 
 /* ناوبری کمی بالاتر می‌ایستد تا با نوار هم‌ارتفاع نشود */
 .hero__controller { inset-block-end: clamp(72px, 8vw, 96px); }

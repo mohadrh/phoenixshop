@@ -30,6 +30,9 @@
 @import '../components/ui/controller.css';
 @import '../components/home/levelup.css';
 
+/* حالت روشن — آخر از همه، تا بازنویسی‌هایش بر بقیه غالب شود */
+@import '../styles/light.css';
+
 @layer base {
   /* نام‌های قدیمی — تا کامپوننت‌های پورت‌نشده نشکنند */
   :root {

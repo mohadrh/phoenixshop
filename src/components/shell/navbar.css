@@ -442,3 +442,87 @@
 @media (prefers-reduced-motion: reduce) {
   .navshop__panel { transition: opacity 1ms, visibility 1ms; }
 }
+
+/* ============================================================
+   کلید شب و روز
+
+   عمداً ساده: تمام جسارت طرح در خود حالت روشن خرج شده و یک کلید
+   پرزرق‌وبرق کنارش فقط سر و صدا اضافه می‌کرد.
+
+   ریل ثابت می‌ماند و فقط گلوله جابه‌جا می‌شود — دو آیکن همیشه سر
+   جایشان‌اند و گلوله روی یکی می‌نشیند. این‌طور معلوم است که کدام
+   حالت فعال است، نه فقط اینکه کلید کجاست.
+   ============================================================ */
+
+.thm {
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* جای‌نگهدار تا پیش از مشخص شدن حالت، نوبار نپرد */
+.thm--ghost { width: 52px; height: 28px; }
+
+.thm__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  width: 52px;
+  height: 28px;
+  padding: 0 3px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.05);
+  transition: background 260ms var(--ease-out), border-color 260ms var(--ease-out);
+}
+
+.thm:hover .thm__track { border-color: var(--border-default); }
+
+.thm:focus-visible .thm__track {
+  outline: 2px solid var(--phx-ember-400, #f59440);
+  outline-offset: 2px;
+}
+
+.thm__icon {
+  position: relative;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  transition: color 260ms var(--ease-out), opacity 260ms var(--ease-out);
+}
+
+/* آیکنِ حالت فعال پررنگ است، دیگری کم‌رنگ */
+.thm__icon--moon { color: #c4b5fd; opacity: 1; }
+.thm__icon--sun  { color: var(--text-faint); opacity: 0.55; }
+
+.thm.is-light .thm__icon--moon { color: var(--text-faint); opacity: 0.55; }
+.thm.is-light .thm__icon--sun  { color: #b45309; opacity: 1; }
+
+/* گلوله زیر آیکن فعال می‌نشیند */
+.thm__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+              background 260ms var(--ease-out);
+}
+
+.thm.is-light .thm__knob {
+  transform: translateX(24px);
+  background: rgba(180, 83, 9, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thm__knob, .thm__track, .thm__icon { transition: none; }
+}

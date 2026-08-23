@@ -1,0 +1,301 @@
+/* ============================================================
+   حالت روشن
+
+   طرحِ تاریکِ این سایت «شب» است: نئون، تابش صفحه، آرکید ساعت دو
+   بامداد. معادل روشنش «همان سایت با رنگ برعکس» نیست — آن جواب
+   کلیشه‌ای است و همیشه بدتر درمی‌آید.
+
+   معادل درست، روزِ همان مصالح است:
+
+     · نئون خاموش می‌شود، ولی رنگش می‌ماند — به‌شکل سایه‌ی رنگی
+       زیر همان جسم. در تاریکی عمق از نوری می‌آید که بیرون می‌ریزد؛
+       در روشنایی از سایه‌ای که جسم می‌اندازد. این تنها ترجمه‌ی
+       صادقانه است، و همان چیزی که اغلب حالت‌های روشن اشتباه
+       می‌کنند: هاله را نگه می‌دارند و مثل لکه دیده می‌شود.
+
+     · شیشه به‌جای درخشیدن، پشت خودش را نشان می‌دهد.
+
+     · کاغذ سفیدِ خالص نیست. ته‌رنگ بنفش دارد، چون هسته‌ی برند
+       کهربایی به سرخابی به بنفش است و سفیدِ خنثی با آن می‌جنگد.
+
+   رنگ‌های شاخص همان‌ها می‌مانند ولی تیره‌تر، تا روی کاغذ روشن
+   کنتراست داشته باشند.
+   ============================================================ */
+
+[data-theme='light'] {
+  /* کاغذ و سطح */
+  --l-paper:  #f4f2f8;
+  --l-raised: #ffffff;
+  --l-sunken: #eae7f1;
+
+  /* مرکب */
+  --l-ink:   #16111f;
+  --l-ink-2: #3d3550;
+  --l-ink-3: #6b6280;
+  --l-ink-4: #938aa8;
+
+  --l-line:        rgba(22, 17, 31, 0.10);
+  --l-line-strong: rgba(22, 17, 31, 0.18);
+
+  /* شاخص‌ها — تیره‌تر از نسخه‌ی شب تا روی کاغذ خوانا بمانند */
+  --l-amber:   #b45309;
+  --l-magenta: #be185d;
+  --l-violet:  #6d28d9;
+
+  /* ---------- توکن‌های معنایی ---------- */
+  --bg-base:   var(--l-paper);
+  --bg-raised: var(--l-raised);
+  --bg-overlay: var(--l-raised);
+
+  --surface-1: rgba(22, 17, 31, 0.04);
+  --surface-2: rgba(22, 17, 31, 0.07);
+  --surface-glass: rgba(255, 255, 255, 0.78);
+
+  --border-subtle:  var(--l-line);
+  --border-default: rgba(22, 17, 31, 0.14);
+  --border-strong:  var(--l-line-strong);
+
+  --text-primary:   var(--l-ink);
+  --text-secondary: var(--l-ink-2);
+  --text-muted:     var(--l-ink-3);
+  --text-faint:     var(--l-ink-4);
+  --text-on-accent: #fff;
+
+  --accent:      var(--l-amber);
+  --accent-soft: rgba(180, 83, 9, 0.16);
+
+  /* سایه‌ها روی کاغذ باید دیده شوند، پس عمیق‌تر از حالت شب‌اند */
+  --shadow-lg: 0 10px 30px rgba(22, 17, 31, 0.10);
+  --shadow-xl: 0 20px 50px rgba(22, 17, 31, 0.14);
+  --shadow-accent-lg: 0 12px 32px rgba(190, 24, 93, 0.22);
+
+  --fade-bottom: linear-gradient(to top, var(--l-paper) 0%, transparent 55%);
+  --fade-side:   linear-gradient(to left, var(--l-paper) 0%, transparent 42%);
+
+  /* نوبار شیشه‌ای روشن — پشتش دیده می‌شود، نه اینکه بدرخشد */
+  --nav-bg: rgba(255, 255, 255, 0.82);
+
+  color-scheme: light;
+}
+
+/* ============================================================
+   بازنویسی رنگ‌های سخت‌کدشده‌ی Tailwind
+
+   این کلاس‌ها مستقیم در کامپوننت‌ها نوشته شده‌اند و به توکن نگاه
+   نمی‌کنند. همه‌شان تُن‌های بنفشِ تیره در بازه‌ی #05030a تا #18112e
+   هستند و در حالت روشن به دو سطح خلاصه می‌شوند: کاغذِ صفحه و
+   سطحِ کارت. سلسله‌مراتب در روشنایی از سایه می‌آید نه از اختلاف
+   ریزِ پس‌زمینه.
+   ============================================================ */
+
+[data-theme='light'] .bg-\[\#05030a\],
+[data-theme='light'] .bg-\[\#080511\],
+[data-theme='light'] .bg-\[\#090614\],
+[data-theme='light'] .bg-\[\#090713\],
+[data-theme='light'] .bg-\[\#0a0713\],
+[data-theme='light'] .bg-\[\#0a0715\],
+[data-theme='light'] .bg-\[\#080510\]\/80,
+[data-theme='light'] .bg-\[\#090616\]\/95,
+[data-theme='light'] .bg-\[\#090714\]\/90 {
+  background-color: var(--l-paper) !important;
+}
+
+[data-theme='light'] .bg-\[\#0c0817\],
+[data-theme='light'] .bg-\[\#0c0916\],
+[data-theme='light'] .bg-\[\#0c0919\],
+[data-theme='light'] .bg-\[\#0d091a\],
+[data-theme='light'] .bg-\[\#0d091b\],
+[data-theme='light'] .bg-\[\#0d091d\],
+[data-theme='light'] .bg-\[\#0d091e\],
+[data-theme='light'] .bg-\[\#0e0a1c\],
+[data-theme='light'] .bg-\[\#100c1e\],
+[data-theme='light'] .bg-\[\#120c24\],
+[data-theme='light'] .bg-\[\#120f24\],
+[data-theme='light'] .bg-\[\#140e29\],
+[data-theme='light'] .bg-\[\#140e2b\],
+[data-theme='light'] .bg-\[\#150f29\],
+[data-theme='light'] .bg-\[\#0c081c\]\/95,
+[data-theme='light'] .bg-\[\#0d0918\]\/95,
+[data-theme='light'] .bg-\[\#0d091a\]\/70,
+[data-theme='light'] .bg-\[\#0d091a\]\/80,
+[data-theme='light'] .bg-\[\#0d091a\]\/90,
+[data-theme='light'] .bg-\[\#0e0a1b\]\/80,
+[data-theme='light'] .bg-\[\#0e0a1b\]\/95,
+[data-theme='light'] .bg-\[\#0e0a1b\]\/98,
+[data-theme='light'] .bg-\[\#0e0a1c\]\/90,
+[data-theme='light'] .bg-\[\#0e0a1c\]\/95,
+[data-theme='light'] .bg-\[\#0e0a1c\]\/98,
+[data-theme='light'] .bg-\[\#0e0a1d\]\/90,
+[data-theme='light'] .bg-\[\#0e0a1d\]\/95,
+[data-theme='light'] .bg-\[\#0f0b1c\]\/98,
+[data-theme='light'] .bg-\[\#110c22\]\/95,
+[data-theme='light'] .bg-\[\#140e2b\]\/95,
+[data-theme='light'] .bg-\[\#18112e\]\/95 {
+  background-color: var(--l-raised) !important;
+}
+
+/* ---------- مقیاس متن ---------- */
+
+[data-theme='light'] .text-zinc-100 { color: var(--l-ink) !important; }
+[data-theme='light'] .text-zinc-200 { color: var(--l-ink) !important; }
+[data-theme='light'] .text-zinc-300 { color: var(--l-ink-2) !important; }
+[data-theme='light'] .text-zinc-400 { color: var(--l-ink-3) !important; }
+[data-theme='light'] .text-zinc-500 { color: var(--l-ink-3) !important; }
+[data-theme='light'] .text-zinc-600 { color: var(--l-ink-4) !important; }
+[data-theme='light'] .text-zinc-700 { color: var(--l-ink-4) !important; }
+[data-theme='light'] .text-white    { color: var(--l-ink) !important; }
+
+/* متن سفید روی سطح رنگی باید سفید بماند */
+[data-theme='light'] [class*='bg-gradient-to'] .text-white,
+[data-theme='light'] .btn--primary,
+[data-theme='light'] .btn--action,
+[data-theme='light'] .hero__cta-main,
+[data-theme='light'] .dmq__label-pill { color: #fff !important; }
+
+/* ---------- خطوط و سطوح شفاف ---------- */
+
+[data-theme='light'] [class*='border-white\/'] { border-color: var(--l-line) !important; }
+[data-theme='light'] .border-white\/20,
+[data-theme='light'] .border-white\/25 { border-color: var(--l-line-strong) !important; }
+
+[data-theme='light'] .bg-white\/\[0\.01\],
+[data-theme='light'] .bg-white\/\[0\.02\],
+[data-theme='light'] .bg-white\/\[0\.03\],
+[data-theme='light'] .bg-white\/\[0\.04\],
+[data-theme='light'] .bg-white\/\[0\.05\],
+[data-theme='light'] .bg-white\/\[0\.06\],
+[data-theme='light'] .bg-white\/\[0\.07\],
+[data-theme='light'] .bg-white\/\[0\.08\],
+[data-theme='light'] .bg-white\/5,
+[data-theme='light'] .bg-white\/10 {
+  background-color: rgba(22, 17, 31, 0.05) !important;
+}
+
+[data-theme='light'] .bg-white\/15,
+[data-theme='light'] .bg-white\/20 { background-color: rgba(22, 17, 31, 0.08) !important; }
+
+/* ============================================================
+   نئون ← سایه‌ی رنگی
+
+   امضای این حالت. رنگ محصول می‌ماند، ولی به‌جای هاله‌ای که از جسم
+   بیرون می‌زند، سایه‌ای می‌شود که زیرش می‌افتد.
+   ============================================================ */
+
+[data-theme='light'] .dmq__neon {
+  background: transparent;
+  filter: none;
+  opacity: 1;
+  inset: auto 6% -6px 6%;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: 0 14px 26px -6px color-mix(in srgb, var(--deal-accent) 55%, transparent);
+}
+
+[data-theme='light'] .dmq__neon::after,
+[data-theme='light'] .dmq__neon::before { display: none; }
+
+/* هاله‌ی هاور کارت‌ها هم سایه می‌شود */
+[data-theme='light'] .glow-hover::before {
+  filter: none;
+  border-radius: 24px;
+  inset: auto 8% -10px 8%;
+  top: auto;
+  width: 84%;
+  height: 26px;
+  aspect-ratio: auto;
+  background: transparent;
+  box-shadow: 0 16px 30px -8px color-mix(in srgb, var(--glow-accent) 45%, transparent);
+}
+
+[data-theme='light'] .glow-hover::after { opacity: 0 !important; }
+
+/* شیشه به‌جای درخشیدن، پشتش را نشان می‌دهد */
+[data-theme='light'] .glass-pill,
+[data-theme='light'] .glass-card {
+  background: rgba(255, 255, 255, 0.82) !important;
+  border-color: var(--l-line) !important;
+  box-shadow: 0 8px 28px rgba(22, 17, 31, 0.10) !important;
+}
+
+/* ---------- هیرو ---------- */
+
+/* ---------- هیرو ----------
+
+   هیرو استثناست و عمداً در هر دو حالت تیره می‌ماند.
+
+   دلیلش این نیست که تنبلی کرده‌ایم: هیرو یک عکس واقعی از بازی یا
+   محصول را نشان می‌دهد و آن عکس تیره است. اگر متن را به مرکبِ روشن
+   عوض کنیم، روی همان عکس تیره ناخوانا می‌شود. روشن کردنِ خود عکس هم
+   یعنی خراب کردن تنها چیزی که هیرو برایش هست.
+
+   پس متن سفید می‌ماند و فقط محو شدنِ کف با کاغذ هماهنگ می‌شود تا
+   لبه‌ی تیزی بین هیرو و بقیه‌ی صفحه نماند. */
+
+[data-theme='light'] .hero__fade-bottom {
+  background: linear-gradient(to top,
+    var(--l-paper) 0%, rgba(244, 242, 248, 0.55) 20%, transparent 52%);
+}
+
+/* وینیت در حالت روشن، لبه‌ها را به کاغذ می‌برد نه به سیاهی */
+[data-theme='light'] .hero__vignette {
+  background: radial-gradient(ellipse 82% 74% at 50% 45%,
+    transparent 34%, var(--l-paper) 100%);
+  opacity: 0.55;
+}
+
+/* متن هیرو سفید می‌ماند، چون روی عکس می‌نشیند نه روی کاغذ */
+[data-theme='light'] .hero__title-en { color: #fff !important; }
+[data-theme='light'] .hero__fa { color: rgba(255, 255, 255, 0.92) !important; }
+[data-theme='light'] .hero__desc { color: rgba(255, 255, 255, 0.82) !important; }
+[data-theme='light'] .hero__english { color: rgba(255, 255, 255, 0.7) !important; }
+[data-theme='light'] .hero__highlights li { color: rgba(255, 255, 255, 0.9) !important; }
+[data-theme='light'] .hero__kicker { color: #fde68a !important; }
+
+/* دکمه‌ی فرعی هیرو هم روی عکس است */
+[data-theme='light'] .hero__cta-alt {
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* سایه‌ی متن قوی‌تر، چون کف قاب حالا روشن‌تر است و کنتراست کم می‌شود */
+[data-theme='light'] .hero__content {
+  text-shadow: 0 2px 18px rgba(8, 6, 13, 0.55);
+}
+
+[data-theme='light'] .hero__dock { background: transparent; }
+
+[data-theme='light'] .hdock__item {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--l-line);
+  box-shadow: 0 4px 14px rgba(22, 17, 31, 0.12);
+}
+
+[data-theme='light'] .hdock__body b { color: var(--l-ink); }
+[data-theme='light'] .hdock__body small { color: var(--l-ink-3); }
+
+/* ---------- پس‌زمینه‌ی ذرات ---------- */
+
+/* بوم ذرات برای زمینه‌ی تیره ساخته شده و روی کاغذ مثل نویز دیده
+   می‌شود. کم‌رنگش می‌کنیم تا بافت بماند بدون اینکه شلوغ کند. */
+[data-theme='light'] .phx-bg { opacity: 0.20; }
+
+/* ---------- اسکرول‌بار ---------- */
+
+[data-theme='light'] ::-webkit-scrollbar-track { background: var(--l-sunken); }
+
+/* ---------- متن روی نوارهای رنگی ---------- */
+
+[data-theme='light'] .dmq__eyebrow { color: var(--l-magenta); }
+[data-theme='light'] .dmq__title { color: var(--l-ink); }
+[data-theme='light'] .dmq__clock-label { color: var(--l-magenta); }
+[data-theme='light'] .dmq__clock-digits b { background: rgba(22, 17, 31, 0.08); color: var(--l-ink); }
+
+[data-theme='light'] .nb__title,
+[data-theme='light'] .thr__subject,
+[data-theme='light'] .wsel__wordmark { color: var(--l-ink); }
+
+/* دو دنیای گیم و AI تصویر و رنگ خودشان را دارند و تیره می‌مانند */
+[data-theme='light'] .wsel__wordmark,
+[data-theme='light'] .wsel__title,
+[data-theme='light'] .wsel__count b { color: #fff !important; }
