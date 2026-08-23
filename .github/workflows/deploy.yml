@@ -31,7 +31,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: نصب وابستگی‌ها
@@ -51,6 +51,11 @@ jobs:
         run: touch out/.nojekyll
 
       - uses: actions/configure-pages@v5
+        with:
+          # خودِ گردش‌کار Pages را روشن می‌کند و روی حالت Actions
+          # می‌گذارد. بدون این، اگر تنظیم دستی انجام نشده باشد بیلد
+          # با «Get Pages site failed» می‌شکند.
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
