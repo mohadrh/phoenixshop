@@ -1586,10 +1586,43 @@
    رنگ هم دیده می‌شود. روی کاغذِ روشن همان مقدار گم می‌شود، پس هم
    اشباع بالاتر می‌رود هم لکه‌ها بزرگ‌تر می‌شوند. */
 [data-theme='light'] .hero__aurora {
+  /* روی کاغذ کمی بیشتر از حالت شب، ولی همچنان در حد ته‌رنگ */
+  opacity: 0.62;
   background:
     radial-gradient(62% 72% at 18% 22%, rgba(232, 134, 46, 0.3), transparent 64%),
     radial-gradient(58% 68% at 78% 30%, rgba(222, 46, 107, 0.26), transparent 62%),
     radial-gradient(68% 78% at 60% 82%, rgba(139, 63, 212, 0.3), transparent 66%),
     radial-gradient(54% 64% at 28% 78%, rgba(56, 130, 246, 0.22), transparent 64%);
   background-size: 200% 200%;
+}
+
+/* ---------- هاور لینک‌های فوتر ----------
+
+   دو مشکل با هم:
+
+   ۱. رنگ هاور --l-amber بود (#b45309). آن رنگ برای متنِ کوچکِ ثابت
+      انتخاب شده بود و روی کاغذ قهوه‌ای دیده می‌شود، نه نارنجی —
+      تفاوتش با رنگ عادیِ لینک آن‌قدر کم بود که به چشم نمی‌آمد.
+      #c2410c روشن‌ترین نارنجی‌ای است که هنوز نسبت کنتراست ۴٫۷ روی
+      کاغذ می‌دهد و AA را رد می‌کند.
+
+   ۲. متن بعضی لینک‌ها داخل <span> است و قانونِ
+      `footer span { color: … }` رنگ را مستقیم روی همان span
+      می‌نشاند. رنگِ هاورِ لینک ارث نمی‌رسید چون span رنگ خودش را
+      داشت، پس آن لینک‌ها اصلاً تغییر رنگ نمی‌دادند.
+*/
+
+[data-theme='light'] footer a:hover,
+[data-theme='light'] footer a:focus-visible {
+  color: #c2410c !important;
+}
+
+/* هرچه داخل لینک است رنگ خودِ لینک را بگیرد، نه رنگ عمومیِ فوتر */
+[data-theme='light'] footer a:hover span,
+[data-theme='light'] footer a:hover b,
+[data-theme='light'] footer a:hover svg,
+[data-theme='light'] footer a:focus-visible span,
+[data-theme='light'] footer a:focus-visible b,
+[data-theme='light'] footer a:focus-visible svg {
+  color: inherit !important;
 }
